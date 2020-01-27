@@ -11,3 +11,18 @@ print(res)
 for i in range(len(l)):
   l[i] = res / l[i]
 print(l)
+
+
+#what if you can't use division?
+
+l = list(int(i) for i in input().split(' '))
+result_l = list()
+for i in range(len(l)):
+  cur_prod = 1
+  for j in range(len(l)):
+    if j != i:
+      cur_prod *= l[j]
+  result_l.append(cur_prod)
+print(result_l)
+      
+
