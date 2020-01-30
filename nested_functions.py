@@ -17,11 +17,15 @@ def cons(a, b):
       return f(a, b)
     return pair
 
-
 def car(pair):
-  return pair(lambda a,b:a)
+  def get_first(a,b):
+    return a
+  return pair(get_first)
 
 def cdr(pair):
-  return pair(lambda a,b:b)
+  def get_last(a,b):
+    return b
+  return pair(get_last)
 
 print(car(cons(3,4)))
+print(cdr(cons(3,4)))
