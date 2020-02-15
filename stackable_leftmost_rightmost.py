@@ -8,7 +8,8 @@ possible to stack the cubes. Otherwise, print "No".
 Do not print the quotation marks.
 '''
 
-#time out solution - too long, because O(n^2) for long test cases
+#time out solution - too long, because O(n^2) for long test cases - becaues of max(list), 
+#it takes too long to compute max everytime its called!
 
 def f(r):    
     cur = list()
