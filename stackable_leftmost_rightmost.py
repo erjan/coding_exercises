@@ -46,3 +46,22 @@ if __name__ == '__main__':
         
     for l in total_list:
         f(l)
+        
+        
+        
+  #solution 2      
+def pilecub(cubes,n):
+    for i in range(n-1):
+        if cubes[i]>=cubes[i+1]:
+            continue
+        for j in range(i+1,n-1):
+            if cubes[j]>cubes[j+1]:
+                return "No"
+        return "Yes"
+    return "Yes"
+		
+T = int(input())
+for _ in range(T):
+    n = int(input())
+    cubes = list(map(int,input().split()))
+    print(pilecub(cubes,n))
