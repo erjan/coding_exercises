@@ -8,9 +8,10 @@
 
 #very tricky problem - but tagged easy!!!!
 
-i did not solve it - had to look up solution.
+#i did not solve it - had to look up solution.
 
-ef f(A, queries):
+
+def f(A, queries):
     
     even_sum = sum(list(filter(lambda num : num %2 == 0 , A)))
     print('before beginning the sum of all evens: %d' % even_sum)
@@ -18,11 +19,14 @@ ef f(A, queries):
     print()
     res = []
     print(A)
+    print('even sum %d ' % even_sum)
     for val,index in queries:
         print('------------------------------------------------------')
         
-        temp = 0
+        #if A[index] %2 ==0:
+         #   even_sum -= A[index]
         A[index]+= val
+        
         if A[index] %2 == 0:
             even_sum += A[index]
         print('sum of all evens %d ' % even_sum)
@@ -36,3 +40,10 @@ ef f(A, queries):
     
 a = [1,2,3,4]
 queries = [[1,2], [2,0], [1,1], [2,0], [-3,1], [2,0],[1,1], [2,3] ]
+
+#f(a, queries)
+
+
+A = [1,2,3,4]
+queries = [[1,0],[-3,1],[-4,0],[2,3]]
+f(A, queries)
