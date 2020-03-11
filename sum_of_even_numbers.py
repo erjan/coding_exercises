@@ -25,6 +25,11 @@ def f(A, queries):
         
         #if A[index] %2 ==0:
          #   even_sum -= A[index]
+            
+        # сверху 2 строчки - если их не поставить то будет такая проблема:
+        # мы забываем убрать это значение - потому что не знаем какое получитца вместо него!
+        # если вместо него мы получим четное - мы добавим его в общую сумму, елси - нет прсто пройдем дальше по циклу менять массив!
+        # внизу я оставил пример что вылазиет когда нет этих 2 строк кода
         A[index]+= val
         
         if A[index] %2 == 0:
@@ -47,3 +52,35 @@ queries = [[1,2], [2,0], [1,1], [2,0], [-3,1], [2,0],[1,1], [2,3] ]
 A = [1,2,3,4]
 queries = [[1,0],[-3,1],[-4,0],[2,3]]
 f(A, queries)
+
+
+before beginning the sum of all evens: 6
+
+'''
+[1, 2, 3, 4]
+even sum 6 
+------------------------------------------------------
+about to add at A[0] value : 1
+
+the A array is: [2, 2, 3, 4]
+after adding sum of evens: 8 
+------------------------------------------------------
+about to add at A[1] value : -3
+
+the A array is: [2, -1, 3, 4]
+after adding sum of evens: 8 
+------------------------------------------------------
+about to add at A[0] value : -4
+
+the A array is: [-2, -1, 3, 4]
+after adding sum of evens: 6 
+------------------------------------------------------
+about to add at A[3] value : 2
+
+the A array is: [-2, -1, 3, 6]
+after adding sum of evens: 12 
+
+end result array is :
+[8, 8, 6, 12]
+end of even sum 12 
+'''
