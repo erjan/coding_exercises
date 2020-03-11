@@ -87,3 +87,21 @@ end result array is :
 [8, 8, 6, 12]
 end of even sum 12 
 '''
+
+# finally working solution
+
+class Solution:
+    def sumEvenAfterQueries(self, A: List[int], queries: List[List[int]]) -> List[int]:
+        evens = sum(list(filter(lambda num : num %2 == 0, A)))
+        result = []
+        
+        for q in queries:
+            val = q[0]
+            index = q[1]
+            if A[index] % 2 == 0:
+                evens -= A[index]
+            A[index]+=val
+            if A[index] %2 == 0:
+                evens += A[index]
+                result.append(evens)
+        return result
