@@ -42,7 +42,7 @@ def reverse (item, tail = None):
         print()
         print()
         print('recursive..')
-        return reverse(tmp, item)
+        return reverse(tmp, item) # здесь была причина непонятки - я не видел как эта переменная обновляется. туда в item передается первый нод
         
         
    print_list(m1)
