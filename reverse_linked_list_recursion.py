@@ -27,7 +27,11 @@ def reverse (item, tail = None):
     print('tail before:')
     print_list(tail)
     tmp = item.next
-    item.next = tail
+    item.next = tail # вот это ключевая строка здесь!
+    # мы строим именно список-лист item! 
+    # когда передаем item в reverse - мы передаем туда 1 нод с последним первым числом!
+    
+  
     print('tail after:')
     print_list(item.next)
     if tmp is None:
@@ -44,3 +48,6 @@ def reverse (item, tail = None):
    print_list(m1)
    
    d = reverse(m1, None)
+
+
+
