@@ -2,8 +2,9 @@ def f2(nums,k):
 
     for i in range(len(nums)-k+2):
         for j in range(i, i+k):
-            for t in range(i,j):
-                print(nums[t], end = ' ')
+            print(nums[i:j])
+            #for t in range(i,j):
+                #print(nums[t], end = ' ')
             print()
         print()
 
