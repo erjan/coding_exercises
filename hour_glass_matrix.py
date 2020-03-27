@@ -1,7 +1,9 @@
 #hour glass matrix is of the form:
-a b c
-  e
-f g h
+#a b c
+#  e
+#f g h
+
+#find hour glass matrix with highest sum of values , print this sum
 
 def printer(hg):
     print('---------------')
@@ -62,8 +64,7 @@ m = [
 [-1, -3, -1, -2, -4, -5]
 ]
 
-
-
-
 f(m)
+
+
                     
