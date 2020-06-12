@@ -22,3 +22,22 @@ class Solution:
             result.append(y[i])
         print(result)
         return result
+    
+    #just using del 
+    
+    #beats 99.2 of all submissions lol
+    
+    class Solution:
+    def shuffle(self, nums: List[int], n: int) -> List[int]:
+        real_n = len(nums)//2
+        result = list()
+        
+        
+        x = nums[:real_n]
+        y = nums[real_n:]
+
+        for i in range(len(x)):
+            result.append(x[i])
+            result.append(y[i])
+        del x,y
+        return result
