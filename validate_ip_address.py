@@ -20,12 +20,7 @@ the address 02001:0db8:85a3:0000:0000:8a2e:0370:7334 is invalid.
 Note: You may assume there is no extra space or special characters in the input string.
 '''
 
-
-
-
-
 class Solution:
-    
     def validIPAddress(self, IP: str) -> str:
         def ip6(self,IP):
             s = IP
@@ -35,12 +30,9 @@ class Solution:
             if seven_colons == False:
                 return "Neither"
             hex_nums = s.split(':')
-
             for num in hex_nums:
                 if len(num) == 0 or len(num) > 4:
                     return "Neither"
-
-            for num in hex_nums:
                 if num.isalnum() == False:
                     return "Neither"
             for num in hex_nums:
@@ -51,27 +43,18 @@ class Solution:
         
         def ip4(self,IP):
             three_dots = False
-            bad_range = False
-            leading_zero = False
             s = IP
             three_dots = s.count('.') == 3
             if three_dots == False:
                 return "Neither"
-
             nums = s.split('.')
-
             for n in nums:
                 if len(n) > 1 and n.startswith('0'):
-                    leading_zero = True
                     return 'Neither'   
-
-            for n in nums:
                 if n.isdigit() == False:
                     return 'Neither'
                 if int(n) < 0 or int(n) > 255:
-                    bad_range = True
                     return 'Neither'
-
             return 'IPv4'
         
         res1 = ip4(self,IP)
