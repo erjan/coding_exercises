@@ -14,10 +14,3 @@ class Solution:
         res = (m1-1)*(m2-1)
         print('result is %d ' % res)
         return res
-
-        
-
-        result = (nums[ind_max]-1) * (nums[local_m_index]-1)
-        print(result)
-        return result
-
