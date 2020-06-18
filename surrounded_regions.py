@@ -31,5 +31,50 @@ class Solution:
             self.dfs( i, j-1)
             
     
-       
+ #--------------------------------------------without class - only functions ----------------------------
+def print_grid(grid):
+    print('------------------------')
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            print(grid[i][j], end = ' ')
+        print()
+    
+def solve( board):
+    row = len(board)
+    if row <=2:return
+    col = len(board[0])
+    if col <=2: return
+
+    for i in range(row):
+        for j in range(col):
+            if board[i][j] == 'O' and (i == 0 or j == 0 or i == (row -1) or j == (col-1)):
+                 dfs(board,i,j)
+
+    for i in range(row):
+        for j in range(col):
+            if  board[i][j] == 'O': board[i][j] = 'X'
+            elif  board[i][j] == 'A': board[i][j] = 'O'
+        
+def dfs(board, i,j):
+    if i >= 0 and i < len( board) and j  >=0 and j < len( board[0]) and  board[i][j] == 'O':
+         board[i][j] = 'A'
+         dfs(board, i+1, j)
+         dfs(board, i-1,j)
+         dfs(board, i, j+1)
+         dfs(board, i, j-1)
+            
+    
+                    
+
+g = [
+["O","X","X","X"],
+["X","X","O","X"],
+["X","O","O","X"],
+["O","O","X","X"]
+]
+
+print_grid(g)
+solve(g)
+print_grid(g)
+
         
