@@ -62,10 +62,7 @@ def dfs(board, i,j):
          dfs(board, i-1,j)
          dfs(board, i, j+1)
          dfs(board, i, j-1)
-            
-    
-                    
-
+             
 g = [
 ["O","X","X","X"],
 ["X","X","O","X"],
@@ -77,4 +74,11 @@ print_grid(g)
 solve(g)
 print_grid(g)
 
-        
+'''
+my own explanation: 
+find the o on the border - it's first or last row or first or last column
+mark them as V(visited) and traverse dfs style to see if they are connected to any other next surrounding cells
+mark them too
+traverse again thru the list to see and mark any 0s with x and any Visited V as O
+done
+'''
