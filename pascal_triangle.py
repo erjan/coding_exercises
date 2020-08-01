@@ -1,26 +1,23 @@
-#Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
+class Solution:
+    def generate(self, numRows: int) -> List[List[int]]:
+        def helper(self,d):
 
-def helper(d):
-
-    res = []
-    for i in range(len(d)-1):
-        temp = d[i] + d[i+1]
-        res.append(temp)
-    res.insert(0,1)
-    res.insert( len(res),1)
-    
-    return res
-
-
-def main(n):
-    res = []
-    res.append([1])
-    for i in range(1,n):
-        prev = res[i-1]
-        temp = helper(prev)
-        res.append(temp)
-    print(res)
+            res = []
+            for i in range(len(d)-1):
+                temp = d[i] + d[i+1]
+                res.append(temp)
+            res.insert(0,1)
+            res.insert( len(res),1)
+            return res
         
-main(5) 
-#prints: [[1], [1, 1], [1, 2, 1], [1, 3, 3, 1], [1, 4, 6, 4, 1]]
-
+        res = []
+        res.append([1])
+        
+        if numRows == 0:
+            return []
+        
+        for i in range(1,numRows):
+            prev = res[i-1]
+            temp = helper(self,prev)
+            res.append(temp)
+        return res
