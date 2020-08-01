@@ -18,3 +18,15 @@ class Solution:
         print(temp)
         temp = ''.join(temp)
         return temp
+
+    
+#adding 2nd solution - i wanted this one    
+def f(s, indices):
+    temp = list(s)
+
+    counter = 0
+    for i in range(len(s)):
+        temp[ indices[i]] = s[i]
+        counter+=1
+        
+    print(temp)
