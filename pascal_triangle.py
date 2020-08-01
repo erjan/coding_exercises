@@ -1,3 +1,5 @@
+#Given a non-negative integer numRows, generate the first numRows of Pascal's triangle.
+
 class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
         def helper(self,d):
