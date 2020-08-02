@@ -8,9 +8,8 @@ Return the element repeated N times.
 class Solution:
     def repeatedNTimes(self, A: List[int]) -> int:
         d = dict()
-        a = A
-        for i in range(len(a)):
-            if a[i] not in d:
-                d[a[i]] = 1
+        for i in range(len(A)):
+            if A[i] not in d:
+                d[A[i]] = 1
             else:
-                return a[i]
+                return A[i]
