@@ -52,3 +52,31 @@ class MyHashSet:
 # obj.add(key)
 # obj.remove(key)
 # param_3 = obj.contains(key)
+
+
+#actual normal working...
+
+class MyHashSet:
+    def __init__(self):
+        self.numbuckets = 15000
+        self.container = [[] for i in range(self.numbuckets)]
+
+    def hash_function(self,data):
+        return data % self.numbuckets
+
+    def add(self,data):
+        hash_index = self.hash_function(data)
+        if not data in self.container[hash_index]:
+            self.container[hash_index].append(data)
+
+    def remove(self,data):
+        hash_index = self.hash_function(data)
+        if data in self.container[hash_index]:
+            self.container[hash_index].remove(data)
+
+    def contains(self,data):
+        hash_index = self.hash_function(data)
+        if data in self.container[hash_index]:
+            return True
+        return False
+        
