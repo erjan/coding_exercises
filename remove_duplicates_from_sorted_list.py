@@ -18,3 +18,20 @@ class Solution:
                 head = head.next
 
         return big_head
+    
+#RECURSIVE SOLUTION
+class Solution:
+    def deleteDuplicates(self, head: ListNode) -> ListNode:
+        if head is None:
+            return None
+
+        if head.next is not None:
+
+            if head.val == head.next.val:
+                temp = head.next.next
+                head.next = None
+                head.next = temp
+                self.deleteDuplicates(head)
+            else:
+                self.deleteDuplicates(head.next)
+        return head
