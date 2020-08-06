@@ -18,3 +18,19 @@ class Solution:
                 res.append(a[count])
             count+=1
         return res
+# clever solution from NIck white on youtube
+
+def f(a):
+    output = []
+    for i in range(len(a)):
+        index = abs(a[i])-1
+        if a[index] < 0:
+            output.append( index+1)
+        a[index] = - a[index]
+    print(output)
+    return output
+       
+
+k = [4,3,2,7,8,2,3,1]
+
+f(k)
