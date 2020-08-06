@@ -50,3 +50,23 @@ class Solution:
                 return [index1,index2]
 
         print(index1,index2)
+        
+# solution from youtube channel - using 2 pointers, 1 pointer at beging, 1pointer at end, converge either one - move left or right until their sum is equal to target!
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        res = []
+        a = numbers
+        start= 0
+        end = len(a)-1
+        while start < end:
+            print('-')
+            if a[start] + a[end] == target:
+                res.append(start+1)
+                res.append(end+1)
+                return res
+            elif a[start]+ a[end] < target:
+                start+=1
+            elif a[start] + a[end] > target:
+                end-=1
+        print(res)
+        return res
