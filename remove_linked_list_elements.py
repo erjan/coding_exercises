@@ -41,3 +41,27 @@ class Solution:
 
         return head
     
+    
+#a bit modified solution:
+
+class Solution:
+    def removeElements(self, head: ListNode, val: int) -> ListNode:
+        if head is None:
+            return head
+        cur = head
+        prev = None
+
+        while cur:
+            if cur.val == val:
+                if prev is None:
+
+                    head = cur.next
+                else:
+                    prev.next = cur.next
+            else:
+                prev = cur
+
+            cur = cur.next
+
+        return head
+
