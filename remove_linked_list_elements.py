@@ -64,4 +64,19 @@ class Solution:
             cur = cur.next
 
         return head
+    
+    
+#recursive solution
+
+class Solution:
+    def removeElements(self, head: ListNode, val: int) -> ListNode:
+        if head is None:
+            return head
+
+        res = self.removeElements(head.next, val)
+
+        if head.val == val:return res
+        head.next = res
+        return head
+
 
