@@ -22,11 +22,6 @@ class Solution:
         cur = head
         prev = None
         
-        if cur.next is None:
-            if cur.val == val:
-                return prev
-            else:
-                return cur
          
         while cur:
             if cur.val == val:
