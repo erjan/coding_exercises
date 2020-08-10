@@ -26,3 +26,27 @@ for i in range(len(l)):
 print(result_l)
       
 
+#another solution from 10aug 2020
+
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        left_products = [1] * len(nums)
+
+        for i in range(1, len(nums)):
+            left_products[i] = nums[i-1] * left_products[i-1]
+
+        print(left_products)
+
+
+        right_products = [1]*len(nums)
+
+        for i in range(len(nums)-2,-1,-1):
+            right_products[i] = right_products[i+1] * nums[i+1]
+
+        print(right_products)
+
+        res = [1]*len(nums)
+        for i in range(len(nums)):
+            res[i] = left_products[i]*right_products[i]
+        print(res)
+        return res
