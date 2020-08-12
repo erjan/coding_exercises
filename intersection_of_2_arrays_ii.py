@@ -22,15 +22,15 @@ class Solution:
 
         c1 = dict(c1)
         c2 = dict(c2)
+        print(c1)
+        print(c2)
 
         res = []
         for k in c1.keys():
-            temp = []
             if k in c2.keys():
                 how_many = min(c1[k],c2[k])
-                temp.extend( [k] * how_many)
-            if len(temp)!= 0:
-                res.extend( temp )
+                res.extend( [k] * how_many)
+
         return res
 
 
