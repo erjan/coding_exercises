@@ -46,3 +46,24 @@ class Solution:
                 return False
 
         return True
+    
+    
+# concise solution
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        if not head or  not head.next:
+            return True
+
+        res = [head.val,]
+        while head.next:
+            head = head.next
+            res.append(head.val)
+
+
+        return res[::-1] == res
