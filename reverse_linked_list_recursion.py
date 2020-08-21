@@ -53,3 +53,17 @@ def reverse (item, tail = None):
 # далее передаем его как финальный лист который мы "растим". когда передаем его - он уже не пустой на 2 итерации, он содержит в себе первый нод из предыдущей итерации
 # и все что нам надо это дойти до конца и вернуть лист
 
+
+#iterative solution
+
+def reverseList(self, head):
+    prev = None
+    curr = head
+
+    while curr:
+        next = curr.next
+        curr.next = prev
+        prev = curr
+        curr = next
+    
+    return prev
