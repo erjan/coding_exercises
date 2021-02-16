@@ -1,5 +1,4 @@
 # последнее задание из курса степик "Как добиться успеха, решая задачки на Степике" - 6 правил
-
 import unittest
 from math import modf
 import sys
@@ -41,6 +40,7 @@ def print_all():
 
 def get_num(s):
     try:
+        saved = s
         s = int(s)
 
         if s == 0:
@@ -49,12 +49,12 @@ def get_num(s):
         elif s in [1, 2, 3, 4, 5, 6]:
             print_rule(s)
         elif s < 1 or s > 6:
-            #print('just returning some ')
-            print(s)
+            # print('just returning some ')
+            print(saved)
     except ValueError:
         try:
-            #print('trying float...')
-            saved = s
+            # print('trying float...')
+            # saved = s
             s = float(s)
             if s == 0:
                 print_all()
@@ -65,19 +65,19 @@ def get_num(s):
                 s = float(s)
                 s = check_float(s)
                 if s == 0:
-                    #print('case zero..')
+                    # print('case zero..')
                     print_all()
                 elif s in [1, 2, 3, 4, 5, 6]:
                     print_rule(s)
                 else:
-                    print(s)
+                    print(saved)
 
         except ValueError:
-            print(s)
+            print(saved)
 
 
 def check_float(n):
-    frac, c = modf(n)
+    frac, _ = modf(n)
     if frac != 0:
         return n
     else:
@@ -91,11 +91,7 @@ def test():
     for item in d:
         get_num(item)
 
-
 def test2():
-
-    #d = fileinput.input()
-    # 1print(d)
 
     for line in fileinput.input():
         line = line.strip().split()
@@ -105,5 +101,5 @@ def test2():
 
 
 if __name__ == "__main__":
-
     test2()
+
