@@ -12,3 +12,25 @@ class Solution:
         
         nums.sort(key = lambda x: (s[x], -x))
         return nums
+
+    
+#2nd solution - easier to understand
+
+import collections
+def f( nums):
+        
+    r = collections.Counter(nums).most_common()
+    print(r)
+    r.sort(key = lambda x: x[0], reverse=True)
+    print('after 1st sorting')
+    print(r)
+    r.sort(key = lambda x: x[1])
+    print('after 2nd sorting')
+    print(r)
+        
+    t = []
+    for i in r:
+        a, b = i
+        t.extend([a]*b)
+            
+    return t
