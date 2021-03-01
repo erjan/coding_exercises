@@ -9,7 +9,7 @@ the ball number 10 will be put in the box number 1 + 0 = 1.
 Given two integers lowLimit and highLimit, return the number of balls in the box with the most balls.
 '''
 
-
+# my STUPID SOLUTION 
 class Solution:
     def countBalls(self, lowLimit: int, highLimit: int) -> int:
         def f(n):
@@ -23,7 +23,7 @@ class Solution:
         l = lowLimit
         h = highLimit
         
-        a = [ 0 ]* 100
+        a = [ 0 ]* 100 #for using this array i would get bad point - not knowing the better data structure is hashmap!
         for i in range(l, h+1):
             temp = f(i)
             a[temp] += 1
@@ -33,3 +33,28 @@ class Solution:
         print(f'max is %d' % max(a))
         return max(a)
         
+#MUCH BETTER SOLUTION inspired with idea from submissions with hashmap:
+
+class Solution:
+    def countBalls(self, lowLimit: int, highLimit: int) -> int:
+        def numbersum(n):
+            s = str(n)
+            res = 0
+            for digit in s:
+                res += int(digit)
+            return res
+        
+        
+        #hashmap
+        
+        hashmap = defaultdict(int)
+        
+        for i in range(lowLimit, highLimit+1):
+            value = numbersum(i)
+            hashmap[value]+=1
+            
+        
+        return max( hashmap.values())
+                
+
+
