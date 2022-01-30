@@ -1,3 +1,10 @@
+'''
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+A subarray is a contiguous part of an array.
+'''
+
+
 #gives TLE error
 
 import math
@@ -27,4 +34,18 @@ def f(nums):
 a = [-2,1,-3,4,-1,2,1,-5,4]
 
 f(a)
-        
+
+#optimal solution
+
+'''
+observation is that negative numbers dont add anything & since we need a contigous array, we have to reset the current sum!
+'''
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        max_sum = nums[0]
+        cur_sum = max_sum
+
+        for i in range(1, len(nums)):
+            cur_sum = max( nums[i]+ cur_sum, nums[i])
+            max_sum = max(cur_sum, max_sum)
+        return max_sum        
