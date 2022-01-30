@@ -49,3 +49,17 @@ class Solution:
             cur_sum = max( nums[i]+ cur_sum, nums[i])
             max_sum = max(cur_sum, max_sum)
         return max_sum        
+    
+#slightly different
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        max_sum = nums[0]
+        cur_sum = max_sum
+
+        for i in range(1, len(nums)):
+            if nums[i] + cur_sum >= nums[i]:
+                cur_sum = nums[i] + cur_sum
+            else:
+                cur_sum = nums[i]                         
+            max_sum = max(cur_sum, max_sum)
+        return max_sum    
