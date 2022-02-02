@@ -43,4 +43,25 @@ class Solution:
             total_sum += el
         return total_sum
             
+#DFS with stack
+class Solution:
+    def sumNumbers(self, root: Optional[TreeNode]) -> int:
+        
+        stack,res = [],0
+        
+        if root:
+            stack.append(root)
             
+        while stack:
+            node = stack.pop()
+            
+            if not node.left and not node.right:
+                res += node.val
+            if node.right:
+                node.right.val += node.val*10
+                stack.append(node.right)
+            if node.left:
+                node.left.val += node.val*10
+                stack.append(node.left)
+        return res
+                        
