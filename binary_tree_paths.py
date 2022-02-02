@@ -31,3 +31,28 @@ class Solution:
         res = self.helper(root, "")  
         return self.main
       
+
+#ITERATIVE SOLUTION:
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def binaryTreePaths(self, root: Optional[TreeNode]) -> List[str]:
+        if not root:
+            return []
+        res = []
+        stack = [(root, "")]
+        while stack:
+            node,path = stack.pop()
+            if not node:
+                continue
+            if not node.right and not node.left:
+                res.append( "{}{}".format(path, node.val))
+            else:
+                stack.append( (node.left, path + str(node.val) + "->"))
+                stack.append( (node.right, path + str(node.val) + "->"))
+        return res                   
