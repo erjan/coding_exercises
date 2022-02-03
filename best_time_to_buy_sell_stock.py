@@ -33,6 +33,7 @@ import sys
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         maxpro = 0
+                
         nums = prices
         m = sys.maxsize
         
@@ -41,7 +42,18 @@ class Solution:
                 m = nums[i]
             elif nums[i] - m > maxpro:
                 maxpro = nums[i] - m
-          
-        
-
         return maxpro
+    
+#solution from leetcode discussions:
+def maxProfit(nums):
+    l = 0
+    r = 1
+    maxp = 0
+    while r < len(nums):
+        curprofit = nums[r] - nums[l]
+        if nums[l] < nums[r]:
+            maxp = max(curprofit, maxp)
+        else:
+            l = r
+        r+=1
+    print(maxp)
