@@ -24,3 +24,24 @@ def f(nums):
         
 r = [7,1,5,3,6,4]
 f(r)
+
+
+#все равно сам нашел хотя бы тле решение!
+# solution optimal
+import sys
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        maxpro = 0
+        nums = prices
+        m = sys.maxsize
+        
+        for i in range(len(nums)):
+            if nums[i] < m:
+                m = nums[i]
+            elif nums[i] - m > maxpro:
+                maxpro = nums[i] - m
+          
+        
+
+        return maxpro
