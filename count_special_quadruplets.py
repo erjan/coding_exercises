@@ -16,3 +16,15 @@ class Solution:
                         if nums[i]+nums[j] + nums[k] == nums[x]:
                             count+=1
         return count
+    
+    
+# using combinations - something new!
+
+  def countQuadruplets(self, nums: List[int]) -> int:
+        count = 0
+        
+        for i,j,k,x  in itertools.combinations( range(len(nums)),4):
+            if nums[i] + nums[j] + nums[k] == nums[x]:
+                count+=1
+        return count
+            
