@@ -33,3 +33,25 @@ class Solution:
                     root = d
         return root
             
+        
+#right solution
+
+def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+
+    def helper(left,right):
+        if left > right:
+            return None
+
+        m = (left+right)//2
+
+        mid_el = TreeNode( nums[m])
+        mid_el.left = helper(left, m-1 )
+        mid_el.right = helper(m+1, right)
+        return mid_el # i was thinking returning this element is not needed - but it is needed, cuz recursive calls to left and right go deeper! and build inner subtrees, so we still need to return
+
+    res = helper(0, len(nums)-1)
+    return res 
+
+# TIP i learned - still need to return mid_el!
+# i was thinking returning this element is not needed - but it is needed, cuz recursive calls to left and right go deeper! and build inner subtrees, so we still need to return
+
