@@ -14,3 +14,26 @@ class Solution:
             return d[0]
         else:
             return max( d[0] + self.rob(d[2:]), self.rob(d[1:]))
+         
+         
+         
+#working solution - with tips from knowledge center https://www.youtube.com/watch?v=jzpsHKJy00c
+
+#insight: first find the recurrence, figure out the relations btw subproblems
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        if len(nums) == 0:
+            return 0
+        if len(nums) == 1:
+            return nums[0]
+        
+        v1 = nums[0]
+        v2 = max(nums[1], nums[0]) #dont forget it should not be just nums[1] !!!!!!!!!!!!!!
+        
+        for i in range(2, len(nums)):
+            tmp = v2
+            v2 = max( nums[i] + v1, v2)
+            v1 = tmp
+            
+        return v2
