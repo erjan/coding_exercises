@@ -5,12 +5,14 @@ leftmost node in the tree is now the root of the tree, and every node has no lef
 
 
 # MY OWN SOLUTION!! 
+
 # Definition for a binary tree node.
 # class TreeNode:
 #     def __init__(self, val=0, left=None, right=None):
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
 class Solution:
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         if root:
@@ -20,7 +22,6 @@ class Solution:
             
     def increasingBST(self, root: TreeNode) -> TreeNode:
         d = self.inorderTraversal(root)
-        #print(d)
         
         root = TreeNode(-1)
         cur = root
