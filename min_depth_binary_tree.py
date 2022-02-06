@@ -36,3 +36,30 @@ class Solution:
             return 0
         res = self.helper(root, 0)  
         return self.min_len
+
+    
+#another great readable solution: not mine
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def minDepth(self, root: Optional[TreeNode]) -> int:
+        
+        def helper(root):
+            
+            if not root:
+                return 0
+            if not root.right and not root.left:
+                return 1
+            if not root.left and root.right:
+                return 1 + helper(root.right)
+            if root.left and not root.right:
+                return 1 + helper(root.left)
+            if root.left and root.right:
+                return min( helper(root.right)+1 , helper(root.left)+1)
+            
+        return helper(root) if root else 0
