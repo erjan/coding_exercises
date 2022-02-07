@@ -40,7 +40,7 @@ class Solution:
                     that_letter = t[i]
                     return that_letter
 
-                
+#TIP INSIGHT: what did i learn? i was thinking too much of this, trying to cover every corner case, but the problem is that here YOU NEED TO COUNT every letter - so you use COUNT!!!!!!!!!!         
 # good
 class Solution:
     def findTheDifference(self, s: str, t: str) -> str:
