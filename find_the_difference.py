@@ -40,6 +40,21 @@ class Solution:
                     that_letter = t[i]
                     return that_letter
 
+                
+# good
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+        for i in t:
+            if t.count(i) != s.count(i):
+                return i
+
+#using counter
+
+from collections import Counter
+
+class Solution:
+    def findTheDifference(self, s: str, t: str) -> str:
+    	return list(Counter(t) - Counter(s))[0]
 
 
 
