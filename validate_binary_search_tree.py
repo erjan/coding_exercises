@@ -35,3 +35,24 @@ class Solution:
             if d[i+1] <= d[i]:
                 return False
         return True
+    
+    
+# much better solution - originally what i wanted.
+import sys
+
+class Solution:
+    
+    
+    def helper(self, root: Optional[TreeNode], l, r) -> List[int]:
+
+        if not root:
+            return True
+        if not (l < root.val < r):
+            return False
+        return self.helper(root.left, l, root.val) and self.helper(root.right, root.val, r)
+        
+                    
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+         
+        return self.helper(root, -sys.maxsize, sys.maxsize)
+       
