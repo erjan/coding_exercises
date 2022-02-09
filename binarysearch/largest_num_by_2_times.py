@@ -14,3 +14,12 @@ class Solution:
         second_m = max(nums)
 
         return 2* second_m < m
+
+    
+#much better solution
+
+class Solution:
+    def solve(self, nums):
+       nums = sorted(nums)
+
+       return nums[-2] * 2 < nums[-1]
