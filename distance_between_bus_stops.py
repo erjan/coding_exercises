@@ -32,6 +32,20 @@ class Solution:
                 if i >= dest and i < start:
                     std_dest += distance[i]
             print('standard travel left to right : %d' % std_dest)
+            
+            
+#much better solution
+
+class Solution:
+    def distanceBetweenBusStops(self, distance: List[int], start: int, destination: int) -> int:
+        
+        if start > destination:
+            start,destination = destination,start
+            
+        d1 = sum(distance[start:destination])
+        d2 = sum(distance[:start]) + sum(distance[destination:])
+        
+        return min(d1,d2)
 
             d2 = 0
             for i in range(len(distance)):
