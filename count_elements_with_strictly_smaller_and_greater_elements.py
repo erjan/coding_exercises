@@ -32,3 +32,17 @@ class Solution:
         print(res)
         return res
    
+#such a simple solution!!
+'''
+Algorithm:
+
+Find minimum and maximum element
+Loop through the array and increase count every time the element lies between the min and max of the array
+Return count
+'''
+
+class Solution:
+    def countElements(self, nums: List[int]) -> int:
+        M = max(nums)
+        m = min(nums)
+        return sum(1 for i in nums if m<i<M)
