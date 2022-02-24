@@ -37,4 +37,19 @@ class Solution:
         del actual_set
         del d
         return [repeating, missing_num]
+       
+       
+# much better upvoted solution
+
+class Solution:
+    def findErrorNums(self, nums: List[int]) -> List[int]:
+        n = len(nums)
+        
+        true_sum = n*(n+1)//2
+        actual_sum = sum(nums)
+        
+        set_sum = sum(set(nums))
+        
+        res = [actual_sum - set_sum, true_sum - set_sum]
+        return res
 
