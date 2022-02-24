@@ -36,5 +36,22 @@ class Solution:
         print('actual prefix', good_prefix)
         return good_prefix
 
+    
+#another better solution
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:        
+        l = list(zip(*strs))
+        ans = ''        
+        for i in l:
+            temp = ''.join(i)
+            s = set(temp)
+            
+            if len(s)!=1:
+                return ans
+            else:
+                ans+= temp[0]
+        return ans
+            
 
             
