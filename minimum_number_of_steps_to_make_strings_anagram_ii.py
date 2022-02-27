@@ -30,3 +30,17 @@ class Solution:
                 count += abs(hash_s[res[i]] - hash_t[res[i]])
         print(count)
         return count
+
+    
+#much better solution!
+
+from collections import Counter
+
+class Solution:
+    def minSteps(self, s: str, t: str) -> int:
+        
+        s = Counter(s)
+        t = Counter(t)
+        
+        res = sum( abs(s[ch] - t[ch]) for ch in string.ascii_lowercase)
+        return res
