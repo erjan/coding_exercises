@@ -22,3 +22,15 @@ class Solution:
 
         print('maxi diff is %d' % maxi)
         return maxi
+    
+#another solution 1 pass    
+class Solution:
+    def maximumDifference(self, nums: List[int]) -> int:
+        maxdiff = -1
+
+        min_num = nums[0]
+        
+        for i in range(len(nums)):
+            maxdiff = max(maxdiff, nums[i] - min_num)
+            min_num = min(nums[i], min_num)
+        return maxdiff if maxdiff != 0 else -1    
