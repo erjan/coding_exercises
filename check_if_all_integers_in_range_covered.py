@@ -49,3 +49,8 @@ class Solution:
             if all(temp) == False:
                 return False
         return True
+
+#really good elegant solution
+
+ def isCovered(self, ranges, left, right):
+        return all(any(l <= i <= r for l, r in ranges) for i in xrange(left, right + 1))
