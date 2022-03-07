@@ -9,6 +9,13 @@ position[i] + 1 or position[i] - 1 with cost = 1.
 Return the minimum cost needed to move all the chips to the same position.
 '''
 
+'''
+обьяснение - мы выбираем 1 позицию - она может быть четная или нечетная, 
+если выбрана четная позиция - на нее все ДРУГИЕ четные можно спокойно двинуть с ценой 0 + все нечетные с ценой 1*кол-во нечетных или 
+если выбрана нечетная позиция - на нее все другие нечетные можно тоже двинуть  с ценой 0 + все четные с ценой 1*кол-во четных!
+'''
+
+
 class Solution:
     def minCostToMoveChips(self, position: List[int]) -> int:
         even = 0
