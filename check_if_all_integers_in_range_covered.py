@@ -33,5 +33,19 @@ class Solution:
                 print('baaaad')
                 return False
 
-        print('gooooooood')
+            
+#a bit optimized solution:
+class Solution:
+    def isCovered(self, ranges: List[List[int]], left: int, right: int) -> bool:
+        for i in range(left, right+1):
+
+            for l, r in ranges:             
+                temp = list()
+                if i >= l and i <= r:
+                    temp.append(True)
+                    break
+                else:
+                    temp.append(False)
+            if all(temp) == False:
+                return False
         return True
