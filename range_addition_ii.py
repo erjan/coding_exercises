@@ -46,3 +46,19 @@ class Solution:
                     c += 1
         print(c)
         return c
+    
+#normal solution
+
+class Solution:
+    def maxCount(self, m: int, n: int, ops: List[List[int]]) -> int:
+        
+        minrow = m
+        mincol = n
+        for i in range(len(ops)):
+            op = ops[i]
+            minrow = min(minrow, op[0])
+            mincol = min(mincol, op[1])
+
+        res = minrow * mincol
+        return res
+
