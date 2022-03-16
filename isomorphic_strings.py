@@ -33,3 +33,33 @@ class Solution:
                     return False
         print('good')
         return True
+
+    
+#follow-up question :) from google - got this from discussions
+class Solution:
+    def isIsomorphic(self, s: str, t: str) -> bool:
+        return self.string_to_int(s) == self.string_to_int(t)
+        
+    def string_to_int(self, s):
+        output = []
+        count = 0
+        cache = defaultdict(int)
+        
+        for char in s:
+            if char in cache:
+                output.append(cache[char])
+            else:
+                output.append(count)
+                cache[char] = count
+                count += 1
+                
+        return tuple(output)
+    
+    def group_isomorphic(self, strings = ['aab', 'xxy', 'xyz', 'abc', 'def', 'xyx']):
+        results = defaultdict(list)
+        
+        for string in strings:
+            res = self.string_to_int(string)
+            results[res].append(string)
+        
+        return results
