@@ -46,3 +46,22 @@ class Solution:
                         c += 1
         print('count total', c)
         return c
+    
+    
+#normal solution
+
+class Solution:
+    def countBinarySubstrings(self, s: str) -> int:
+        ans = 0        
+        cur = 1
+        prev = 0
+        
+        for i in range(len(s)-1):
+            
+            if s[i] != s[i+1]:
+                
+                ans += min(cur,prev)
+                prev, cur = cur,1
+            else:
+                cur+=1
+        return ans + min(cur,prev)
