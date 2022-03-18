@@ -14,3 +14,7 @@ class Solution:
                 c += 1
         print(c)
         return c
+
+    
+  def numOfStrings(self, patterns: List[str], word: str) -> int:
+        return sum(i in word for i in patterns)
