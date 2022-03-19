@@ -21,3 +21,8 @@ class Solution:
         if first_b < last_a:
             return False
         return True
+    
+    
+#cool solution    
+def checkString(self, s: str) -> bool:
+	return "ba" not in s    
