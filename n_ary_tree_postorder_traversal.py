@@ -29,3 +29,17 @@ class Solution:
         print(output)
         output = output[::-1]
         return output
+
+#recursive
+
+class Solution:
+    def postorder(self, root: 'Node') -> List[int]:
+        def rec(root):
+            if root:
+                for c in root.children:
+                    rec(c)
+                out.append(root.val)
+
+        out = []
+        rec(root)
+        return out
