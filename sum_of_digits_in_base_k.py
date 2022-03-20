@@ -12,3 +12,17 @@ class Solution:
             output_sum = output_sum + rem 
             n = int(n / k)
         return output_sum
+
+    
+class Solution:
+def sumBase(self, n: int, k: int) -> int:
+
+    res = 0
+
+    while n > 0:
+
+        rem = n%k
+        res += rem 
+        n = int(n/ k)
+    return res
+
