@@ -69,3 +69,38 @@ class Solution:
         leaf_seq_2 = helper( root2, '')
 
         return leaf_seq_1 == leaf_seq_2
+    
+#my own solution 2
+    
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+        
+    def leafSimilar(self, root1: Optional[TreeNode], root2: Optional[TreeNode]) -> bool:
+ 
+        leaflist1 = []
+        leaflist2 = []
+
+        def getleafs(root, leaf):
+            if not root:
+                return 
+            
+            if root:
+
+                getleafs(root.left, leaf)
+                
+                if not root.right and not root.left:
+                    leaf.append(root.val)
+                    
+                
+                getleafs(root.right, leaf)  
+            
+        getleafs(root1, leaflist1)
+        getleafs(root2, leaflist2)
+        
+        return leaflist1 == leaflist2
+    
