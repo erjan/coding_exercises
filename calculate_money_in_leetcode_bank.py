@@ -42,4 +42,20 @@ class Solution:
             else:
                 prev+=1
                 total+=prev
-        return total            
+        return total      
+    
+    
+class Solution:
+    def totalMoney(self, n: int) -> int:
+        
+        
+        total = 0                
+        q,remains = divmod(n,7)
+        q +=1
+        
+        for i in range(1, q):
+            total += sum([i for i in range(i, i+7)])
+        for i in range(q, q + remains):
+            total += i
+        
+        return total    
