@@ -25,3 +25,21 @@ class Solution:
                     print(j, end=' ')
                     q.append(j)
             print()
+
+            
+class Solution:
+    def totalMoney(self, n: int) -> int:
+  
+        start = 0
+        total = 0
+        prev = start
+        
+        for i in range(1,n+1):
+            if i%7 == 1:
+                start+=1
+                total+=start
+                prev = start
+            else:
+                prev+=1
+                total+=prev
+        return total            
