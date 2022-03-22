@@ -49,3 +49,8 @@ class Solution(object):
             for child in node.children:
                 stack.append((child, d+1))
         return depth
+    
+class Solution(object):
+    def maxDepth(self, root):
+        if not root: return 0
+        return 1 + max(map(self.maxDepth, root.children or [None]))    
