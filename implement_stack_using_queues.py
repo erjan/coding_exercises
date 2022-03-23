@@ -13,7 +13,7 @@ You must use only standard operations of a queue, which means that only push to 
 Depending on your language, the queue may not be supported natively. You may simulate a queue using a list or deque (double-ended queue) as long as you use only a queue's standard operations.
 '''
 
-#using deque
+#using deque - my own solution
 from collections import deque
 
 class MyStack:
@@ -70,3 +70,26 @@ class Stack:
     # @return an boolean
     def empty(self):
         return len(self.stack) == 0
+    
+# proper solution using 2 queues
+class MyStack:
+    def __init__(self):
+        self.queue1=[]
+        self.queue2=[]
+
+    def push(self, x: int) -> None:
+        self.queue2.append(x)
+        for _ in range(len(self.queue1)-1):
+            self.queue2.append(self.queue1.pop(0)) 
+        self.queue1 = self.queue2
+
+    def pop(self) -> int:
+        return self.queue1.pop(0)
+
+    def top(self) -> int:
+        return self.queue1[0]
+
+    def empty(self) -> bool:
+        if(self.queue1==[]):
+            return True
+        return False
