@@ -93,3 +93,22 @@ class MyStack:
         if(self.queue1==[]):
             return True
         return False
+
+    
+#1 queue
+
+class MyStack:
+    def __init__(self):
+        self.queue = []
+    def push(self, x: int) -> None:
+        length = len(self.queue)
+        self.queue.append(x)
+        for i in range(length):
+            y = self.queue.pop(0)
+            self.queue.append(y)
+    def pop(self) -> int:
+        return self.queue.pop(0)
+    def top(self) -> int:
+        return self.queue[0]
+    def empty(self) -> bool:
+        return not self.queue
