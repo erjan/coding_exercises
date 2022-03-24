@@ -12,3 +12,13 @@ class Solution:
             res = not '00' in n and not '11' in n
             print(res)
             return res
+        
+        
+#another my own solution        
+class Solution:
+    def hasAlternatingBits(self, n: int) -> bool:
+            n = bin(n)
+            for i in range(len(n)-1):
+                if n[i] == n[i+1]:
+                    return False
+            return True
