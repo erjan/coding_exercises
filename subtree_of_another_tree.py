@@ -7,19 +7,21 @@ all of this node's descendants. The tree tree could also be considered as a subt
 '''
 
 
-
 class Solution:
     
     def isSubtree(self, s: TreeNode, t: TreeNode) -> bool:
         
-        if not s: 
+        if not s:
             return False
-        if self.isSameTree(s, t): 
+        
+        if self.isSameTree(s,t):
             return True
-        return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)
-
+        
+        return self.isSubtree(s.left, t) or self.isSubtree(s.right,t)
     
-    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+    def isSameTree(self, p, q):
+        if not p and not q:             # base case when we reached the bottom of both trees and both nodes are nil    
+            return True
+    
         if p and q:
             return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
-        return p is q
