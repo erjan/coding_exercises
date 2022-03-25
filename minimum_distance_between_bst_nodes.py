@@ -26,3 +26,14 @@
         for i in range(1, len(arr)):
             diff = min(diff, arr[i] - arr[i-1])
         return diff
+
+       
+#recursive alternative solution       
+class Solution(object):
+    def minDiffInBST(self, root):
+        def fn(node, lo, hi):
+            if not node: return hi - lo
+            left = fn(node.left, lo, node.val)
+            right = fn(node.right, node.val, hi)
+            return min(left, right)
+        return fn(root, float('-inf'), float('inf'))       
