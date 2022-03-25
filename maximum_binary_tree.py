@@ -57,4 +57,22 @@ class Solution(object):
                 stack[-1].right = node
             stack.append(node)
             
-        return stack[0]      
+        return stack[0]     
+#----------------------------------------------------------------
+
+class Solution:
+    def constructMaximumBinaryTree(self, nums: List[int]) -> TreeNode:
+        
+        def dfs(nums):
+            if not nums:
+                return None
+            
+            max_ = max(nums)
+            idx = nums.index(max_)
+            root = TreeNode(max_)
+            
+            root.left = dfs(nums[:idx])
+            root.right =  dfs(nums[idx+1:])
+            return root
+                    
+        return dfs(nums)
