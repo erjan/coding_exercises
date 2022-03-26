@@ -14,3 +14,21 @@ FROM Activity
 GROUP BY 1
 HAVING DATEDIFF('2019-07-27', day) < 30
     AND active_users >= 1;
+
+
+
+
+#another solution
+select activity_date as day,
+
+count(distinct user_id) as active_users
+
+from activity
+
+
+where datediff('2019-07-27', activity_date) < 30
+
+and activity_date <= '2019-07-27'
+group by activity_date
+
+having count(distinct user_id) >=1
