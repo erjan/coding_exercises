@@ -19,11 +19,28 @@ class Solution:
             rite_sum = s[middle:len(s)]
             if sum(left_sum) == sum(rite_sum[1:]):
                 if middle < len(s):
-                    print('yes found',middle)
                     found = True
                     return middle
             print(left_sum, rite_sum)
 
         if not found:
-            print('not found')
             return -1
+
+        
+#another solution
+
+class Solution:
+    def findMiddleIndex(self, nums: List[int]) -> int:
+        s=sum(nums)
+        t=0
+        for i in range(len(nums)):
+            if t==s-t-nums[i]:
+                return i
+            t+=nums[i]
+        return -1
+    
+def findMiddleIndex(self, nums: List[int]) -> int:
+        for i in range(len(nums)):
+            if sum(nums[:i]) == sum(nums[i+1:]):
+                return i
+        return -1    
