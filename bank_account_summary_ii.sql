@@ -20,16 +20,13 @@ select name,helper.balance from users inner join helper on helper.account= users
 
 #another solution
 
-select
-    a.name,
-    sum(b.amount) balance
-from
-    Users a
-join
-    Transactions b
-on
-    a.account = b.account
-group by
-    a.account
-having
-    balance > 10000;
+
+select Users.name, sum(Transactions.amount) balance
+
+from Users  join Transactions 
+
+on Users.account = Transactions.account
+
+group by Users.account
+
+having balance > 10000;
