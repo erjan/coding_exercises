@@ -15,7 +15,7 @@ from collections import Counter
 class Solution:
     def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
                 
-        j=0
+        j=0 #this is basically the same idea that i tried to implement- we need a counter to keep track of when to break out in case infinite loop occurs, and no more sandwiches for students!
         while j!=len(students):
             if(students[0]==sandwiches[0]):
                 j=0
