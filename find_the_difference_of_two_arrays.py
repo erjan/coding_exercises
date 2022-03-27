@@ -33,4 +33,9 @@ class Solution:
         answer.append(f1)
         answer.append(f2)
         return answer
+    
+    
+#another
+def findDifference(self, a: List[int], b: List[int]) -> List[List[int]]:
+        return [set(a)-set(b), set(b)-set(a)]
                 
