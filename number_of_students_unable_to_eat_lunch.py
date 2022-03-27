@@ -14,17 +14,15 @@ from collections import Counter
 
 class Solution:
     def countStudents(self, students: List[int], sandwiches: List[int]) -> int:
-        
-        sa = sandwiches
-        s = students
+                
         j=0
-        while j!=len(s):
-            if(s[0]==sa[0]):
+        while j!=len(students):
+            if(students[0]==sandwiches[0]):
                 j=0
-                s.pop(0)
-                sa.pop(0)
+                students.pop(0)
+                sandwiches.pop(0)
             else:
                 j+=1
-                g=s.pop(0)
-                s.append(g)
-        return len(s)
+                g=students.pop(0)
+                students.append(g)
+        return len(students)
