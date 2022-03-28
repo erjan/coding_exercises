@@ -20,3 +20,9 @@ SELECT x,
  SELECT MIN(a.x - b.x) AS shortest
 FROM point a, point b
 WHERE a.x > b.x;
+
+
+
+SELECT MIN(ABS(P1.x - P2.x)) AS shortest
+FROM Point P1, Point P2
+WHERE P1.x != P2.x
