@@ -48,4 +48,18 @@ def arraysIntersection(self, arr1: List[int], arr2: List[int], arr3: List[int]) 
 			k += 1
 			
 	return result
+
+
+#another
+
+class Solution:
+    def arraysIntersection(self, arr1: List[int], arr2: List[int], arr3: List[int]) -> List[int]:
+        result = arr1 + arr2 + arr3
+        res = []
+        freq = collections.Counter(result)
+        for i, val in freq.items():
+            if val == 3:
+                res.append(i)
+                
+        return res
         
