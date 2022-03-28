@@ -48,3 +48,29 @@ def f(words, word1, word2):
     print(ind)
 
     return dis
+
+
+#---------------------
+class Solution:
+    def shortestDistance(self, wordsDict: List[str], word1: str, word2: str) -> int:
+        
+        
+        mind = float('inf')
+        
+        ind = [None, None]
+        for i in range(len(wordsDict)):
+            
+            
+            if wordsDict[i] == word1:
+                ind[0] = i
+                
+            elif wordsDict[i] == word2:
+                ind[1] = i
+                
+            
+            if ind[0] != None and ind[1] != None:
+                mind = min( abs(ind[0] - ind[1]), mind)
+        
+        return mind
+                
+                
