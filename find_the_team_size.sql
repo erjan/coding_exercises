@@ -24,3 +24,10 @@ employee.team_id = helper.team_id
 
 select e.employee_id, (select count(team_id) from Employee where e.team_id = team_id) as team_size
 from Employee e
+
+
+#another window solution
+
+SELECT employee_id,
+COUNT(employee_id) OVER (PARTITION BY team_id) team_size
+FROM EMPLOYEE
