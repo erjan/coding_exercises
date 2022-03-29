@@ -24,3 +24,15 @@ from seller left join orders using(seller_id)
 
 where seller.seller_id not in (select seller_id from the2020)
 order by SELLER_NAME asc
+
+
+#another
+
+SELECT seller_name
+FROM Seller 
+WHERE  seller_id NOT IN (
+    SELECT DISTINCT seller_id 
+    FROM Orders
+    WHERE LEFT(sale_date, 4) = '2020'
+)
+ORDER BY 1
