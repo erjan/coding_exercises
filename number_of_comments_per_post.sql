@@ -10,13 +10,12 @@ The result table should be ordered by post_id in ascending order.
 The query result format is in the following example.
 '''
 
-SELECT s.sub_id AS post_id,
 
-(SELECT COUNT(DISTINCT(s1.sub_id)) 
- 
- FROM Submissions s1 WHERE s1.parent_id = s.sub_id)
- 
-AS number_of_comments
-FROM Submissions s
-WHERE s.parent_id IS null
-GROUP BY s.sub_id
+
+SELECT
+    DISTINCT sub_id AS post_id,
+    (SELECT COUNT(DISTINCT sub_id) FROM Submissions S2 WHERE S1.sub_id = S2.parent_id) AS number_of_comments
+FROM
+    Submissions AS S1
+WHERE parent_id IS NULL
+ORDER BY sub_id
