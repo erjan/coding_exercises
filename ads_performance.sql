@@ -21,3 +21,13 @@ IFNULL(ROUND(AVG(CASE WHEN action = 'Clicked' THEN 1
 FROM Ads
 GROUP BY ad_id
 ORDER BY ctr DESC, ad_id
+
+
+
+#another
+
+select ad_id, 
+ifnull(round(sum(case when action = 'Clicked' then 1 else 0 end) / sum(case when action = 'Clicked' or action = 'Viewed' then 1 else 0 end) * 100, 2), 0) as ctr
+from Ads
+group by ad_id
+order by ctr desc, ad_id asc
