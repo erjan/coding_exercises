@@ -6,13 +6,15 @@ Return the result table in any order.
 The query result format is in the following example.
 '''
 
-SELECT seller_id 
-FROM Sales
-GROUP BY seller_id
-HAVING SUM(price) = (
-    SELECT sum(price)
-    FROM Sales
-    GROUP BY seller_id
-    ORDER BY 1 DESC 
-    LIMIT 1)
-    
+
+
+
+
+select seller_id
+
+from sales 
+group by seller_id
+
+having sum(price) = (select sum(price) 
+from sales group by seller_id order by 1 desc limit 1)
+
