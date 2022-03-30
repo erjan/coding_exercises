@@ -45,21 +45,20 @@ def highFive(self, items: List[List[int]]) -> List[List[int]]:
       
       
 #another
-
-import heapq
-from collections import defaultdict
-def highFive(self, items: List[List[int]]) -> List[List[int]]:
-	cache = defaultdict(list)  # {student_id: [top-5 scores]}
+class Solution:
+    def highFive(self, items: List[List[int]]) -> List[List[int]]:
+        cache = defaultdict(list)  # {student_id: [top-5 scores]}
 	
-	for student_id, score in items:
-		if len(cache[student_id]) < 5:  # make sure the size of heap for each student does not exceed 5.
-			heapq.heappush(cache[student_id], score)
-		else:
-			heapq.heappushpop(cache[student_id], score)
+        for student_id, score in items:
+            if len(cache[student_id]) < 5: 
+                heapq.heappush(cache[student_id], score)
+            else:
+                heapq.heappushpop(cache[student_id], score)
 
-	ans = []
-	for student_id, scores in cache.items():
-		average = sum(scores) // len(scores)
-		ans.append((student_id, average))
+        ans = []
+        for student_id, scores in cache.items():
+            average = sum(scores) // len(scores)
+            ans.append((student_id, average))
 
-	return ans
+        ans.sort(key = lambda x: x[0])
+        return ans
