@@ -49,3 +49,15 @@ def closestValue(self, root, target):
         root = root.left if target < root.val else root.right
     return closest
 
+#another
+def closestValue(self, root, target):
+    if not root:
+        return sys.maxint
+    if not root.left and not root.right:
+        return root.val
+    node = root.right if target > root.val else root.left
+    if not node:
+        return root.val
+    tmp = self.closestValue(node, target)
+    return min((tmp, root.val), key=lambda x:abs(x-target))
+
