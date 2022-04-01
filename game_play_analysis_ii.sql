@@ -56,3 +56,15 @@ FROM
             ,rank() OVER(PARTITION BY player_id ORDER BY event_date) AS rnk
     FROM Activity) rnk_table
 WHERE rnk_table.rnk = 1
+
+
+#another
+
+ select player_id, device_id from (
+    
+    select player_id, device_id, 
+     
+     rank() over(partition by player_id order by event_date asc) as ranky
+     from activity )k
+where k.ranky = 1
+
