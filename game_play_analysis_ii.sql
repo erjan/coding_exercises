@@ -36,3 +36,23 @@ FROM
     GROUP BY player_id) dt
 JOIN Activity a ON a.player_id = dt.player_id
 AND a.event_date = dt.min_date
+
+
+
+#another window function - first value()
+
+SELECT  DISTINCT player_id,
+        FIRST_VALUE(device_id) OVER(PARTITION BY player_id ORDER BY event_date ASC) AS device_id 
+FROM Activity 
+
+
+#another window function rank()
+
+SELECT player_id
+        ,device_id
+FROM 
+    (SELECT player_id
+            ,device_id
+            ,rank() OVER(PARTITION BY player_id ORDER BY event_date) AS rnk
+    FROM Activity) rnk_table
+WHERE rnk_table.rnk = 1
