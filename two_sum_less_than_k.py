@@ -24,3 +24,26 @@ class Solution:
                     answer = max(answer, a[i]+ a[j])
                     
         return answer
+
+    
+#another    
+class Solution:
+    def twoSumLessThanK(self, nums: List[int], k: int) -> int:
+
+        res = -1        
+        nums.sort()        
+        i = 0
+        j = len(nums)-1        
+        while i < j:
+            
+            potential_sum = nums[i] + nums[j]
+            
+            if potential_sum < k:
+                res = max(res, potential_sum)
+                i+=1
+            else:
+                j = j - 1
+        
+        return res
+                
+                
