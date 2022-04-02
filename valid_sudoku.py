@@ -165,3 +165,15 @@ def is_square_valid(self, board):
 def is_unit_valid(self, unit):
     unit = [i for i in unit if i != '.']
     return len(set(unit)) == len(unit)
+
+
+
+#another
+
+
+def isValidSudoku(self, board):
+    seen = sum(([(c, i), (j, c), (i/3, j/3, c)]
+                for i, row in enumerate(board)
+                for j, c in enumerate(row)
+                if c != '.'), [])
+    return len(seen) == len(set(seen))
