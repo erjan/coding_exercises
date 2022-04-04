@@ -34,3 +34,16 @@ class Solution:
             vals[ind][0] = num[0] // gcd
             vals[ind][1] = num[1] // gcd
         return vals
+
+    
+#another
+
+class Solution:
+    def solve(self, fractions):
+        simplified = set()
+
+        for a, b in fractions:
+            g = math.gcd(a, b)
+            simplified.add((a // g, b // g))
+
+        return sorted(simplified, key=lambda x: x[0] / x[1])
