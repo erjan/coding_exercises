@@ -20,3 +20,18 @@ class Solution:
             s = list(map(lambda y: int(y), s))
             s = sum(s)
             return s
+
+        
+#another
+
+class Solution:
+    def solve(self, s):
+        ret = 0
+        curr = 0
+        for ch in s:
+            if ch in digits:  # string.digits
+                curr = 10 * curr + int(ch)
+            else:
+                ret += curr
+                curr = 0
+        return ret + curr
