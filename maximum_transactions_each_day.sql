@@ -7,17 +7,36 @@ Return the result table ordered by transaction_id in ascending order.
 The query result format is in the following example.
 
 '''
-WITH temp AS(
+
+
+
+with h as(
+
+select date(day) d, max(amount) a
     
-SELECT date(day) d, max(amount) a
+    from transactions group by d )
+         
+select 
 
-    FROM transactions
-GROUP BY 1)
+transaction_id
 
+from transactions t join h t2 on t2.d = date(t.day) and t2.a = t.amount
 
-SELECT transaction_id
-FROM transactions t1
-JOIN temp t2
-ON Date(t1.day)=t2.d
-AND t1.amount=t2.a
+order by 1
+
+----------------
+
+SELECT  
+	transaction_id
+FROM
+(
+SELECT 
+   transaction_id,
+   day,
+   amount,
+   rank() OVER(PARTITION BY date(day) ORDER BY amount DESC) as rnk
+FROM
+    Transactions
+) as t
+WHERE rnk =1
 ORDER BY 1
