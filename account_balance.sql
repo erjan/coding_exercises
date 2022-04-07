@@ -32,3 +32,14 @@ from transactions t1, transactions t2
 where t1.account_id = t2.account_id and t1.day >= t2.day
 group by 1,2
 order by 1,2
+
+
+---------------------------
+
+select account_id, 
+        day,
+       sum(case when type = 'Deposit' then amount
+        else -amount end)
+        over (partition by account_id order by day asc) as balance
+from Transactions
+group by account_id, day;
