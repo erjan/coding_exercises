@@ -28,3 +28,17 @@ WHERE
 		WHERE order_type = 0)
 	)
 ;
+
+----------
+
+WITH CTE_tmp AS (
+    SELECT *,
+           RANK() OVER (
+               PARTITION BY customer_id
+               ORDER BY order_type
+               ) AS rnk
+    FROM Orders
+    )
+SELECT *
+FROM CTE_tmp
+WHERE rnk = 1;
