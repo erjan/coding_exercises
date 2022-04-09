@@ -11,50 +11,46 @@ You are given a start IP address ip and the number of IP addresses we need to co
 Return the shortest list of CIDR blocks that covers the range of IP addresses. If there are multiple answers, return any of them.
 '''
 
-class Solution(object):
-    def ipToCIDR(self, ip, n):
-        """
-        :type ip: str
-        :type n: int
-        :rtype: List[str]
-        """
-        ip_parts = ip.split(".")
-        converted_ip = 0
-        for ip_part in ip_parts:
-            converted_ip = converted_ip * 256 + int(ip_part)
-        curr_ip = converted_ip
-        
-        res = []
-        while n > 0:
-            count = curr_ip & (-curr_ip)
-            
-            if count == 0:
-                count = self.get_highest_one(n)
-                
-            while count > n:
-                count /= 2
-            
-            res.append(self.getCIDR(curr_ip, count))
-            n -= count
-            curr_ip += count
-        return res
-    
-    def getCIDR(self, curr_ip, count):
-        ip_list = []
-        for i in range(4):
-            ip_list.append(str(curr_ip & 255))
-            curr_ip = curr_ip >> 8
 
-        length = 0
-        while count > 0:
-            count /= 2
-            length += 1
-        mask = 32 - (length - 1)
-        return ".".join(ip_list[::-1]) + '/' + str(mask)
+class Solution:
+    def ipToCIDR(self, ip, n):
+        
+        num = self.ip2num(ip)
+        end = num + n - 1
+        cover = 0
+        cur = num
+        ans = []
+        while cover < n:
+            cur_zero = self.zero_count(cur)
+            while 2**cur_zero + cover > n:
+                cur_zero = cur_zero - 1
+            ans.append(self.num2ip(cur) + "/" + str(32-cur_zero))
+            cover += 2**cur_zero
+            cur = cur + 2**cur_zero
+        return ans 
+              
+    def zero_count(self, num):
+        
+        if num == 0:
+            return 32
+        ans = 0
+        while num and num % 2 == 0:
+            ans += 1
+            num = num / 2
+        return ans
     
-    def get_highest_one(self, n):
-        length = 0
-        while n > 1:
-            n /= 2
-            length += 1
-        return 1 << length
+
+    def ip2num(self, ip):
+        ans = 0
+        ip_list = ip.split(".")
+        for (i, entry) in enumerate(ip_list[::-1]):
+            ans += (int(entry)) << (8 * i)
+        return ans
+    
+    def num2ip(self, num):
+        ans = []
+        for i in range(4):
+            tmp = num & (255)
+            ans.append(str(tmp))
+            num = num >> 8
+        return ".".join(ans[::-1])
