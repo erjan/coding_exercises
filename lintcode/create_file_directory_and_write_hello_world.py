@@ -7,10 +7,22 @@ Please write the relevant Python code in the write_hello_world.py file to
 create a new file directory and write'Hello World!' into it.
 '''
 
-
+import os
 def write_to_file(path):
         file = os.path.dirname(path)
         if not os.path.exists(file):
             os.mkdir(file)
         with open(path, 'w') as f:
             f.write(s)
+
+        
+        
+--------------------
+import os
+def write_to_file(path):
+
+	folder = os.path.dirname(path)
+	if not os.path.exists(folder):
+		os.mkdir(folder)
+	with open(path, 'w') as f:
+		f.write("Hello World!")        
