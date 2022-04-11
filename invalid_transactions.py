@@ -74,3 +74,51 @@ class Solution(object):
                     break
 
         return invalid
+       
+--------------------------------------
+
+from collections import defaultdict
+
+""" 
+https://www.notion.so/paulonteri/Hashtables-Hashsets-220d9f0e409044c58ec6c2b0e7fe0ab5#cf22995975274881a28b544b0fce4716
+"""
+
+class Solution(object):
+    def invalidTransactions(self, transactions):
+        
+        invalid = []
+        tr_time = defaultdict(dict)
+
+        for tr in transactions:
+
+            tr = tr.split(',')
+
+            name = (tr[0])
+            time = (int(tr[1]))
+            amount = (int(tr[2]))
+            city = (tr[3])
+
+            if name not in tr_time[time]:
+                tr_time[time][name] = {city,}
+            else:
+                tr_time[time][name].add(city)
+
+        for t in transactions:
+            name, time , amount,city =t.split(',')
+            time = int(time)
+            if int(amount)>1000:
+                invalid.append(t)
+                continue
+
+            for q in range(time-60, time+61):
+                if q not in tr_time:
+                    continue
+                if name not in tr_time[q]:
+                    continue
+
+                t_by_time = tr_time[q][name]
+                if city not in t_by_time or len(t_by_time)>1:
+                    invalid.append(t)
+                    break
+        return invalid
+
