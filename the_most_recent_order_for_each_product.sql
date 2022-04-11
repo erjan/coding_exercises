@@ -39,3 +39,13 @@ from orders o inner join products p on p.product_id = o.product_id
 ) AS po
 where po.rank = 1
 order by po.product_name, po.product_id, po.order_id
+
+------------------------
+SELECT p.product_name,p.product_id,o.order_id,o.order_date FROM Products p
+JOIN Orders o ON p.product_id = o.product_id
+JOIN (
+      SELECT product_id, MAX(order_date) AS first_order_date FROM Orders
+      GROUP BY product_id
+     ) t
+ON t.product_id = p.product_id AND t.first_order_date = o.order_date
+ORDER BY p.product_name,p.product_id,o.order_id;
