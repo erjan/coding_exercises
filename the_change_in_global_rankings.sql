@@ -30,3 +30,28 @@ FROM
     INNER JOIN PointsChange chg
     ON chg.team_id = ini.team_id
 ORDER BY 3
+
+
+--------------------------------------
+
+with c as 
+(
+with b as 
+(
+    with a
+    as
+    (
+        select t.team_id  as team_id ,t.name as name  , (t.points + p.points_change) as p_plus    from teampoints t
+        left join pointschange p 
+        on p.team_id = t.team_id 
+        order by t.points desc
+    )
+    select team_id , name ,dense_rank() over(order by p_plus desc , name  ) as rnk  from a
+)
+select b.team_id as team_id, b.name as name  , b.rnk as rnk1 , dense_rank() over(order by t.points desc ,t.name) as rnk2 from b 
+left join  teampoints t 
+on t.team_id = b.team_id 
+
+)
+
+select team_id , name , (CAST(rnk2 as SIGNED) - CAST(rnK1 as SIGNED))  as rank_diff from c 
