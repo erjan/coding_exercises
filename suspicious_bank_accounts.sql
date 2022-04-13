@@ -49,3 +49,22 @@ select distinct account_id
 from cte2
 group by grp, account_id
 having count(*)>1
+----------------------------------------
+
+WITH CTE AS (
+SELECT temp.account_id, month 
+FROM (
+SELECT account_id, DATE_FORMAT(day,'%Y%m') as month, SUM(amount) total_income
+FROM transactions
+WHERE type='Creditor'
+GROUP BY 1,2) temp
+JOIN accounts a
+ON temp.account_id = a.account_id
+WHERE total_income > max_income
+)
+
+
+SELECT DISTINCT c1.account_id
+from CTE c1
+join CTE c2
+ON c1.account_id = c2.account_id AND c2.month-c1.month = 1
