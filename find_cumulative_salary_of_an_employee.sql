@@ -20,28 +20,17 @@ WHERE A.month != (select max(month) from employee where id = a.id)
 GROUP BY A.Id, A.Month
 ORDER BY Id, Month DESC
 
-
-
-select e1.id,e1.month month,sum(e2.salary) salary
-from
-employee e1 inner join employee e2 on e1.id=e2.id and (e1.Month - e2.Month) between 0 and 2
-where (e1.id,e1.month) not in (select id,max(month) from employee group by id)
-group by e1.id,e1.month
-order by e1.id,e1.month desc
-
-
 #best solution
-
-SELECT id, month, Salary
+------
+SELECT id, month, salary+prev_month_salary+prev_2month_salary AS Salary
 FROM
 (
-SELECT  id, 
-        month, 
-		-- Every 3 months. ROWS 2 PRECEDING indicates the number of rows or values to precede the current row (1 + 2)
-        SUM(salary) OVER(PARTITION BY id  ORDER BY month ROWS 2 PRECEDING) as Salary, 
-        DENSE_RANK() OVER(PARTITION BY id ORDER by month DESC) month_no
-FROM Employee
-)  src
---  exclude the most recent month
-where month_no > 1
-ORDER BY id , month desc
+    SELECT id, month, salary,
+    ROW_NUMBER() OVER(PARTITION BY id ORDER BY month DESC) AS month_rank,
+    CASE WHEN LAG(month,1,0) OVER(PARTITION BY id ORDER BY month) = month - 1 THEN LAG(salary,1,0) OVER(PARTITION BY id ORDER BY month) ELSE 0 END AS prev_month_salary,
+    CASE WHEN LAG(month,2,0) OVER(PARTITION BY id ORDER BY month) = month - 2 THEN LAG(salary,2,0) OVER(PARTITION BY id ORDER BY month) ELSE 0 END AS prev_2month_salary
+    FROM Employee
+) AS SUB_T
+WHERE month_rank <> 1 AND salary <> 0
+GROUP BY id, month
+ORDER BY id, month DESC
