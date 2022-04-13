@@ -46,3 +46,16 @@ from (select player_id, min(event_date) as install_date
 left join Activity b 
 on a.player_id = b.player_id and a.install_date = b.event_date - 1
 group by 1
+
+---------------------------------------
+with cte as (
+    select player_id, min(event_date) as install_dt
+    from activity
+    group by player_id
+)
+select a.install_dt, count(distinct a.player_id) as installs, round(1.00 * count( distinct b.player_id) / count(distinct a.player_id), 2) as Day1_retention
+from cte a
+    left join activity b 
+        on a.player_id = b.player_id 
+            and b.event_date = dateadd(d, 1, a.install_dt)
+group by a.install_dt
