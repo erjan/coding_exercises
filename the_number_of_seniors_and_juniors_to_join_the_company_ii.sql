@@ -52,3 +52,70 @@ and experience = 'Junior'
 select employee_id from senior_cte
 union
 select employee_id from junior_cte
+
+---------------------------------------
+      
+      with cte as (
+select *, sum(salary) over (partition by experience order by salary) as cum_sum
+   from Candidates
+),
+cte_s as (
+select employee_id, salary from cte 
+    where experience='Senior' and cum_sum<=70000
+)
+
+select employee_id from cte_s
+union
+select employee_id from cte 
+    where experience='Junior' and cum_sum<=70000-(select coalesce(sum(salary),0) from cte_s)
+      
+      ----------------------------------------------------------
+      
+      WITH seniors AS
+(
+
+SELECT
+    employee_id,
+    running_salary
+FROM
+(
+    SELECT
+        employee_id,
+        SUM(salary) OVER (ORDER BY salary ASC) as running_salary
+    FROM
+        Candidates
+    WHERE
+        experience = 'Senior'
+)t
+WHERE running_salary <= 70000
+),
+
+
+remaining_budget AS
+(
+SELECT CASE WHEN (SELECT MAX(running_salary) FROM seniors) IS NOT NULL THEN 70000 - (SELECT MAX(running_salary) FROM seniors)
+    ELSE 70000 END AS remaining_amount
+
+),
+
+
+juniors AS
+
+(
+
+SELECT
+    employee_id
+FROM
+(
+    SELECT
+        employee_id,
+        SUM(salary) OVER (ORDER BY salary ASC) as running_salary
+    FROM
+        Candidates
+    WHERE
+        experience = 'Junior'    
+)T
+WHERE running_salary <= (SELECT remaining_amount FROM remaining_budget)
+
+)
+SELECT employee_id FROM seniors UNION ALL SELECT * FROM juniors
