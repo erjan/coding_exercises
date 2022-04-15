@@ -163,3 +163,26 @@ class Leaderboard:
         else:
             self.sortedScores[-preScore] -= 1
         del self.scores[playerId];
+        
+        
+------------------------------------
+import heapq
+class Leaderboard:
+
+    def __init__(self):
+        self.board = defaultdict(int)
+
+    def addScore(self, playerId: int, score: int) -> None:
+        self.board[playerId] += score
+
+    def top(self, K: int) -> int:
+        arr = [-x for x in self.board.values()]
+        heapq.heapify(arr)
+        res = 0 
+        for _ in range(K):
+            res += heapq.heappop(arr)
+        
+        return -res
+
+    def reset(self, playerId: int) -> None:
+        self.board[playerId] = 0 
