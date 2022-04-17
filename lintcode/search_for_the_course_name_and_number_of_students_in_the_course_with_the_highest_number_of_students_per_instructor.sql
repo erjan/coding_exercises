@@ -12,3 +12,17 @@ where (teacher_id, student_count) in
     select teacher_id, max(student_count) from courses
     group by teacher_id
 )
+
+
+
+------------------------
+
+select 
+
+c.name, c.student_count
+from courses c
+
+where (teacher_id, student_count) in (
+
+
+select teacher_id, max(student_count)  from courses group by teacher_id)
