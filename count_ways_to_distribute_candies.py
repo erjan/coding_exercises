@@ -147,3 +147,25 @@ class Solution:
 			dp = dp1
 			
 		return dp[-1]
+
+				      
+--------------------------------------------------------------------------------------------------
+
+For case with c candies and b bags, we start with the c-th candy,
+What is the relation between case of c candies (c, b) and case of c-1 candies ( c-1, XXX) ?
+
+Two cases are included: the c-th candy is put in a bag alone, or mixed with others in the bag.
+
+The number of first case is just case ( c-1, b-1) , since the c-th candy is in a bag alone, the rest c-1 candies are in b-1 bags.
+
+For the second case, we just need to get the number of case (c-1, b), and randomly pick a bag from b bags and put the c-th candy in, so its guaranteed that c-th candy is mixed with other candies. The total number of this case is case ( c-1, b) * b (since there will be b bags for option)
+
+Finally we have dp[c][b]= dp[c-1][b-1] + dp[c-1][b] * b
+When set up the orignal dp matrix, just remember dp[c][b]==1 when c==b or b==1 and we only focus on the c>b cases.
+
+def waysToDistribute(self, n: int, k: int) -> int:
+		dp=[[1]*n for _ in range(n)]
+			for c in range(2,n):
+				for b in range(1,min(c,k)):
+					dp[c][b]=dp[c-1][b-1]+dp[c-1][b]*(b+1)
+			return dp[n-1][k-1]
