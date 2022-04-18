@@ -167,4 +167,89 @@ class Solution:
         node.right = self.expTree(s[sign_pos+1:])
 
         return node
+    
+    
+---------------------------------------------------------------------
+Convert infix to postfix.
+Build expression tree from postfix.
+I think there are tons of references of both 1 and 2 steps on the web, but I found the following articles.
+
+Convert infix to postfix first
+https://www.includehelp.com/c/infix-to-postfix-conversion-using-stack-with-c-program.aspx
+
+Build expression tree from postfix.
+https://www.techiedelight.com/expression-tree/
+
+The following problem is similar to this but little harder for me because the length of the digit can be more than 1.
+https://leetcode.com/problems/basic-calculator/
+
+# Definition for a binary tree node.
+# class Node(object):
+#     def __init__(self, val=" ", left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import deque
+
+operators_level = {
+    "(": 0,
+    ")": 0,
+    "+": 1,
+    "-": 1,
+    "*": 2,
+    "/": 2
+}
+
+operators = {
+    "+", "-", "*", "/"
+}
+
+class Solution:
+    def expTree(self, s: str) -> 'Node':
+        postfix = self.buildPostFix(s)
+        tree = self.buildTreeFromPostFix(postfix)
+        return tree
+    
+    def buildTreeFromPostFix(self, postfix: List[str]) -> 'Node':
+        stack = deque()
+        
+        for c in postfix:
+            if c in operators:
+                right = stack.pop()
+                left = stack.pop()
+                
+                currNode = Node(c, left, right)
+                stack.append(currNode)
+            else:
+                stack.append(Node(c))
+        return stack[-1]
+    
+    def buildPostFix(self, s: str) -> List[str]:
+        stack = deque()
+        postfix = []
+        
+        for i in range(len(s)):
+            c = s[i]
+            
+            if c in operators_level.keys():
+                if c == "(":
+                    stack.append(c)
+                elif c == ")":
+                    while stack and stack[-1] != "(":
+                        postfix.append(stack.pop())
+                    stack.pop()
+                elif stack and operators_level[c] > operators_level[stack[-1]]:
+                    stack.append(c)
+                else:
+                    while stack:
+                        if stack[-1] == "(":
+                            break
+                        postfix.append(stack.pop())
+                    stack.append(c)
+            else:
+                postfix.append(c)
+        
+        while stack:
+            postfix.append(stack.pop())
+        return postfix
         
