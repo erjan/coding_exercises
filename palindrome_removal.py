@@ -105,3 +105,50 @@ class Solution:
                     for k in range(i,j):
                         dp[i][j] = min(dp[i][k]+dp[k+1][j],dp[i][j])
         return dp[0][-1]
+
+
+-------------------------------------------------------------
+from functools import lru_cache
+class Solution(object):
+    def minimumMoves(self, A):
+        @lru_cache(None)
+        def dp(i,j):
+            if i >= j: return 1
+            return dp(i+1,j-1) if A[i]==A[j] else min([dp(i,mid)+dp(mid+1,j) for mid in range(i,j)])
+        return dp(0,len(A)-1)
+class Solution(object):
+    def minimumMoves(self, A):
+        dp = [[len(A) for i in A] for j in A]
+        for i in range(len(A)):
+            dp[i][i] = 1
+        for i in range(len(A)-1):
+            dp[i][i+1] = 1 if A[i] == A[i+1] else 2
+        for size in range(3,len(A)+1):
+            for l in range(len(A)-size+1):
+                r = l+size-1
+                if A[l] == A[r]:
+                    dp[l][r] = dp[l+1][r-1]
+                else:
+                    dp[l][r] = min([dp[l][mid]+dp[mid+1][r] for mid in range(l,l+size-1)])
+        return dp[0][len(A)-1]
+
+
+-------------------------------------------------------------------------------------------------
+class Solution:
+    def minimumMoves(self, arr: List[int]) -> int:
+        n = len(arr) 
+        dp = [[0] * (n + 1) for _ in range(n + 1)] 
+        for l in range(1, n + 1): 
+            i, j = 0, l - 1
+            while j < n: 
+                if l == 1: 
+                    dp[i][j] = 1
+                else: 
+                    dp[i][j] = 1 + dp[i + 1][j] 
+                    if arr[i] == arr[i + 1]: 
+                        dp[i][j] = min(1 + dp[i + 2][j], dp[i][j]) 
+                    for k in range(i + 2, j + 1): 
+                        if arr[i] == arr[k]: 
+                            dp[i][j] = min(dp[i + 1][k - 1] + dp[k + 1][j], dp[i][j]) 
+                i, j = i + 1, j + 1
+        return dp[0][n - 1]
