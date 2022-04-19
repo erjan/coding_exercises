@@ -43,3 +43,81 @@ class WordDistance:
 # Your WordDistance object will be instantiated and called as such:
 # obj = WordDistance(wordsDict)
 # param_1 = obj.shortest(word1,word2)
+
+
+------------------------------------------------------------------------------------
+class Solution:
+   def shortestWordDistance(self, words: List[str], word1: str, word2: str) -> int:
+       m=len(words)
+       p1=-len(words)
+       p2=len(words)
+       for i in range(len(words)):
+           if words[i]==word1:
+               if words[i] == word2:
+                   p2 = p1
+               p1=i
+           elif words[i]==word2:
+               if words[i] == word1:
+                   p1=p2
+               p2=i
+           m=min(m,abs(p1-p2))
+       return m
+
+------------------------------------------------------------------------
+
+def shortestWordDistance(self, words, word1, word2):
+    p1 = p2 = -1
+    res = len(words)
+    # first case: the same as Shortest Word Distance
+    if word1 != word2:
+        for i, w in enumerate(words):
+            if w == word1:
+                p1 = i
+            if w == word2:
+                p2 = i
+            if p1 > -1 and p2 > -1:
+                res = min(res, abs(p1-p2))
+        return res
+    else:
+        # pre and i record previous and current word1 respectively
+        pre, i = -len(words), 0
+        while i < len(words):
+            while i < len(words) and words[i] != word1:
+                i += 1
+            if i < len(words):
+                res = min(res, i-pre)
+            pre = i
+            i += 1
+        return res
+    
+-------------------------------------------------------------------------------------------
+class Solution:
+    def shortestWordDistance(self, wordsDict: List[str], word1: str, word2: str) -> int:
+        n = len(wordsDict)
+        idx1, idx2 = [], [] 
+        
+        for i in range(n):
+            word = wordsDict[i]
+            if word == word1:
+                idx1.append(i)
+            elif word == word2:
+                idx2.append(i)
+
+        res = float('inf')
+        if word1 == word2:
+            for i in range(1, len(idx1)):
+                res = min(res, idx1[i] - idx1[i-1])
+            return res
+        res = float('inf')
+        i, j = 0, 0
+
+        while i < len(idx1) and j < len(idx2):
+            res = min(res, abs(idx1[i]-idx2[j]))
+            if idx1[i] > idx2[j]:
+                j += 1
+            else: # idx1[i] < idx2[j]
+                i += 1
+            
+            
+        return res 
+    
