@@ -119,3 +119,53 @@ def dijkstras(start, visited, target):
     return -1
 -----------------------------------------------------------------------------  
   
+class Solution(object):
+    def findShortestPath(self, master: 'gridMaster') -> int:
+        res = [float('inf')]
+        target = [(float('-inf'), float('-inf'))]
+        seen = set()
+        def dfs(i, j):
+            if (i, j) not in seen:
+                seen.add((i, j))
+            else:
+                return
+            if master.isTarget():
+                target[0] = (i, j)
+            if master.canMove('U'):
+                master.move('U')
+                dfs(i - 1, j)
+                master.move('D')
+            if master.canMove('D'):
+                master.move('D')
+                dfs(i + 1, j)
+                master.move('U')
+            if master.canMove('L'):
+                master.move('L')
+                dfs(i, j - 1)
+                master.move('R')
+            if master.canMove('R'):
+                master.move('R')
+                dfs(i, j + 1)
+                master.move('L')
+        dfs(0, 0)
+        if target[0] == (float('-inf'), float('-inf')):
+            return -1
+        seen2 = set()
+        qu = deque()
+        dirs = [(0, -1), (0, 1), (-1, 0), (1, 0)]
+        qu.append((0, 0, 0))
+        seen2.add((0, 0))
+        while qu:
+            cx, cy, steps = qu.popleft()
+            if (cx, cy) == target[0]:
+                print(target[0])
+                return steps
+            for x, y in dirs:
+                nx = cx + x
+                ny = cy + y
+                if (nx, ny) in seen2:
+                    continue
+                if (nx, ny) in seen:
+                    seen2.add((nx, ny))
+                    qu.append((nx, ny, steps + 1))
+        return -1
