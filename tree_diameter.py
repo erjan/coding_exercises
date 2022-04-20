@@ -178,3 +178,14 @@ class Solution:
       
       
       
+class Solution:
+    def treeDiameter(self, E: List[List[int]]) -> int:
+        L, G, n = len(E), collections.defaultdict(set), 0
+        for i,j in E: G[i].add(j), G[j].add(i)
+        for _ in range(2):
+            B, V, c = {n}, set(range(L+1)), 0
+            while V:
+                A, c = set(), c + 1
+                for n in B: V.remove(n), A.update(G[n] & V)
+                B = A
+        return c - 1
