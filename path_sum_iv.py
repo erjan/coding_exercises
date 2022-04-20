@@ -104,3 +104,59 @@ class Solution:
                     stack.append((node.right, val + node.right.val))
         
         return res
+
+    
+    
+---------------------------------------------------------------------------------------------
+'''
+If the depth of a tree is smaller than 5, then this tree can be represented by an array of three-digit integers. For each integer in this array:
+
+The hundreds digit represents the depth d of this node where 1 <= d <= 4.
+The tens digit represents the position p of this node in the level it belongs to where 1 <= p <= 8. The position is the same as that in a full binary tree.
+The units digit represents the value v of this node where 0 <= v <= 9.
+Given an array of ascending three-digit integers nums representing a binary tree with a depth smaller than 5, return the sum of all paths from the root towards the leaves.
+
+It is guaranteed that the given array represents a valid connected binary tree.
+'''
+
+class Solution:
+    def pathSum(self, nums: List[int]) -> int:
+        out = 0
+        prevLevel = 0
+        prevLevelSum = {}
+        prevLevelSum[1] = 0
+        
+        while nums:
+            lSum = {}
+            nodeUsed = set() #non leaf nodes at previous level
+            
+            while nums and nums[0] // 100 == prevLevel + 1:
+                x = nums.pop(0)
+                P, V = (x % 100) //10, (x % 100) % 10
+                lSum[P] = prevLevelSum[(P + 1) // 2] + V
+                nodeUsed.add((P + 1) // 2)
+            
+            for k in prevLevelSum:
+                if k not in nodeUsed:
+                    out += prevLevelSum[k] # account for leaf nodes at previous level
+            
+            prevLevelSum = lSum
+            prevLevel += 1
+            
+        return out + sum(lSum[k] for k in lSum)
+      
+-----------------------------------------------------------
+
+class Solution:
+    def pathSum(self, nums: List[int]) -> int:
+        leaves = set(tuple(map(int, str(n)[:2])) for n in nums)
+        sums = {}
+        for n in sorted(nums):
+            a, b, c = list(map(int, str(n)))
+            if a == 1:
+                sums[(a, b)] = c
+            else:
+                parent = (a-1,  (b+1)//2)
+                leaves.discard(parent)
+                sums[(a, b)] = c + sums[parent]
+        return sum(v for k, v in sums.items() if k in leaves)
