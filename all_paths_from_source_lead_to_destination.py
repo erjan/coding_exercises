@@ -129,5 +129,70 @@ class Solution:
         
         return dfs(source,[])
              
-             
+------------------------------------------------------------------------
+             class Solution:
+    
+    def debug(func):
+        def wrapper_debug(*args, **kwargs):
+            args_repr = [repr(a) for a in args]
+            kwargs_repr = [f'{k}: {v}' for k, v in kwargs.items()]
+            signature = ", ".join(args_repr + kwargs_repr)
+            print(f"Calling {func.__name__}({signature})")
+            value = func(*args, **kwargs)
+            print(f"{func.__name__!r} returned {value!r}")
+            return value
+        return wrapper_debug
+    
+    #@debug
+    def traverse(self, node, dest):
+        if node in self.graph[node]:
+            self.result = False
+            return False
+        
+        if node == dest:
+            if not self.graph[node]: # leaf node
+                return True
+            else:
+                self.result = False
+                return False
+        
+        self.visited[node] = True
+        
+        # it doesn't have neighbor and it is not destination
+        if not self.graph[node]:
+            self.result = False
+            return False
+        
+        response = None
+        for neighbor in self.graph[node]:
+            if neighbor == node:  # self loop
+                self.result = False
+                return False
+            if not self.visited[neighbor]:
+                response = self.traverse(neighbor, dest)
+                self.visited[neighbor] = False # reset
+                if not response:
+                    self.result = False
+                    return False
+        if response:
+            return True
+        self.result = False
+        return False
+        
+    def leadsToDestination(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
+        # find all paths from source to destination
+        # while doing so, if we encounter a self loop or a leaf and dest hasn't been reached
+        # then return false, otherwise true
+        if not edges:
+            if source == destination:
+                return True
+            else:
+                return False
+        self.graph = defaultdict(list)
+        for edge in edges:
+            self.graph[edge[0]].append(edge[1])
+        self.visited = [False]*n
+        self.result = True
+        self.traverse(source, destination)
+        return self.result
              
