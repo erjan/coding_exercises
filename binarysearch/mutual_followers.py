@@ -34,3 +34,20 @@ class Solution:
         print('----------')
         print(rtr)
         return rtr
+    
+----------------------------------------------------------------------
+class Solution:
+    def solve(self, relations):
+        res = set()
+        ans = set()
+        for a, b in relations:
+            ans.add((a, b))
+
+            if (b, a) in ans:
+                res.add(b)
+                res.add(a)
+
+        res = list(res)
+        res.sort()
+        print(res)
+        return res
