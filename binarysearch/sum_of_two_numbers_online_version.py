@@ -75,4 +75,21 @@ class TwoSum:
             elif toFind in keys:
                 return True
         return False
+    
+-----------------------------------------------------------------------------------------
+class TwoSum:
+    def __init__(self):
+        self.cache = defaultdict(int)
+
+    def add(self, val):
+        self.cache[val] += 1
+
+    def find(self, val):
+        for key in self.cache:
+            target = val - key
+            if target == key and self.cache[key] > 1:
+                return True
+            elif target != key and target in self.cache:
+                return True
+        return False
         
