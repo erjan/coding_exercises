@@ -50,3 +50,29 @@ class TwoSum:
             elif to_find in ls:
                 return True
         return False
+    
+----------------------------------------------------------------------
+class TwoSum:
+    def __init__(self):
+
+        self.d = defaultdict(int)
+        
+
+    def add(self, val):
+        self.d[val]+=1
+        
+
+    def find(self, val):
+
+        keys = self.d.keys()
+
+        for k in keys:
+            toFind = val - k
+
+            if toFind == k:
+                if self.d[k] > 1:
+                    return True
+            elif toFind in keys:
+                return True
+        return False
+        
