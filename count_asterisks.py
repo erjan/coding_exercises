@@ -23,8 +23,8 @@ class Solution:
       
 -------------------------------------------------------------------------------------------------------------
 # логика здесь: если нет | то мы добавляем в список
-# добавлять все до тех пор пока не встретим | потом игнорировать - все что идет дальше это уже внутри скобок(пары) поэтому игнорировать
-# потом добавить
+# добавлять все до тех пор пока не встретим | , как только началась первая |  - все что идет дальше это уже внутри скобок(пары) поэтому можно игнорировать
+# потом если мы видим 2ую | - мы удаляем ее, и снова можно добавлять все элементы как не внутри скобок
 
 class Solution:
   def f(s):
@@ -42,3 +42,24 @@ class Solution:
               print('removing %s ' % x)
       print(lst)
       return lst.count('*')
+    
+--------------------------------------------------
+# idea - bar count even odd
+class Solution:
+    def countAsterisks(self, s: str) -> int:
+        bar_count = 0
+        ast_count = 0
+        
+        for char in s:
+            # check if this is a bar
+            if char == '|':
+                # adjust bar count
+                bar_count += 1
+            elif char == '*':
+                # only if bar count is even, we should count it
+                # because in this example l|*e*et|c**o|*de|
+                # we skip the *e*et because it has odd bar count
+                if bar_count & 1 == 0:
+                    ast_count += 1
+        
+        return ast_count
