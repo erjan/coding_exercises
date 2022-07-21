@@ -47,6 +47,31 @@ class Solution:
         return c        
 
 
+----------------------------------------------------------------
+class Solution:
+    def fillCups(self, amount: List[int]) -> int:
+        
+        amount.sort()
+        
+        res = 0
+        
+        while sum(amount)!=0:
+            
+            if amount[-1] !=0 and amount[-2]!=0:
+                amount[-1] -=1
+                amount[-2] -=1
+                res+=1
+            
+            elif amount[-2] == 0 and amount[-3] == 0:
+                return res + amount[-1]
+            
+            elif sum(amount) == 0:
+                return res
+            amount.sort()
+        
+        return res
+        
+	
 -------------------------------------------------------------------------------
 #heap another sol-n
 
