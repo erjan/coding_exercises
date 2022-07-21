@@ -23,8 +23,28 @@ class Solution:
         
         return res
             
+---------------------------------------------------------------------------------------------------------------          
+import math
+class Solution:
+    def fillCups(self, l: List[int]) -> int:
+        l.sort()
+        c=0
+        while(sum(l)!=0):
+            if(l[-1]!=0 and l[-2]!=0):
+                l[-1]-=1
+                l[-2]-=1
+                c+=1
+				
+			# If only one non zero element present then add that number to count and return the count.
+            elif(l[-2]==0 and l[-3]==0):
+                return c+l[-1]
+				
+			#If all are zero then return count
+            elif(sum(l)==0):
+                return c
             
-        
+            l.sort()
+        return c        
 
 
 -------------------------------------------------------------------------------
