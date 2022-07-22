@@ -74,3 +74,12 @@ class Solution:
                 tax+= left*i[1]/100
                 break
         return tax
+
+--------------------------------------------------
+class Solution:
+    def calculateTax(self, brackets: list[list[int]], income: int) -> float:
+        cur, res = 0, 0
+        for upper, percent in brackets:
+            pre, cur = cur, min(upper, income)
+            res += (cur - pre) * percent
+        return res / 100
