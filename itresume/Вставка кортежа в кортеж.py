@@ -18,3 +18,11 @@ class Answer:
     
         init = tuple(init)
         return init
+
+#another solution
+
+class Answer:
+    def tuplex(self, init, ind, add):
+        init = init[:ind] + add + init[ind:]
+
+        return init
