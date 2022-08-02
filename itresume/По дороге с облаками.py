@@ -41,3 +41,22 @@ class Answer:
                 jumps+=1
                 i += 1
         return jumps
+    
+#recursive
+
+class Answer:
+    def jumpingOnClouds(self, clouds):
+        
+        if len(clouds) == 1:
+            return 0
+        if len(clouds) == 2:
+            if clouds[1] == 1:
+                return 0
+            else:
+                return 1
+        if clouds[2] == 1:
+            return 1 + self.jumpingOnClouds(clouds[1:])
+        if clouds[2] == 0:
+            return 1 + self.jumpingOnClouds(clouds[2:])
+
+
