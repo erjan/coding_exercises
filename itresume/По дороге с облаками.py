@@ -23,3 +23,21 @@ class Answer:
                    
 
         return res -1
+
+    
+#alternative solution
+
+class Answer:
+    def jumpingOnClouds(self, clouds):       
+        
+        i = 0
+        jumps = 0
+        
+        while(i < len(clouds)-1):
+            if clouds[i+2] == 0: 
+                jumps+=1
+                i += 2
+            elif clouds[i+1] == 0: 
+                jumps+=1
+                i += 1
+        return jumps
