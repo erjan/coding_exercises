@@ -26,3 +26,25 @@ class Solution:
             curB = curB.next
             curA = curA.next
         return curA
+
+    
+------------------------------------------------------------------
+    
+class Answer:
+    def getIntersectionNode(self, headA, headB):
+        
+        a, b = headA, headB
+        while (a != b):
+            if not a:
+                a = headB
+            else:
+                a = a.next
+            if not b:
+                b = headA
+            else:
+                b = b.next
+        return a
+        
+        
+        
+'''
