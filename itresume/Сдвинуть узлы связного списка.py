@@ -1,36 +1,30 @@
-'''
-Дан односвязный список с начальным узлом head. Необходимо сдвинуть узлы на заданное число k.
-'''
-
-#Описание класса-узла
-#class ListNode:
-#    def __init__(self, val=0, next=None):
-#        self.val = val
-#        self.next = next
-
-
-class Answer:
-    def rotateRight(self, head, k):
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         if not head:
-            return head
-
-        len = 0
-        tail = head
-        temp = head
-
-        while temp:
-            temp = temp.next
-            len += 1
-        print('len is %d' % len)
-
-        k = k % len
-        if k == 0:
-            return head
+            return None
         
-        cur = head
-        for i in range(len - k -1):
-            cur = cur.next
-        newhead = cur.next
-        cur.next = None
+        tail = head
+        l = 1
+        while (tail.next):
+            tail = tail.next
+            l += 1
+
+
+        k = k % l
+            
         tail.next = head
-        return newhead
+        
+
+        tempNode = head
+        for _ in range( l - k - 1 ):
+            tempNode = tempNode.next
+        
+        answer = tempNode.next
+        tempNode.next = None
+        
+        return answer
