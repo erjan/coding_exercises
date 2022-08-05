@@ -53,6 +53,18 @@ def swapNodes(self, head: ListNode, k: int) -> ListNode:
 	return head
 
 ----------------------------------------------------------------
+
+'''
+Thankfully, in the process of iterating through the linked 
+list to find the tail node, we can have a pointer pointing to the node that is k-1 nodes 
+to the left of the pointer searching for the tail node. This way, we will know which node is the 
+kth node from the right (i.e., the right node) once we have found the tail node.
+
+Once we have both nodes, swapping their values is trivial. Note that the problem statement specifies 
+that only the values need to be swapped, which makes implementation 
+much simpler. To perform actual node swapping, please refer to my comment below.
+'''
+
 class Solution:
     def swapNodes(self, head: ListNode, k: int) -> ListNode:
 	
