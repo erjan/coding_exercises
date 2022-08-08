@@ -33,3 +33,25 @@ class Solution:
                 if len(stack) and stack[-1] == '(': stack.pop()
                 else: stack.append(ch)
         return len(stack)
+
+    
+-----------------------------------------------------------
+#my own solution
+
+class Solution:
+    def minAddToMakeValid(self, s: str) -> int:
+        stack = list()
+                
+        for elem in s:
+            
+            if elem == '(':
+                stack.append(elem)
+                
+            else:
+                if elem == ')' and len(stack)!= 0  and stack[-1] == '('  :
+                    stack.pop()
+                else:
+                    stack.append(elem)
+        return len(stack)
+        
+        
