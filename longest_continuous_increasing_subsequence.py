@@ -28,3 +28,22 @@ class Solution:
 
         print(res)
         return res
+
+       
+--------------------------------
+#my own solution
+
+class Solution:
+    def findLengthOfLCIS(self, nums: List[int]) -> int:
+        best_r = 1
+        cur_r = 1
+
+        for i in range(len(nums)-1):
+            if nums[i] < nums[i+1]:
+                cur_r += 1
+                if cur_r > best_r:
+                    best_r = cur_r
+            else:
+                cur_r = 1
+        print(best_r)
+        return best_r
