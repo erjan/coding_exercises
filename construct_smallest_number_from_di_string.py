@@ -42,3 +42,33 @@ class Solution:
                 i+=1
                 
         return "".join(smallest)
+
+---------------------------------------------------------------------------
+class Solution:
+    def smallestNumber(self, pattern: str) -> str:
+        n = len(pattern)
+        smallest = list()
+        for i in range(n+1):
+            smallest.append(str(i+1))
+
+
+        def reverse(a,start,end):
+            if start >=end:
+                return
+            a[start],a[end] = a[end], a[start]
+            reverse(a,start+1,end-1)
+
+        i = 0
+        while i < n:
+
+            if pattern[i] == 'D':
+                j = i
+                while j+1 < n and pattern[j+1] == 'D':
+                    j+=1
+                reverse(smallest,i,j+1)
+                i = j+1
+                
+            else:
+                i+=1
+
+        return "".join(smallest)
