@@ -10,7 +10,6 @@ Return the lexicographically smallest possible string num that meets the conditi
 '''
 
 
-
 class Solution:
     def smallestNumber(self, pattern: str) -> str:
         n = len(pattern)
@@ -19,12 +18,12 @@ class Solution:
         smallest = [f'{i+1}' for i in range(n+1)]
         
 		#inplace reversal
-        def revserse(arr,start,end):
+        def reverse(arr,start,end):
             if start>=end:
                 return
             
             arr[start],arr[end] = arr[end],arr[start]
-            revserse(arr,start+1,end-1)
+            reverse(arr,start+1,end-1)
         
         i = 0
         while i<n:
@@ -35,7 +34,7 @@ class Solution:
                     j+=1
 					
 				#reverse the sequence
-                revserse(smallest,i,j+1)
+                reverse(smallest,i,j+1)
 				
 				#move front
                 i = j+1
