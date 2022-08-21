@@ -27,3 +27,23 @@ class Solution:
                 stack.append(s[i])
 
         return "".join(stack)
+
+       
+-----------------------------------------------------------------------------
+class Solution:
+    def reverseParentheses(self, s: str) -> str:
+        i, n, stack = 0, len(s), []
+        
+        while i < n:
+            if  s[i] == '(':  # if its opening parentheses, just append
+                stack.append(s[i])
+            elif s[i] == ')': # if its closing parentheses
+                st = ''
+                while stack!=[] and stack[-1]!='(': #while stack is not empty and stack's top is NOT an opening parentheses
+                    st += stack.pop() #pop the element and append to a temporary string
+                stack.pop() #pop the last remaining ( in some cases
+                stack += list(st) #append the popped elements to stack
+            else:
+                stack.append(s[i]) #pushing all letters into stack
+            i += 1
+        return ''.join(stack)
