@@ -47,3 +47,23 @@ class Solution:
                 stack.append(s[i]) #pushing all letters into stack
             i += 1
         return ''.join(stack)
+       
+--------------------------------------------------------------------------------------------------
+class Solution:
+    def reverseParentheses(self, s: str) -> str:
+        i = 0
+        stack = list()
+
+        while i < len(s):
+            if s[i] != ')':
+                stack.append(s[i])
+            elif s[i] == ')':
+                st = ''
+                while len(stack) != 0 and stack[-1] != '(':
+                    st += stack.pop()
+
+                stack.pop()#pop last '('
+                stack += list(st)
+            i+=1
+
+        return ''.join(stack)
