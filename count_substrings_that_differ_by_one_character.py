@@ -36,3 +36,26 @@ class Solution:
                 i+=1
                 j+=1
         return ans
+    
+----------------------------------------------------------------------------------------------
+class Solution:
+    def countSubstrings(self, s: str, t: str) -> int:
+        
+        ans = 0
+        
+        for i in range(len(s)):
+            for j in range(len(t)):
+                
+                x = i
+                y = j
+                diff = 0
+                while x < len(s) and y < len(t):
+                    if s[x] != t[y]:
+                        diff+=1
+                    if diff ==1:
+                        ans+=1
+                    elif diff ==2:
+                        break
+                    x+=1
+                    y+=1
+        return ans
