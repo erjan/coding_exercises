@@ -24,4 +24,24 @@ class Solution:
                 stack.pop()
         backtrack(0,0)
         return res
+    
+------------------------------------------------------------
+class Solution:
+    def generateParenthesis(self, n: int) -> List[str]:
+        
+        def backtrack(left, right, ans, curstring):
+            if right < left:
+                return
+            if not left and not right:
+                ans.append(curstring)
+                return
+            if left:
+                backtrack(left-1, right, ans, curstring + "(")
+            if right:
+                backtrack(left, right-1, ans, curstring + ")")
+
+        res = list()
+        backtrack(n, n, res, "")
+        print(res)
+        return res
             
