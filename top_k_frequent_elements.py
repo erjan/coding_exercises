@@ -10,6 +10,29 @@ class Solution:
 
         return res
         
+------------------------------------------------------------------------------------
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        
+        if  len(nums)  == 1:
+            return [nums[0]]
+    
+        
+        d = dict(Counter(nums))
+        
+        h = []
+        
+        for key in d:
+            
+            heappush(h, (d[key], key))
+            if len(h) > k:
+                heappop(h)
+        
+        res = []
+        while h:
+            _, item = heappop(h)
+            res.append(item)
+        return res
 
         
 ---------------------------------------------------------------------------------
