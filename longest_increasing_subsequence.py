@@ -38,6 +38,28 @@ def dfs(self, nums, i, pre, cur_len):
     if nums[i] > pre:
         self.dfs(nums, i + 1, nums[i], cur_len + 1)
 
+        
+----------------------------------------------------------
+class Solution:
+    def lengthOfLIS(self, nums: List[int]) -> int:
+        tails = [0] * len(nums)
+        result = 0
+        
+        for num in nums:
+            
+            left_index, right_index = 0, result
+            while left_index != right_index:
+                
+                middle_index = left_index + (right_index - left_index) // 2
+                
+                if tails[middle_index] < num:
+                    left_index = middle_index + 1
+                else:
+                    right_index = middle_index
+            result = max(result, left_index + 1)
+            tails[left_index] = num
+        return result
+        
 ---------------------------------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
 
