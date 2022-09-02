@@ -79,3 +79,37 @@ class Solution:
             res[node].neighbors.append(res[node_])
             self.dfs(node_,res,visited)
       
+-------------------------------------------------------------------------------------------------------------------------------
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        if not node:
+            return node
+        
+        res = dict()
+        visited = set()
+        stack = deque([node])
+
+        while stack:
+            n = stack.pop()
+            if n in visited:
+                continue
+            visited.add(n)
+
+            if n not in res:
+                res[n] = Node(n.val)
+            for nebor in n.neighbors:
+                if nebor not in res:
+                    res[nebor] = Node(nebor.val)
+                res[n].neighbors.append(res[nebor])
+                stack.append(nebor)
+                
+        return res[node]
