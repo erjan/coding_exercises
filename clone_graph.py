@@ -40,3 +40,42 @@ class Solution:
                 q.append(neb)   
 
         return res[node] 
+    
+    
+-------------------------------------------------------------------------------------------------------------
+
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val = 0, neighbors = None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+"""
+
+class Solution:
+    def cloneGraph(self, node: 'Node') -> 'Node':
+        
+        if not node:
+            return node
+        
+        res = dict()
+        visited = set()
+
+        self.dfs(node,res,visited)
+        return res[node]
+    
+    def dfs(self,node,res,visited):
+        if node in visited:
+            return
+        
+        visited.add(node)
+        if node not in res:
+            res[node] = Node(node.val)
+        
+        for node_ in node.neighbors:
+            if node_ not in res:
+                res[node_] = Node(node_.val)
+            res[node].neighbors.append(res[node_])
+            self.dfs(node_,res,visited)
+      
