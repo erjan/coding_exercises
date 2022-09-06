@@ -12,20 +12,27 @@ Given an array of integers nums, find the next permutation of nums.
 The replacement must be in place and use only constant extra memory.
 '''
 
+def nextPermutation(self, nums):
+    i = j = len(nums)-1
+    #find the first non-increasing element starting from the end
+    while i > 0 and nums[i-1] >=nums[i]:
+        i = i-1
+    
+    #special case - if nums is all decreasing - reverse the nums
+    if i == 0:
+        nums.reverse()
+        return
+    # find the first number > nums[k] starting from end
+    k = i-1
 
-class Solution:
-    def nextPermutation(self, nums: List[int]) -> None:
-        i = j = len(nums)-1
-        while i > 0 and nums[i-1] >= nums[i]:
-            i -= 1
-        if i == 0:   # nums are in descending order
-            nums.reverse()
-            return 
-        k = i - 1    # find the last "ascending" position
-        while nums[j] <= nums[k]:
-            j -= 1
-        nums[k], nums[j] = nums[j], nums[k]  
-        l, r = k+1, len(nums)-1  # reverse the second part
-        while l < r:
-            nums[l], nums[r] = nums[r], nums[l]
-            l +=1 ; r -= 1
+    while nums[j] <=nums[k]:
+        j = j-1
+    #swap these 2 numbers
+    nums[k], nums[j] = nums[j],nums[k]
+    #erverse the 2nd part
+    l = k+1
+    r = len(nums)-1
+    while l < r:
+        nums[l],nums[r] = nums[r],nums[l]
+        l = l+1
+        r = r-1
