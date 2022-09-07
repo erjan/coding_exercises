@@ -36,5 +36,18 @@ class Solution:
         
         dfs(root)
             
+--------------------------------------------------------------------------------------------------------
+def flatten(self, root):
+    while root:
+        if root.left:
+            self.flatten(root.left)
+            node1 = root.left
+            while node1.right:
+                node1 = node1.right
+            node2 = root.right
+            root.right = root.left
+            root.left = None
+            node1.right = node2
+        root = root.right
             
         
