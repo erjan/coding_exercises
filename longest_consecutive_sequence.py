@@ -39,3 +39,34 @@ class Solution:
                 cur_consecutive = 1
             prev = cur
         return ans
+------------------------------------------------------------------------------------
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        
+        
+        heapq.heapify(nums)
+        
+        res = 1
+        
+        cur_consec = 1
+        
+        prev = heapq.heappop(nums)
+        
+        while nums:
+            
+            cur = heapq.heappop(nums)
+            
+            diff = cur - prev
+            if diff == 1:
+                cur_consec +=1
+                res = max(res, cur_consec)
+            
+            elif diff > 1:
+                cur_consec = 1
+            
+            prev = cur
+        
+        return res
+            
