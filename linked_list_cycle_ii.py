@@ -21,3 +21,28 @@ class Solution:
         while head != slow:
             head, slow = head.next, slow.next
         return head
+----------------------------------------------------------------------------------------
+def detectCycle(self, head: ListNode) -> ListNode:
+	if not head:
+		return None
+
+	fast, slow = head, head
+	isCycle = False
+
+	while fast and fast.next:
+		slow = slow.next
+		fast = fast.next.next
+
+		if slow == fast:
+			isCycle = True
+			break
+
+	if not isCycle:
+		return None
+
+	slow = head
+	while slow != fast:
+		slow = slow.next
+		fast = fast.next
+
+	return fast
