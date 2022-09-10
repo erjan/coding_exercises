@@ -20,3 +20,22 @@ class Solution:
                     length+=1
                 longest = max(longest, length)
         return longest
+-------------------------------------------------------------------
+class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+        ans = 1
+        cur_consecutive = 1
+        heapq.heapify(nums)
+        prev = heapq.heappop(nums)
+        while nums:
+            cur = heapq.heappop(nums)
+            diff = cur - prev
+            if diff == 1:
+                cur_consecutive += 1
+                ans = max(ans, cur_consecutive)
+            elif diff > 1:
+                cur_consecutive = 1
+            prev = cur
+        return ans
