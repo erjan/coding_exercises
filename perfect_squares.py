@@ -6,7 +6,19 @@ that is the square of an integer; in other words, it is the product of some inte
 with itself. For example, 1, 4, 9, and 16 are perfect squares while 3 and 11 are not.
 '''
 
+class Solution:
+    def numSquares(self, n: int) -> int:
+        dp = [float("inf")]*(n+1)
+        for i in range(len(dp)):
+            if int(sqrt(i)) == sqrt(i):
+                dp[i] = 1
+            else:
+                for j in range(int(sqrt(i))+1):
+                    dp[i] = min(dp[i], dp[i-j*j]+1)
+                    
+        return dp[-1]
 
+---------------------------------------------------------------
 class Solution:
     def numSquares(self, n: int) -> int:
 		# step 1
