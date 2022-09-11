@@ -46,9 +46,6 @@ class Solution:
 
                     top = stack.pop()
                     top2 = stack.pop()
-                    stack.append(int(top2/top))
-
-
-                    
+                    stack.append(int(top2/top))                   
 
         return stack[-1]
