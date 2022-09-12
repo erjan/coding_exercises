@@ -15,3 +15,12 @@ class Solution:
         right.append(n)        
         
         return max(max(left), n - min(right))
+
+---------------------------------------------------------
+
+class Solution:
+    def getLastMoment(self, n: int, left: List[int], right: List[int]) -> int:
+        l = max(left) if left else 0
+        r = n - min(right) if right else 0
+        
+        return max(l,r)
