@@ -295,4 +295,98 @@ class AllOne(object):
         val = node.arr.pop()
         node.arr.add(val)
         return val
+----------------------------------------------------------------------------------------------------
+class Node:
+    def __init__(self, val):
+        self.next = None
+        self.pre = None
+        self.val = val
+        self.data = set()
 
+
+class AllOne(object):
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.head = Node(0)
+        self.tail = Node(0)
+        self.head.next, self.tail.pre = self.tail, self.head
+        self.memo = {}
+        
+    def add(self, node, key):
+        if node.val+1 != node.next.val:
+            newNode = Node(node.val+1)
+            newNode.pre, newNode.next = node, node.next
+            newNode.pre.next = newNode.next.pre = newNode
+        else:
+            newNode = node.next
+        
+        newNode.data.add(key)
+        return newNode
+    
+    def add_prev(self, node, key):
+        if node.val-1 != node.pre.val:
+            newNode = Node(node.val-1)
+            newNode.pre, newNode.next = node.pre, node
+            newNode.pre.next = newNode.next.pre = newNode
+        else:
+            newNode = node.pre
+        newNode.data.add(key)
+        return newNode
+        
+    def inc(self, key):
+        """
+        Inserts a new key <Key> with value 1. Or increments an existing key by 1.
+        :type key: str
+        :rtype: None
+        """
+        if key not in self.memo:
+            self.memo[key] = self.add(self.head, key)
+        else:
+            node = self.memo[key]
+            self.memo[key] = self.add(node, key)
+            node.data.remove(key)
+            if not node.data:
+                node.pre.next, node.next.pre = node.next, node.pre
+                node.next = node.pre = None
+
+    def dec(self, key):
+        """
+        Decrements an existing key by 1. If Key's value is 1, remove it from the data structure.
+        :type key: str
+        :rtype: None
+        """
+        if key in self.memo:
+            node = self.memo[key]
+            node.data.remove(key)
+            del self.memo[key]
+            if node.val > 1:
+                self.memo[key] = self.add_prev(node, key)
+            if not node.data:
+                node.pre.next, node.next.pre = node.next, node.pre
+                node.next = node.pre = None
+                
+
+    def getMaxKey(self):
+        """
+        Returns one of the keys with maximal value.
+        :rtype: str
+        """
+        if not self.tail.pre.data:
+            return ""
+        num = self.tail.pre.data.pop()
+        self.tail.pre.data.add(num)
+        return num
+
+    def getMinKey(self):
+        """
+        Returns one of the keys with Minimal value.
+        :rtype: str
+        """
+        if not self.head.next.data:
+            return ""
+        num = self.head.next.data.pop()
+        self.head.next.data.add(num)
+        return num
