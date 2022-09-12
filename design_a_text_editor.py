@@ -129,3 +129,77 @@ class TextEditor:
     def cursorRight(self, k: int) -> str:
         self.ptr = min(self.ptr + k, len(self.txt))  
         return self.txt[max(0, self.ptr - 10):self.ptr]
+    
+-------------------------------------------------------------------------------------------------
+class Node:
+    def __init__(self, c, pre=None, next=None):
+        self.c = c
+        self.pre = pre
+        self.next = next
+
+class TextEditor:
+    def __init__(self):
+        self.head = Node(0)
+        self.tail = Node(1)
+        self.head.next = self.tail
+        self.tail.pre = self.head
+        self.curr = self.tail
+        
+    def addText(self, text: str) -> None:
+        pre = self.curr.pre
+        post = self.curr
+        for c in text:
+            curr = Node(c)
+            pre.next = curr
+            curr.pre = pre
+            pre = curr
+        
+        pre.next = post
+        post.pre = pre
+
+    def deleteText(self, k: int) -> int:
+        ans = 0
+        curr = self.curr
+        pre = curr.pre
+        for _ in range(k):
+            if pre.c == 0:
+                break
+            ans += 1
+            pre = pre.pre
+            pre.next = curr
+            curr.pre = pre
+            
+        return ans
+        
+    def cursorLeft(self, k: int) -> str:
+        curr = self.curr
+        pre = curr.pre
+        for _ in range(k):
+            if pre.c == 0:
+                break
+            self.curr = pre
+            pre = pre.pre
+        
+        return self.rt_txt()
+        
+
+    def cursorRight(self, k: int) -> str:
+        for _ in range(k):
+            if self.curr.c == 1:
+                break
+            post = self.curr.next
+            self.curr = post
+        
+        return self.rt_txt()
+        
+    
+    def rt_txt(self,):
+        s = ""
+        pre = self.curr.pre
+        for _ in range(10):
+            if pre.c == 0:
+                break
+            s = pre.c + s
+            pre = pre.pre
+
+        return s
