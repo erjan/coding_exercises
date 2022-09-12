@@ -65,3 +65,24 @@ class Solution:
                     if nth_sample == 1:
                         reservoir = index
         return reservoir
+
+----------------------------------------------------------------------------------------------------------
+class Solution:
+
+    def __init__(self, nums: List[int]):
+        # Reservoir Sampling (which can handle the linked list with unknown size), time complexity O(n) (init: O(1), pick: O(n)), space complextiy O(1)
+        self.nums = nums
+
+    def pick(self, target: int) -> int:
+        # https://docs.python.org/3/library/random.html
+        count = 0
+        chosen_index = None
+        for i in range(len(self.nums)):
+            if self.nums[i] != target:
+                continue
+            count += 1
+            if count == 1:
+                chosen_index = i
+            elif random.random() < 1 / count:
+                chosen_index = i
+        return chosen_index
