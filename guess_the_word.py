@@ -26,3 +26,16 @@ class Solution:
                for other in wordlist
                if matches == sum(w == o for w, o in zip(word, other))
            ]
+------------------------------------------------------------------------------------
+class Solution:
+    def findSecretWord(self, wordlist: List[str], master: 'Master') -> None:
+        dic = wordlist
+        for _ in range(10):
+            word = random.choice(dic)
+            matches = master.guess(word)
+            if matches == 6: break  
+            dic = [w for w in dic \
+                    if w != word and self.guess(word, w) == matches]
+      
+    def guess(self, w1, w2):
+        return sum(1 for c1, c2 in zip(w1,w2) if c1==c2)
