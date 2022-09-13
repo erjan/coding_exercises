@@ -54,3 +54,53 @@ def stoneGameIII(stoneValue):
     return "Alice" if dp[0] > 0 else "Bob" if dp[0] < 0 else "Tie"-
   
 --------------------------------------------------------------------  
+class Solution:
+    def stoneGameIII(self, num: List[int]) -> str:
+        dp=[0]*(len(num)+1)
+        i=len(num)-1
+        
+        while i>=0:
+            ans=-1001
+            ans=max(ans,num[i]-dp[i+1])
+            
+            if i+1<len(num):
+                ans=max(ans,num[i]+num[i+1]-dp[i+2])
+            
+            if i+2<len(num):
+                ans=max(ans,num[i]+num[i+1]+num[i+2]-dp[i+3])
+            dp[i]=ans
+            i-=1
+            
+            
+        alice=dp[0]
+        if alice>0:
+            return "Alice"
+        elif alice<0:
+            return "Bob"
+        else:
+            return "Tie"
+-------------------------------------------------------------------------
+Use dp[i] to represent for a player (could be Alice or Bob) who is about to play with the first stone in the row is the ith in the array, the maximum value he/she can get throughout the game.
+
+With this definition, the state transition formula is clear:
+starting from the ith stone, there are a total of sum(stoneValue[i:]) in the game.
+There are 3 options of this player to play, pick 1, 2, or 3 stones. Let's use 2 as an example, since this player picked 2 stones in this turn, the next player starts at ith+2 stone, and the maximum the next player can get is dp[i+2] (according to the definition of our dp). So consider all 3 opitons:
+
+dp[i] = sum(stoneValue[i:]) - min(dp[i+1], dp[i+2], dp[i+3])
+
+def stoneGameIII(self, stoneValue):
+
+
+    dp = [0 for i in range(len(stoneValue) + 3)]
+    
+    arrsum = 0 # arrsum aggreagtion from the end to avoid repetitive sumation
+    for i in range(len(stoneValue)-1,-1,-1):
+        arrsum += stoneValue[i]
+        dp[i] = arrsum - min(dp[i+1], dp[i+2], dp[i+3]) # we want to maximize the value for current player so we need to minimize the gain for next player
+    
+    score = dp[0] # dp[0] is the maximum gain for player who plays first
+    s = score*2 - arrsum
+    if s > 0: return 'Alice'
+    if s == 0: return 'Tie'
+    if s < 0: return 'Bob'
+        
