@@ -38,3 +38,41 @@ def getMoneyAmount(self, n):
             need[lo][hi] = min(x + max(need[lo][x-1], need[x+1][hi])
                                for x in range(lo, hi))
     return need[1][n]
+
+-----------------------------------------------------------------------------
+class Solution:
+    def solve(self, start, end):
+        if start >= end:
+            return 0
+        if (start, end) in self.d:
+            return self.d[(start, end)]
+        self.d[(start, end)] = float("inf")
+        for i in range(start, end+1):
+            cost1 = self.solve(start, i-1) + i
+            cost2 = self.solve(i+1, end) + i
+            cost = max(cost1, cost2)
+            self.d[(start, end)] = min(self.d[(start, end)], cost)
+        return self.d[(start, end)]
+    
+    def getMoneyAmount(self, n: int) -> int:
+        self.d = {}
+        return self.solve(1, n)
+
+----------------------------------------------------------------------------------------------------
+from functools import lru_cache
+class Solution:
+    def getMoneyAmount(self, n: int) -> int:
+        @lru_cache(maxsize=None) 
+        def cost(arr):
+            l = len(arr)
+            if not l: return 0
+            if l == 1: return 0
+            if l == 2: return arr[0]
+            if l == 3: return arr[1]
+            minimum = float('inf')
+            for i in range(len(arr)-2, -1, -2):
+                left, right = cost(arr[:i]), cost(arr[i+1:])
+                minimum = min(minimum, max(left + arr[i], arr[i] + right))
+            return minimum
+        return cost(tuple(range(1, n+1)))
+    
