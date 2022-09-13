@@ -58,6 +58,7 @@ class Solution:
         self.d = {}
         return self.solve(1, n)
 
+    
 ----------------------------------------------------------------------------------------------------
 from functools import lru_cache
 class Solution:
@@ -75,4 +76,45 @@ class Solution:
                 minimum = min(minimum, max(left + arr[i], arr[i] + right))
             return minimum
         return cost(tuple(range(1, n+1)))
-    
+    -----------------------------------------------------------------------------------------------------------------
+    class Solution:
+    def getMoneyAmount(self, n: int) -> int:
+        ## RC ##
+        ## APPROACH : DP - MERGE INTERVALS PATTERN ##
+        ## LOGIC - BOTTOM UP ##
+        ## consider numbers 1,2,3,4 (here i = 1, j = 4) ## 
+        ## 1. we start by picking 2 or 3 ==> lets say we started by 2, player B says right side we pick 3 ==> so total = 5. or if player B says left side ? result will be 2 + 0 => 2. worst case scenarios is maximum of leftside and rightside. i.e for k=2 => max(5,2)
+        ## 2. next if we start with 3 i.e k=3 ==> we can go left side or right side. for leftside ==> total = 3 + 1, for rightside total = 3 + 0. worst case is max(4,3) = 4
+        ## In short, for start point k =2 in 1234, we need leftside [1,1] rightside[3,4] and pick worst
+        ## for startpoint k = 3 in 1234, we need leftside [1,2] and rightside[4,4] and pick worst
+        ## This is the reason why we need to have 2D DP matrix, to store left and right subproblems
+        ## We need to return best of all worst cases, so res = minimum( worstcase( number + leftside sub problem, number + rightside subproblem ) ) 
+        ## ```dp[i][j] = min( dp[i][j], max( dp[i][k-1] + k, dp[k+1][j] + k ) )``` for all startpoints of k ( k lies between i and j)
+        
+		## TIME COMPLEXITY : O(N^2) ##
+		## SPACE COMPLEXITY : O(N^2) ##
+
+        ## EXAMPLE : 1 2 3 4 5 6 7 ##
+        # [
+        #     ['X', 'X', 'X', 'X', 'X', 'X', 'X', 'X'], 
+        #     ['X', 0, 1, 2, 4, 6, 8, 10], 
+        #     ['X', 'X', 0, 2, 3, 6, 8, 10], 
+        #     ['X', 'X', 'X', 0, 3, 4, 8, 10], 
+        #     ['X', 'X', 'X', 'X', 0, 4, 5, 10], 
+        #     ['X', 'X', 'X', 'X', 'X', 0, 5, 6], 
+        #     ['X', 'X', 'X', 'X', 'X', 'X', 0, 6], 
+        #     ['X', 'X', 'X', 'X', 'X', 'X', 'X', 0]
+        # ]
+
+        dp = [[ float('inf') ] * (n+1) for _ in range(n+1)]
+        for i in range(n, 0, -1):
+            for j in range(i,n+1):
+                if i == j :
+                    dp[i][j] = 0
+                if j - i == 1:
+                    dp[i][j] = i
+                for k in range(i+1, j):
+                    dp[i][j] = min( dp[i][j], max( dp[i][k-1] + k, dp[k+1][j] + k ) )
+        # print(dp)
+        return dp[1][-1]
+
