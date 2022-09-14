@@ -45,3 +45,51 @@ class Solution:
                     if result == 0: ans = 0
                 return ans
         return move(1,2,1)
+    
+---------------------------------------------------------------------------
+from functools import lru_cache
+class Solution:
+     def catMouseGame(self, graph: List[List[int]]) -> int:
+        n = len(graph)
+
+        degree = [[[0 for k in range(3)] for j in range(n)] for i in range(n)]
+        for i in range(n):
+            for j in range(n):
+                degree[i][j][1] += len(graph[i])
+                degree[i][j][2] += len(graph[j])
+                if 0 in graph[j]:
+                    degree[i][j][2] -= 1 # cat cannot go to the hole 0!
+        # Push the winning state into the queue, and look for their parents
+        dq = deque()
+        win = [[[0 for k in range(3)] for j in range(n)] for i in range(n)]
+        for i in range(1, n):
+            for k in range(1,3):
+                win[0][i][k] = 1
+                dq.append([0,i,k,1])
+                win[i][i][k] = 2
+                dq.append([i,i,k,2])
+
+        while dq:
+            m, c, t, w = dq.popleft()
+            parents = []
+            if t == 1:
+                for parent in graph[c]:
+                    if parent != 0:
+                        parents.append([m, parent, 2]) # cat cannot come from the hole 0!
+            else:
+                for parent in graph[m]:
+                    parents.append([parent, c, 1])
+            for mp, cp, tp in parents:
+                # we are only interested in dealing with the potential draws
+                if win[mp][cp][tp] == 0:
+                    # it's mouse turn and mouse would win if it makes the move; same for cat
+                    if tp == w: 
+                        win[mp][cp][tp] = w
+                        dq.append([mp, cp, tp, w])
+                    else:
+                        degree[mp][cp][tp] -= 1
+                        if degree[mp][cp][tp] == 0:
+                            win[mp][cp][tp] = w
+                            dq.append([mp, cp, tp, w])
+        #print(win)
+        return win[1][2][1]
