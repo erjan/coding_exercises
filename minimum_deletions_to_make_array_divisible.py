@@ -54,3 +54,26 @@ class Solution:    # version w/o heap. Seems to run slower
             if not g%num: return i
 
         return -1
+
+------------------------------------------------------------------------------------------------------------------
+'''
+Explanation
+"divides all the elements of numsDivide"
+equals to
+"divides gcd of all the elements of numsDivide"
+where gcd is the greatest common divisor.
+
+So the first step, find out the gcd of numsDivide,
+then sort input nums A,
+and find out the smallest element A[i] in A divides gcd.
+
+We need to remove all elements smaller than A[i].
+If no such A[i], return -1
+'''
+
+ def minOperations(self, A: List[int], numsDivide: List[int]) -> int:
+        g = gcd(*numsDivide)
+        for i,a in enumerate(sorted(A)):
+            if g % a == 0: return i
+            if a > g: break
+        return -1
