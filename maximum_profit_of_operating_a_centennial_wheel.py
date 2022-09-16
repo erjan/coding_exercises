@@ -60,39 +60,20 @@ class Solution:
 -----------------------------------------------------
 
 class Solution:
-    def minOperationsMaxProfit(self, customers: List[int], boardingCost: int, runningCost: int) -> int:
-        if not customers:
-            return 0
-        waiting = 0
+    def minOperationsMaxProfit(self, customers, boardingCost: int, runningCost: int) -> int:
         profit = 0
-        
-        max_profit = -1
-        index = 0
-        
-        op = 0 # the number of operations 
-        
-        for i, people in enumerate(customers):
-            op += 1
-            waiting += people
-            boarding = min(4, waiting)
-            profit += boarding * boardingCost - runningCost
-            waiting -= boarding
-            
-            if profit > max_profit:
-                max_profit = profit
-                index = op
-
-        while waiting > 0:
-            op += 1
-            boarding = min(4, waiting)
-            profit += boarding * boardingCost - runningCost
-            waiting -= boarding
-            if profit > max_profit:
-                max_profit = profit
-                index = op
-        
-        if max_profit == -1:
-            return -1
-        else:
-            return index
-      
+        waiting = 0
+        lst_profit = []
+        for arrived in customers:
+            waiting += arrived
+            loading = min(4, waiting)
+            waiting -= loading
+            profit += loading * boardingCost - runningCost
+            lst_profit.append(profit)
+        while waiting:
+            loading = min(4, waiting)
+            waiting -= loading
+            profit += loading * boardingCost - runningCost
+            lst_profit.append(profit)
+        max_profit = max(lst_profit)
+        return lst_profit.index(max_profit) + 1 if max_profit > 0 else -1
