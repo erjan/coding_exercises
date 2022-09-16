@@ -14,43 +14,29 @@ Note: All the given times follow the 24-hour clock. That means the first round o
 
  
  '''
-
 class Solution:
-    def numberOfRounds(self, startTime: str, finishTime: str) -> int:
-        sh, sm = startTime.split(":")
-        eh, em = finishTime.split(":")
-		
-        # sh - hour part of the start time
-		# sm - minute part of the start time
-		# eh - hour part of the finish time
-		# em = minute part of the finish time
-        sh, sm, eh, em = int(sh), int(sm), int(eh), int(em)
+    def numberOfRounds(self, loginTime: str, logoutTime: str) -> int:
+        login = self.to_min(loginTime)
+        logout = self.to_min(logoutTime)
         
-        if sh == eh:
-            if sm <= em:
-                return em//15 - (sm//15 + 1)
-            else:
-                val = 0
-                sm = 60 - sm
-                val += sm//15
-                val += em//15
-                return 23*4 + val 
-        else:
-            if eh < sh:
-                eh += 24
-            val = 0
-            sm = 60 - sm
-            val += sm//15
-            val += em//15
-            sh += 1
-            return (eh-sh)*4 + val
-          
-----------------------------------------------------
-def numberOfRounds(self, startTime: str, finishTime: str) -> int:
-    s = int(startTime[:2]) * 60 + int(startTime[-2:])
-    t = int(finishTime[:2]) * 60 + int(finishTime[-2:])
-    if s > t:
-        t += 24 * 60
-    q, r = divmod(s, 15)
-    s, t = q + int(r > 0), t // 15
-    return max(0, t - s)
+        if logout < login:  # new day after midnight
+            logout = logout + 24 * 60
+            
+        if logout - login < 15:
+            return 0
+        
+        login = self.round_login(login)
+        logout = self.round_logout(logout)
+        
+        return (logout - login) // 15
+    
+    
+    def to_min(self, current_time: str) -> int:
+        h, m = map(int, current_time.split(":"))
+        return h * 60 + m
+    
+    def round_login(self, m: int):
+        return m if m % 15 == 0 else m + (15 - m % 15)
+    
+    def round_logout(self, m: int):
+        return m if m % 15 == 0 else m - (m % 15)
