@@ -7,22 +7,32 @@ Recall that a permutation of letters is a bijection from letters to letters: eve
 '''
 
 class Solution:
-	def findAndReplacePattern(self, words: List[str], p: str) -> List[str]:
-		def find(w): # function thats calculate the numeric pattern
-			l = []
-			m = defaultdict(int)
-			i = 0
-			for c in w:
-				if c in m:
-					l.append(m[c])
-				else:
-					i+=1
-					m[c]=i
-					l.append(m[c])
-			return l
-		ans = []
-		pfind = find(p)
-		for w in words:
-			wfind = find(w)
-			if wfind == pfind: ans.append(w) #check if numeric pattern of pattern is equal to pattern of word 
-		return ans
+    def findAndReplacePattern(self, words: List[str], pattern: str) -> List[str]:
+        
+        def find(w):
+            
+            l = []
+            
+            d = defaultdict(int)
+            i = 0
+            
+            for char in w:
+                
+                if char in d:
+                    l.append(d[char])
+                    
+                else:
+                    i+=1
+                    d[char] = i
+                    l.append(d[char])
+            return l                
+        res = []
+        patternword_pattern = find(pattern)
+        
+        for word in words:
+            word_pattern = find(word)
+            if word_pattern == patternword_pattern:
+                res.append(word)
+                
+        return res
+                
