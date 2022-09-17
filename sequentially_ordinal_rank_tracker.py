@@ -77,3 +77,21 @@ class SORTracker:
         self.gets += 1
         return name
       
+-----------------------------------------
+from sortedcontainers import SortedList
+
+class SORTracker:
+
+    def __init__(self):
+        self.main = SortedList()
+        self.numcall = 0
+        
+
+    def add(self, name: str, score: int) -> None:
+        self.main.add((-score,name))
+              
+
+    def get(self) -> str:
+        _ , name = self.main[self.numcall]
+        self.numcall+=1
+        return name
