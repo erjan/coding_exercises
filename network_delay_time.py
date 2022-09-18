@@ -27,3 +27,36 @@ class Solution:
                     heapq.heappush(heap, (travel_time+time, adjacent_node))
                 
         return -1
+
+---------------------------------------------------------------------------------------------------------------
+import heapq
+
+from collections import defaultdict
+
+
+def f(times, N, K):
+    elapsedTime = [0] + [float("inf")] * N
+    graph = defaultdict(list)   # it's a min-heap
+    heap = [(0, K)]
+
+    for u, v, w in times:
+        graph[u].append((v, w))
+
+    print(graph)
+
+    while heap:
+        time, node = heapq.heappop(heap)
+        if time < elapsedTime[node]:
+            elapsedTime[node] = time
+            for v, w in graph[node]:
+                heapq.heappush(heap, (time + w, v))
+    mx = max(elapsedTime)
+    return mx if mx < float("inf") else -1
+
+
+if __name__ == '__main__':
+
+    times = [[2, 1, 1], [2, 3, 1], [3, 4, 1]]
+    n = 4
+    k = 2
+    f(times, n, k)
