@@ -42,14 +42,21 @@ class Solution:
 
 class Solution:
     def carPooling(self, trips: List[List[int]], capacity: int) -> bool:
-        trips.sort(key = lambda x:x[2])
+        
+        trips.sort(key = lambda x: x[2])
         stations = trips[-1][-1]
-        people = [0]*(stations+1)
-        for count , start , end in trips:
-            people[start] += count
-            people[end] -= count
+        people = [0] * (stations+1)
+        
+        
+        for psng, from_,to_ in trips:
+            people[from_] += psng
+            people[to_] -= psng
+        
         if people[0] > capacity: return False
-        for i in range(1,stations+1):
+        
+        for i in range(1, stations+1):
             people[i] += people[i-1]
-            if people[i] > capacity: return False
+            
+            if people[i] > capacity:
+                return False
         return True
