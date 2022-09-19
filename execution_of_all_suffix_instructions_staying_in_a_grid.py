@@ -11,29 +11,32 @@ Return an array answer of length m where answer[i] is the number of instructions
 '''
  
  
- def executeInstructions(self, n: int, startPos: List[int], s: str) -> List[int]:
-        result = []
-        for i in range (0,len(s)):
-             ch= s [i:]
-             actualPos = copy.copy(startPos)
-             numberSteps=0
-             for step in ch :
-                    if step == 'U':
-                        actualPos[0]-=1
-                    elif step == 'D':
-                        actualPos[0] +=1
-                    elif step == 'R':
-                        actualPos[1]+=1
-                    elif step =='L':
-                        actualPos[1]-=1
-                        
-                    ## Condition of leaving the grid 
-                    if actualPos[0]<0 or actualPos[1]<0 or actualPos[0]>n-1 or actualPos[1]> n-1 :
-                        break
-                    else: 
-                        numberSteps +=1
-                        
-                   
-             result.append (numberSteps)
-                    
-        return result
+ class Solution:
+    def executeInstructions(self, n: int, startPos: List[int], s: str) -> List[int]:
+        
+        res = []
+        
+        for i in range(len(s)):
+            ch = s[i:]
+            actual_p = copy.copy(startPos)
+            num_steps = 0
+            
+            for command in ch:
+
+                if command == 'U':
+                    actual_p[0]-=1
+                elif command == 'D':
+                    actual_p[0]+=1
+                elif command == 'R':
+                    actual_p[1]+=1
+                elif command == 'L':
+                    actual_p[1]-=1
+                
+                if actual_p[0] < 0 or actual_p[1] < 0 or actual_p[0] > n-1 or actual_p[1] > n-1:
+                    break
+                
+                else:
+                    num_steps+=1
+            res.append(num_steps)
+            
+        return res         
