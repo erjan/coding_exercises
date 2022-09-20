@@ -12,38 +12,23 @@ int seat() Returns the label of the seat at which the next student will set.
 void leave(int p) Indicates that the student sitting at seat p will leave the room. It is guaranteed that there will be a student sitting at seat p.
  
  '''
-
-
 class ExamRoom:
-
-    def __init__(self, n: int):
-        self.n = n
-        self.lst = []
+    def __init__(self, N: int):
+        self.occupied = []
+        self.N = N
 
     def seat(self) -> int:
-        if self.lst == []:
-            self.lst.append(0)
+        if not self.occupied: 
+            self.occupied.append(0)
             return 0
-        else:
-            index = 0 
-            diff = self.lst[0]
-            for i in range(1,len(self.lst)+1):
-                if i == len(self.lst):
-                    tmp = self.n - 1 - self.lst[i-1]
-                else:
-                    tmp = (self.lst[i] - self.lst[i-1])//2
-                if  tmp > diff:
-                    diff  = tmp
-                    index = i
-            #print(self.lst,diff,index)
-            if index ==0: 
-                self.lst.insert(0,0)
-                return 0
-            elif index == len(self.lst):
-                self.lst.append(self.n-1)
-                return self.n-1
-            else:
-                self.lst.insert(index,self.lst[index-1]+diff)
-                return diff+self.lst[index-1]
+        left, right = -self.occupied[0], self.occupied[0]
+        maximum = (right - left) // 2
+        for start, end in zip(self.occupied, self.occupied[1:] + [2 * self.N - 2 - self.occupied[-1]]):
+            if (end - start) // 2 > maximum:
+                left, right = start, end
+                maximum = (right - left) // 2
+        bisect.insort(self.occupied, left + maximum)
+        return left + maximum
+            
     def leave(self, p: int) -> None:
-        self.lst.remove(p)
+        self.occupied.remove(p)
