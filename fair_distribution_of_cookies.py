@@ -8,26 +8,33 @@ Return the minimum unfairness of all distributions.
 
 
 class Solution:
+    
     def distributeCookies(self, cookies: List[int], k: int) -> int:
-        result = float('inf')
-        children = [0] * k
+        lo = min(cookies)
+        hi = sum(cookies) + 1
         
-        def backtrack(index):
-            nonlocal result, children
+        def can_satisfy(cookies, max_size, childs: int = k) -> bool:
+            if childs == 1:
+                return sum(cookies) <= max_size
             
-            if index == len(cookies):
-                result = min(result, max(children))
-                return
-				
-			# key point to pass the TLE!
-            if result <= max(children):
-                return
+            for mask in range(1, 2**len(cookies)):
+                total = 0
+                rest = []
+                for i in range(len(cookies)):
+                    if mask & (1 << i):
+                        total += cookies[i]
+                    else:
+                        rest.append(cookies[i])
+                if total <= max_size:
+                    if can_satisfy(rest, max_size, childs -1):
+                        return True
             
-            for i in range(k):
-                children[i] += cookies[index]
-                backtrack(index + 1)
-                children[i] -= cookies[index]
-                
-        backtrack(0)
+            return False
         
-        return result
+        while lo < hi:
+            mid = (lo+hi)//2
+            if can_satisfy(cookies, mid):
+                hi = mid
+            else:
+                lo = mid+1
+        return lo
