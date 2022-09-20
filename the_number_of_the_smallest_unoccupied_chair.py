@@ -10,6 +10,13 @@ Return the chair number that the friend numbered targetFriend will sit on.
 '''
 
 
+'''
+We will be using two min heaps, one for available chairs and the other for occupied chairs.
+Every time a new friend arrives, we will see that whether there is/are occupied chairs which can be free now(friend sat/sitting on such chairs has left or is leaving) then we pop these chairs from occupied chairs heap and push into available chairs heap.
+Then we pop the minimum number chair from available chairs heap and assign it to the current arrived friend and push it to occupied chairs heap.
+When the target friend arrives, we assign the applicable chair and return its number.
+'''
+
 class Solution:
     def smallestChair(self, times: List[List[int]], targetFriend: int) -> int:
         friendsCount = len(times)
@@ -30,3 +37,6 @@ class Solution:
                 return smallestChairNumberAvailable
             else:
                 heapq.heappush(occupiedChairs, (leaving, smallestChairNumberAvailable))
+
+		
+		
