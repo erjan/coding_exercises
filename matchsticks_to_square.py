@@ -7,7 +7,47 @@ Return true if you can make this square and false otherwise.
 
 '''
 
+---------------------------------------------------------------------------------------
+class Solution:
+    def makesquare(self, matchsticks: List[int]) -> bool:
+        
+        value = sum(matchsticks)
+        if value < 4:
+            return False
+        if value % 4 != 0:
+            return False
+        
+        target = sum(matchsticks)//4
+        
+        
+        matchsticks.sort(reverse=True)
+        
+                                        
+        @cache
+        def backtrack(a,b,c,d, i ):
+            nonlocal target
 
+            if a == b==c==d==target:
+                return True
+            
+            if i > len(matchsticks)-1:
+                return False
+            
+            if a > target or b > target or c > target or d > target:
+                return False
+            
+            cur_stick = matchsticks[i]
+            return backtrack(a+cur_stick,b,c,d,i+1) or \
+                        backtrack(a,b+cur_stick,c,d,i+1) or \
+                        backtrack(a,b,c+cur_stick,d,i+1) or \
+                        backtrack(a,b,c,cur_stick+d,i+1)
+        
+        return backtrack(0,0,0,0,0)
+
+
+
+-----------------------------------------------------------------------------------------------------------------    
+    
 class Solution:
     def makesquare(self, matchsticks: List[int]) -> bool:
         value = sum(matchsticks)
