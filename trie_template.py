@@ -15,9 +15,9 @@ def __init__(self):
 
 
  class Solution(object):
- def main(self, words):
-    trie  = Trie()
-    for word in set(words):
-        trie.add(word[::-1])
-    ans = 0
-    
+	 def main(self, words):
+	    trie  = Trie()
+	    for word in set(words):
+		trie.add(word[::-1])
+	    ans = 0
+
