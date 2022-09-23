@@ -9,25 +9,17 @@ String get(String key, int timestamp) Returns a value such that set was called p
 '''
 
 
-class TimeMap(object):
-
+class TimeMap:
     def __init__(self):
-        self.map = collections.defaultdict(list)
-        
+        self.meta = collections.defaultdict(list)
+        self.data = collections.defaultdict(list)
 
-    def set(self, key, value, timestamp):
-        self.map[key].append((timestamp, value))
-        
+    def set(self, key: str, value: str, timestamp: int) -> None:
+        self.meta[key].append(timestamp)
+        self.data[key].append(value)
 
-    def get(self, key, timestamp):
-        values = self.map[key]
-        if not values: return ''
-        left, right = 0, len(values) - 1
-        while left < right:
-            mid = (left + right + 1) / 2
-            pre_time, value = values[mid]
-            if pre_time > timestamp:
-                right = mid - 1
-            else:
-                left = mid
-        return values[left][1] if values[left][0] <= timestamp else ''
+    def get(self, key: str, timestamp: int) -> str:
+        idx = bisect.bisect(self.meta[key], timestamp)
+        if idx == 0:
+            return ''
+        return self.data[key][idx - 1]
