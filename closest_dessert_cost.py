@@ -16,20 +16,29 @@ Return the closest possible cost of the dessert to target. If there are multiple
 
 
 class Solution:
-    def closestCost(self, baseCosts: List[int], toppingCosts: List[int], target: int) -> int:
-        self.res = float('inf')
-        
-        for baseCost in baseCosts:
-            self.dfs(toppingCosts, target, baseCost)
-		
-        return self.res
-    
-    def dfs(self, toppingCosts, target, total):
-        if abs(target-total) < abs(self.res-target):
-            self.res = total
-        if total > target: return
-        
-        for i in range(len(toppingCosts)):
-            self.dfs(toppingCosts[i+1:], target, total+0*toppingCosts[i])
-            self.dfs(toppingCosts[i+1:], target, total+1*toppingCosts[i])
-            self.dfs(toppingCosts[i+1:], target, total+2*toppingCosts[i])
+	def closestCost(self, baseCosts: List[int], toppingCosts: List[int], target: int) -> int:
+
+		minDiff = float('inf')
+		closestCost = 0
+
+		def combinations(tCosts, idx, curCost, target):
+			nonlocal minDiff
+			nonlocal closestCost
+
+			if abs(target - curCost) <= minDiff:
+				if minDiff == abs(target - curCost):
+					closestCost = min(closestCost, curCost)
+				else:
+					closestCost = curCost
+					minDiff = abs(target- curCost)
+
+			if idx >= len(tCosts):
+				return 
+
+			for num in range(3):
+				combinations(tCosts, idx+1, curCost+(tCosts[idx] * num), target)
+
+		for bCost in baseCosts:
+			 combinations(toppingCosts, 0, bCost, target)
+
+		return closestCost
