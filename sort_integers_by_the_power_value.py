@@ -12,13 +12,14 @@ Return the kth integer in the range [lo, hi] sorted by the power value.
 Notice that for any integer x (lo <= x <= hi) it is guaranteed that x will transform into 1 using these steps and that the power of x is will fit in a 32-bit signed integer.
 '''
 
-class Solution:
-    def sortPeople(self, names: List[str], heights: List[int]) -> List[str]:
-        
-        
-        d = dict(zip(heights, names))
-        
-        d = sorted(d.items() , key = lambda x: -x[0])
-        
-        d = [v for k,v in d]
-        return d
+class Solution(object):
+    def getKth(self, lo, hi, k):
+        cache = {1: 1}
+        def fn(n):
+            if n not in cache:
+                if n % 2 == 0:
+                    cache[n] = 1 + fn(n / 2)
+                else:
+                    cache[n] = 1 + fn(3*n + 1)
+            return cache[n]
+        return sorted((fn(i), i) for i in range(lo, hi+1))[k-1][1]
