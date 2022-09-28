@@ -14,13 +14,25 @@ It can be written as (A), where A is a valid string.
 
 class Solution:
     def minRemoveToMakeValid(self, s: str) -> str:
-        stack = []
-        s = list(s)
-        for i in range(len(s)):
-            if s[i] == "(": stack.append(i)
-            elif s[i] == ")":
-                if stack: stack.pop()
-                else: s[i] = ""
-        for i in stack:
-            s[i] = ""
-        return "".join(s)
+		stack = []
+        res = []
+        for i,v in enumerate(s):
+            res.append(v)  # save the charactors to final resutls
+            if v == '(':
+                stack.append(i) # always save left '(' index, to decided if this need to remove or not 
+            if v == ')':
+                if stack:
+                    stack.pop() # as stack saved left '(', so here is good to pop one no matter the index value, just pop the left as a pair
+                else:
+                    res[-1] = ''  # as stack is empty, now we see additional right ')', need replace res[-1] with a empty str, 
+					                    # why not pop out? 
+										# if we do pop, once we loop to the end of the string
+										# if we still have some  left '(' in stack, 
+										# while we do replace array value, it may mess up. 
+										# here, we need keep our res index consistent with the original str 's'.
+		
+		# if we have some left '(' index stack, which means not paired ones, let's remove these ones
+        while stack:
+            res[stack.pop()] = ''
+		
+        return "".join(res)
