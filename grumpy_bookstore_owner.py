@@ -31,3 +31,28 @@ class Solution:
             result = max(sum1, result)
         
         return res + result 
+
+-------------------------------------------------------------------------------------------
+class Solution:
+    def maxSatisfied(self, customers: List[int], grumpy: List[int], X: int) -> int:
+        
+		# We first calculate the base result without the use of the 'X' minute power
+        base_result = 0
+        possible_gain = []                 
+        
+        for idx, i in enumerate(grumpy):
+            if i == 1:
+                possible_gain.append(customers[idx])
+            else:
+                possible_gain.append(0)
+                base_result += customers[idx]
+        
+		# We then consider the possible gain with the 'X' minute power
+        max_result = 0     
+        
+        for idx in range(len(possible_gain)):
+            result = sum(possible_gain[idx:idx+X])            
+            if result > max_result:
+                max_result = result                
+                
+        return base_result+max_result
