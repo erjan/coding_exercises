@@ -7,6 +7,20 @@ Return the number of nodes that have the highest score.
 
 '''
 
+'''
+Explanation
+Intuition: Maximum product of 3 branches, need to know how many nodes in each branch, use DFS to start with
+Build graph
+Find left, right, up (number of nodes) for each node
+left: use recursion
+right: use recursion
+up: n - 1 - left - right
+Calculate score store in a dictinary
+Return count of max key
+Time: O(n)
+Implementation
+'''
+
 class Solution:
     def countHighestScoreNodes(self, parents: List[int]) -> int:
         graph = collections.defaultdict(list)
@@ -25,3 +39,46 @@ class Solution:
             return s + 1                         # return number of children node + 1 (self)
         count_nodes(0)                           # starting from root (0)
         return d[max(d.keys())]                  # return max count
+    
+-----------------------------------------------------------------------------------------
+'''
+for each node, when we remove it, we have the following parts:
+
+child subtree if any
+parent subtree if any
+we use dfs to count the number of node in each child subtree (no.1) and calculate the number of 
+node in the parent subtree by N - sum(child_subtree) - 1(node itself). We use memo to aovid duplicated calculation in dfs.
+'''
+
+    def countHighestScoreNodes(self, parents: List[int]) -> int:
+        children = collections.defaultdict(list)
+        for i, par in enumerate(parents):
+            children[par].append(i)
+
+        @lru_cache(None)
+        def dfs(root):
+            count = 1
+            for child in children[root]:
+                count += dfs(child)
+            return count
+
+        N = len(parents)
+        max_score = 0
+        score_counter = collections.defaultdict(int)
+
+        for root in range(N):
+            child = children[root]
+            _sum = 0
+            score = 1
+
+            # score of the child tree
+            for c in child:
+                count = dfs(c)
+                score *= count
+                _sum += count
+
+            curr_score = score * max(1, N-_sum-1) # score of the parent subtree
+            score_counter[curr_score] += 1
+            max_score = max(max_score, curr_score)
+
+        return score_counter[max_score]
