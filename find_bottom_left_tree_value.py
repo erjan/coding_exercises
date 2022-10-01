@@ -8,6 +8,23 @@ Given the root of a binary tree, return the leftmost value in the last row of th
 #         self.val = val
 #         self.left = left
 #         self.right = right
+
+
+
+class Solution:
+    def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
+        curlevel = [root]
+        while curlevel:
+            leftmost = curlevel[0]
+            nxtlevel = []
+            for i in range(len(curlevel)):
+                v = curlevel[i]
+                if v.left: nxtlevel.append(v.left)
+                if v.right: nxtlevel.append(v.right)
+            curlevel = nxtlevel
+        return leftmost.val
+--------------------------------------------------------------------------------    
+
 class Solution:
     def findBottomLeftValue(self, root: Optional[TreeNode]) -> int:
         
