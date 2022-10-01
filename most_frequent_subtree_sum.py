@@ -23,3 +23,22 @@ class Solution:
         max_val = max(final_freqs.values())
         maxis = [k for k, v in final_freqs.items() if v == max_val]
         return maxis
+
+    
+---------------------------------------------------------------------------
+class Solution:
+    # 48 ms, 99%
+    def findFrequentTreeSum(self, root: TreeNode) -> List[int]:
+        if not root: return []
+        
+        D = collections.defaultdict(int)
+        # DFS recursively
+		def cal_sum(node):
+            if not node: return 0
+            rv = node.val + cal_sum(node.left) + cal_sum(node.right)
+            D[rv] += 1
+            return rv
+        
+        cal_sum(root)
+        mx = max(D.values())
+        return [k for k, v in D.items() if v == mx] # return key if its val == max
