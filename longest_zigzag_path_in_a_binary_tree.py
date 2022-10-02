@@ -38,3 +38,22 @@ class Solution:
                 if node.right:
                     q.append((node.right,False,1))
         return res
+    
+-----------------------------------------------------------------------------------------------------
+class Solution:
+    def longestZigZag(self, root: Optional[TreeNode]) -> int:
+        self.res = 0
+        self.dfs(root.left,True,1)
+        self.dfs(root.right,False,1)
+        return self.res
+    
+    def dfs(self,node,isLeft,depth):
+        if not node: return
+        self.res = max(self.res,depth)
+        
+        if isLeft:
+            self.dfs(node.left,True,1)
+            self.dfs(node.right,False,depth+1)
+        else:
+            self.dfs(node.left,True,depth+1)
+            self.dfs(node.right,False,1)
