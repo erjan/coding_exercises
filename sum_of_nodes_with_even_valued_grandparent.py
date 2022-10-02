@@ -29,3 +29,22 @@ class Solution:
         
         dfs(node)
         return self.total
+    
+-----------------------------------------------------------------------------------------------
+    def sumEvenGrandparent(self, root):
+        self.sum = 0
+        
+        def dfs(root, even_grandparent, parent_val):
+            if root == None:
+                return 
+            
+            if even_grandparent:
+                self.sum += root.val
+                
+            even_grandparent = (parent_val % 2) == 0
+            dfs(root.left, even_grandparent, root.val)
+            dfs(root.right, even_grandparent, root.val)
+            
+        dfs(root, False, 1)
+        
+        return self.sum
