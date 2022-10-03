@@ -10,6 +10,36 @@ The CPU can finish a task then start a new one instantly.
 Return the order in which the CPU will process the tasks.
 '''
 
+class Solution:
+    def getOrder(self, tasks: List[List[int]]) -> List[int]:
+        q = [(task[0], task[1], idx) for idx, task in enumerate(tasks)]
+        q.sort()
+        
+        hq = []
+        ans = []
+        curr_time = q[0][0]
+        i = 0
+        while i < len(q):
+            et, pt, idx = q[i]
+            if et <= curr_time:
+                heapq.heappush(hq, (pt, idx))
+                i += 1
+            else:
+                if hq:
+                    pt, idx = heapq.heappop(hq)
+                    ans.append(idx)
+                    curr_time += pt
+                else:
+                    curr_time = et
+        
+        while hq:
+            pt, idx = heapq.heappop(hq)
+            ans.append(idx)
+        
+        return ans
+    
+------------------------------------------------------------------------
+
 def getOrder(self, tasks: List[List[int]]) -> List[int]:
     # Sort tasks by start time
     tasks = sorted([(start, task_length, index)
