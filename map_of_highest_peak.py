@@ -54,3 +54,26 @@ class Solution:
                 if 0 <= xx < m and 0 <= yy < n and ans[xx][yy] == -1:
                     arr.append((val+1, xx, yy))
         return ans
+      
+-------------------------------------------------------------------------------------
+class Solution:
+def highestPeak(self, isWater: List[List[int]]) -> List[List[int]]:
+    row, col = len(isWater), len(isWater[0])
+    queue, visited = deque([]), set([])
+    for x in range(row):
+        for y in range(col):
+            if isWater[x][y] == 1:
+                isWater[x][y] = 0
+                queue.append((x,y))
+                visited.add((x,y))
+    
+    while queue:
+        x, y = queue.popleft()
+        for nx,ny in [[x+1,y],[x-1,y],[x,y+1],[x,y-1]]:
+            if (nx,ny) in visited: continue
+            if 0<=nx<row and 0<=ny<col:
+                isWater[nx][ny] = isWater[x][y] + 1 
+                visited.add((nx,ny))
+                queue.append((nx,ny))
+    
+    return isWater
