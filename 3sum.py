@@ -4,6 +4,28 @@ Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]]
 Notice that the solution set must not contain duplicate triplets.
 '''
 
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums = sorted(nums)
+        result = set()
+        for i in range(len(nums)):
+            l = i + 1
+            r = len(nums) - 1
+            target = 0 - nums[i]
+            while l < r:
+                s = nums[l]+nums[r]
+                if s == target:
+                    result.add((nums[i], nums[l], nums[r]))
+                    l += 1
+                    r -= 1
+                elif s < target:
+                    l += 1
+                else:
+                    r -= 1
+        return list(result)
+----------------------------------------------------------------------------------------    
+    
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
