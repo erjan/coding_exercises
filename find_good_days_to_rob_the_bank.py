@@ -68,3 +68,29 @@ class Solution:
             if _inc[i] >= t and _dec[i] >= t:
                 ans.append(i)
         return ans
+
+-----------------------------------------------------------------------------------------------------------------------
+class Solution:
+    def goodDaysToRobBank(self, security: List[int], time: int) -> List[int]:
+        n=len(security)
+        if time==0: return [i for i in range(n)]
+        ans=set()
+        valid_l,valid_r=set(),set()
+        left,right=0,0
+        for i in range(1,n):
+            if security[i-1]>=security[i]: 
+                left+=1
+            else:
+                left=0
+            if left>=time: 
+                valid_l.add(i)
+        for i in range(n-2,-1,-1):
+            if security[i]<=security[i+1]: 
+                right+=1
+            else:
+                right=0
+            if right>=time: 
+                valid_r.add(i)
+        ans=valid_l.intersection(valid_r)
+        return list(ans)
+            
