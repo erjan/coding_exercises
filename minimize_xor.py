@@ -40,3 +40,21 @@ def minimizeXor(self, num1, num2):
 		v <<= 1
 
 	return ans
+
+
+--------------------------------------------------------------------------------------------------
+class Solution:
+    def minimizeXor(self, num1: int, num2: int) -> int:
+        count = str(bin(num2))[2:].count("1")
+        num1_bin = str(bin(num1))[2:]
+        ans = ""
+        for i in range(len(num1_bin)):
+            if len(num1_bin) - i <= count:
+                ans += "1"*count
+                break
+            if num1_bin[i] == "1" and count != 0:
+                ans += "1"
+                count -= 1
+            else:
+                ans += "0"
+        return int(ans, 2)
