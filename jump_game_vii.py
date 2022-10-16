@@ -6,26 +6,18 @@ s[j] == '0'.
 Return true if you can reach index s.length - 1 in s, or false otherwise.
 '''
 
-min_i and max_i are the range 
-of positions that we can reach for the
-next step. If at some point we find the last index in this range, that
-means the last index is reachable. If my current index i is greater than max_i, we can't reach this position 
-and won't be able to continue jumping. We ignore
-those 'invalid' position (s[i] == 1 or i < min_i) because we can't jump from these positions.
-
 class Solution:
     def canReach(self, s: str, minJump: int, maxJump: int) -> bool:
-        if s[-1] == '1':
-            return False
-        n = len(s)
-        min_i = max_i = 0
-        for i in range(n-1):
-            if s[i] == '1' or i < min_i:
-                continue
-            if i > max_i:
-                return False
-            min_i = i + minJump
-            max_i = min(i + maxJump, n-1)
-            if min_i <= n-1 <= max_i:
+        q = [0]
+        far = 0
+        while q:
+            ind = q.pop(0)
+            if ind == len(s)-1:
                 return True
+            low = max(far+1, ind+minJump)
+            high = min(len(s)-1, ind+maxJump)
+            for jump in range(low, high+1):
+                if s[jump] == '0':
+                    q.append(jump)
+            far = ind+maxJump
         return False
