@@ -88,3 +88,49 @@ class Solution:
         
         res = max(dic.values())
         return res
+    
+---------------------------------------------------------------------------------------------------------------------------------
+The problem can be solved using DP as it's asking to find the longest string chain which means we have to go through all the possible paths to find the optimial solutions. We also need a way to define the overlapping subproblems and cache it.
+
+✔️Solution I - Memoization - Top Down
+class Solution:
+    def longestStrChain(self, words: List[str]) -> int:
+        n=len(words)
+        words_set={w:idx for idx, w in enumerate(words)}
+        
+        @cache
+        def dp(i):                 
+            curr=words[i]
+            max_length=0
+            for idx in range(len(curr)):
+                new_wc = curr[:idx] + curr[idx+1:]
+                if new_wc in words_set:
+                    max_length=max(max_length, 1 + dp(words_set[new_wc]))
+        
+            return max_length
+        
+        return max(dp(i)+1 for i in range(n))
+A more concise variation shared by atorre
+
+class Solution:
+    def longestStrChain(self, words: List[str]) -> int:
+        w_set = set(words)
+        @cache
+        def dp(w:str) -> int:
+            return 1 + max((dp(s) for i in range(len(w)) if (s:=w[:i]+w[i+1:]) in w_set), default=0)
+        return max(dp(w) for w in words)
+if N is length of words and L is the max length of a word in words,
+
+Time - O(N * L * L ) - first L is for the loop to find new words by deleting one character and the second L is to generate the new word.
+Space - O(N * L) - space required for words_set.
+
+✔️Solution I I - Tabulation - Bottom Up
+A more concise version only possible because it's python :)
+
+class Solution:
+    def longestStrChain(self, words: List[str]) -> int:                
+        words.sort(key=len)
+        dp={}
+        for w in words:
+            dp[w] = max(dp.get(w[:i] + w[i + 1:], 0) + 1 for i in range(len(w)))
+        return max(dp.values())
