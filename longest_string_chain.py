@@ -49,3 +49,42 @@ class Solution:
                     res = max(res, dp[word])
 
         return res
+
+----------------------------------------------------------------------------------------------------------------
+
+'''
+FIrstly sort the given array on basis of length of words. Such that for a word i we would be checking words having length smaller than i
+
+Create a dictionary or mapping to store the chain length till that words.
+When chain of bigger word is to be found , it will be -> 1 + smaller_length_of_chain.
+
+Initialize the chain length of each word to be 1.
+
+As word.length <= 16, it is easy to create all combinations by taking out one character.
+
+Form different words successor by deleting a letter and check if that word has a larger chain length.
+
+Keep updating and select maximum chain length from mapping / dictionary.
+
+UPVOTE IF HELPFuuL
+'''
+
+
+class Solution:
+    def longestStrChain(self, words: List[str]) -> int:
+        
+        words.sort(key=len)
+        dic = {}
+        
+        for i in words:
+            dic[ i ] = 1
+            
+            for j in range(len(i)):
+                
+                # creating words by deleting a letter
+                successor = i[:j] + i[j+1:]
+                if successor in dic:
+                    dic[ i ] = max (dic[i], 1 + dic[successor])
+        
+        res = max(dic.values())
+        return res
