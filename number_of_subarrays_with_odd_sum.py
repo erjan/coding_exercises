@@ -46,3 +46,31 @@ class Solution:
             # increase the counter for the number of even or odd prefix sums seen so far
             count[cur] += 1
         return res % (10**9 + 7)
+    
+----------------------------------------------------------------------------------------------------------------------
+Explanation
+cur = 0 if current prefix sum is even
+cur = 1 if current prefix sum is odd
+count[0] is the number of even prefix sum
+count[1] is the number of odd prefix sum
+
+For each element in A:
+if current prefix sum is even, res += the number of odd prefix sum
+if current prefix sum is odd, res += the number of even prefix sum
+
+
+More Explanation
+All by @Anonymouso:
+
+Basically the way it works is -
+If you add an odd number to an even number - you get an odd number (4+1 = 5, 1+2 = 3, 7+12 = 19 etc.)
+If you add an even number to an odd number - same result as above obviously.
+if you add an even number to an even number - you get an even number (4 + 2 =6, 8+6 = 14 etc.)
+If you add an odd number to an odd number - you get an even number ( 1+1 = 2, 5 +7 = 12 etc.)
+
+Based on the above table of options, you need to pick only 2 options > add odd number to even number & add even number to odd number.
+What lee is doing is basically counting the amount of "odd" prefix sums he sees and "even prefix sums he sees.
+As he does that:
+if the current subarray sum is odd - that means that we need to add all the number of even sub arrays we saw so far to the result.
+if the current subarray sum is even - that means that we need to add all the number of odd sub arrays we saw so far to the result.
+
