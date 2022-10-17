@@ -49,3 +49,47 @@ class Solution:
                 return(False)            
         return(True)
       
+        
+-----------------------------------------------------------------------------------------------------------------
+Let's break it down:
+
+If sentences are the same - they are similar
+If sentences don't have a common prefix or don't have a common suffix - they are not similar
+If either common prefix or common suffix equals one of the lengths of the sentences - then they are similar!
+If they have common prefix and common suffix, and one of the sentances can be build by the common_prefix+common_suffix - then they are similiar!
+Please upvote if you find the explanation helful! :)
+
+Code:
+
+class Solution:
+    def areSentencesSimilar(self, sentence1: str, sentence2: str) -> bool:
+        if sentence1 == sentence2:
+            return True
+        def longst_common_prefix(s1, s2):
+            prefix = []
+            for x1, x2 in zip(s1, s2):
+                if x1 == x2:
+                    prefix.append(x1)
+                else:
+                    break
+            return prefix
+        def longst_common_suffix(s1, s2):
+            s1 = s1[::-1]
+            s2 = s2[::-1]
+            return longst_common_prefix(s1, s2)[::-1]
+        words1 = sentence1.split(' ')
+        words2 = sentence2.split(' ')
+        common_prefix = longst_common_prefix(words1, words2)
+        common_suffix = longst_common_suffix(words1, words2)
+        def can_match(common_prefix, common_suffix, words1, words2):
+            if not common_prefix and not common_suffix:
+                return False
+            sentances_lengts    = { len(words1), len(words2) }
+            if len(common_prefix) in sentances_lengts:
+                return True
+            if len(common_suffix) in sentances_lengts:
+                return True
+            total_common_legnth = len(common_prefix) + len(common_suffix)
+            return total_common_legnth in sentances_lengts
+        return can_match(common_prefix, common_suffix, words1, words2)
+    
