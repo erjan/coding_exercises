@@ -67,3 +67,30 @@ class Solution:
             return 1 + self.brokenCalc(startValue , target // 2)
         else:
             return 1 + self.brokenCalc(startValue , target + 1)
+
+------------------------------------------------------------------------------------
+
+class Solution:
+    def brokenCalc(self, startValue: int, target: int) -> int:
+        
+        if startValue >=target:
+            return startValue -target
+        
+        else:
+            
+            count = 0
+            while (target!= startValue):
+                
+                if startValue >=target:
+                    count +=(startValue-target)
+                    break
+                    
+                if target %2 == 1:
+                    count+=1
+                    target+=1
+                    
+                elif target %2 == 0:
+                    count+=1                               
+                    target = target//2
+                    
+            return count                
