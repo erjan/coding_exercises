@@ -1,0 +1,33 @@
+'''
+You are given two identical eggs and you have access to a building with n floors labeled from 1 to n.
+
+You know that there exists a floor f where 0 <= f <= n such that any egg dropped at a floor higher than f will break, and any egg dropped at or below floor f will not break.
+
+In each move, you may take an unbroken egg and drop it from any floor x (where 1 <= x <= n). If the egg breaks, you can no longer use it. However, if the egg does not break, you may reuse it in future moves.
+
+Return the minimum number of moves that you need to determine with certainty what the value of f is.
+'''
+
+class Solution:
+    def twoEggDrop(self, n: int) -> int:
+        count = 1
+        i = 2
+        while(n-count > 0):
+            count+=i
+            i+=1
+        return i-1
+      
+------------------------------------------------------
+class Solution:
+    def twoEggDrop(self, n: int) -> int:
+        # 1. set up an interval as 1
+        interval = 1
+        
+        # 2. count down from n until it's <= 0, reducing by the interval, and increasing the interval each time
+        while n > 0:
+            n -= interval
+            interval += 1
+        
+        # 3. return interval - 1
+        return interval - 1
+-----------------------------------------------------      
