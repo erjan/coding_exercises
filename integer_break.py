@@ -43,3 +43,30 @@ class Solution(object):
                 i += 1
             dp.append(max_product)
         return dp[n]
+    
+-------------------------------------------------------------------------------------------------
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        ## RC ##
+        ## APPROACH : DP ##
+        ## LOGIC : ANY NUMBER MORE THAN 3, will have maximum product when all its factors are 2,3
+        ## EX : 4 => 2*2 , 7 => 3*2*2, 9 => 3*3*3
+        
+		## TIME COMPLEXITY : O(N) ##
+		## SPACE COMPLEXITY : O(N) ##
+
+        if(n <= 2): return 1
+        dp = [0,0,1,2]                          # base cases for 2,3
+        for i in range(4, n + 1):
+            dp.append(max( max(3 * dp[i - 3], 3 * (i - 3)), max(2 * dp[i - 2], 2 * (i - 2)) ))         # appending to dp list
+        return dp[n]
+    
+----------------------------------------------------------------------------
+class Solution:
+    def integerBreak(self, n: int) -> int:
+        dp = [None, None, 1, 2, 4, 6, 9]
+        for i in range(7, n+1):
+            dp.append(dp[i-3] * 3)  
+        return dp[n]
+    
+    
