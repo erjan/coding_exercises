@@ -33,3 +33,20 @@ class Solution:
             unique.add(freq)
 
         return count
+    
+---------------------------------------------------------------------------------------------
+from collections import Counter
+
+class Solution:
+    def minDeletions(self, s: str) -> int:
+        counter = Counter(s)
+        filled = set()
+        deletions = 0
+        
+        for c in counter.keys():
+            while counter[c] in filled and counter[c] != 0:
+                deletions += 1
+                counter[c] -= 1
+            filled.add(counter[c])
+        
+        return deletions
