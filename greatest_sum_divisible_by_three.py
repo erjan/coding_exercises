@@ -3,6 +3,19 @@ Given an integer array nums, return the maximum
 possible sum of elements of the array such that it is divisible by three.
 '''
 
+
+class Solution:
+	def maxSumDivThree(self, nums: List[int]) -> int:
+		dp = [0]*3
+
+		for num in nums:
+			newdp = dp.copy()
+			for i in range(3):
+				newdp[(num+dp[i])%3] = max(newdp[(num+dp[i])%3], num+dp[i])
+			dp = newdp
+		return dp[0]
+	
+------------------------------------------------------------------	
 class Solution:
     def maxSumDivThree(self, N: List[int]) -> int:
         A, B, S = heapq.nsmallest(2,[n for n in N if n % 3 == 1]), heapq.nsmallest(2,[n for n in N if n % 3 == 2]), sum(N)
