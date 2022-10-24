@@ -8,6 +8,26 @@ You escape if and only if you can reach the target before any ghost reaches you.
 Return true if it is possible to escape regardless of how the ghosts move, otherwise return false.
 '''
 
+#my own
+
+class Solution:
+    def escapeGhosts(self, ghosts: List[List[int]], target: List[int]) -> bool:
+        
+        
+        t_x,t_y = target
+        
+        m_x,m_y = abs(t_x),abs(t_y)
+        
+        for g in ghosts:
+            
+            ghostx = g[0]
+            ghosty = g[1]
+            
+            manhattan = abs(t_x - ghostx) + abs(t_y - ghosty)
+            if manhattan<= m_x+m_y:
+                return False
+        return True
+-----------------------------------------------------------------------------------------------------    
 
 class Solution:
     def escapeGhosts(self, ghosts: List[List[int]], target: List[int]) -> bool:
