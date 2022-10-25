@@ -21,11 +21,23 @@ then add it with the base.
 Finally we make it palindrome by add its reversed string.
 '''
 
-  def kthPalindrome(self, queries, l):
-        base = 10 ** ((l - 1) / 2)
-        res = [q - 1 + base for q in queries]
-        for i,a in enumerate(res):
-            a = str(a) + str(a)[-1 - l % 2::-1]
-            res[i] = int(a) if len(a) == l else -1
-        return res
-
+def kthPalindrome(self, queries: List[int], L: int) -> List[int]:
+    l1=[]
+    st=""
+    if L%2==0:
+        n=L//2-1
+    else:
+        n=L//2
+    start=pow(10,n)
+    for i in queries:
+        ans=str(start+i-1)
+        rev=ans[::-1]
+        if L%2==0:
+            st=ans+rev
+        else:
+            st=ans+rev[1:]
+        if len(st)==L:
+            l1.append(st)
+        else:
+            l1.append(-1)
+    return l1
