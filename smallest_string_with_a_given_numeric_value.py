@@ -19,5 +19,8 @@ class Solution:
 ------------------------------------------------------------------------------------------
 class Solution:
     def getSmallestString(self, n: int, k: int) -> str:
-        q, r = divmod(k - n, 25)
-        return ('a'*(n - q - 1) + chr(ord('a') + r) if q < n else '') + 'z'*q
+        diff = k - n
+        qt = diff // 25
+        r = diff % 25
+        ans = "a"*(n-qt-1) + chr(97+r) + "z"*qt if r else "a"*(n-qt)+ "z"*qt
+        return ans
