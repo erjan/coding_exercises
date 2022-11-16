@@ -1,21 +1,25 @@
 Find the number of emails received by each user under each built-in email label. The email labels are: 'Promotion', 'Social', and 'Shopping'. Output the user along with the number of promotion, social, and shopping mails count,.
 
-
-with h as(
-select 
-label,
-to_user, count(*) as cnt
-from google_gmail_emails g1 inner join google_gmail_labels g2 on g1.id = g2.email_id
-
-group by to_user, label)
-
-select to_user,
-count(label)
--- sum(case when label = 'Promotion' then cnt else 0 end)as prom_cnt,
--- sum(case when label = 'Social' then cnt else 0 end)as soc_cnt,
--- sum(case when label = 'Shopping' then cnt else 0 end)as shop_cnt
-
-
-
-from h where label in ('Promotion', 'Social', 'Shopping')
-group by to_user
+SELECT to_user,
+       SUM(CASE
+               WHEN label = 'Promotion' THEN cnt
+               ELSE 0
+           END) AS promotion_count,
+       SUM(CASE
+               WHEN label = 'Social' THEN cnt
+               ELSE 0
+           END) AS social_count,
+       SUM(CASE
+               WHEN label = 'Shopping' THEN cnt
+               ELSE 0
+           END) AS shopping_count
+FROM
+  (SELECT mails.to_user,
+          labels.label,
+          COUNT(*) AS cnt
+   FROM google_gmail_emails mails
+   INNER JOIN google_gmail_labels labels ON mails.id = labels.email_id
+   GROUP BY mails.to_user,
+            labels.label) base
+GROUP BY to_user
+ORDER BY to_user
