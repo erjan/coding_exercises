@@ -7,6 +7,19 @@ A segment is a contiguous sequence of positive integers in nums. A segment sum i
 Return an integer array answer, of length n, where answer[i] is the maximum segment sum after applying the ith removal.
 
 Note: The same index will not be removed more than once.
+
+
+
+Here, I use
+
+a ordered set to store the points where nums are divided;
+a hash table mapping from left boundary to right boundary to validate if a triplet is still effective;
+a priority queue to the triplet of <range sum, left boundary, right boundary>.
+At each query, I add the point to the set of dividers, adjust the mapping of its left 
+and right boundary points, and add the new two pieces to the priority queue. While finding current maximum 
+from the priority queue, I first validate if the triplet is still in effect by checking if the left
+boundary matches the right boundary
+in the hash table. If not, I discard the top element until a valid triplet.
 '''
 
 from sortedcontainers import SortedList
