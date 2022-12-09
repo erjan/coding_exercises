@@ -11,7 +11,41 @@ Given a string expression that represents a boolean expression, return the evalu
 It is guaranteed that the given expression is valid and follows the given rules.
 '''
 
+import re
 
+class Solution:
+    def parseBoolExpr(self, expression: str) -> bool:
+
+        # filter removes empty strings
+        tokens = filter(lambda x: x != "", re.split(r"([(),&!|ft])", expression))
+    
+        def compute(tokens):
+            stack = []
+            oper = None
+
+            def process_stack(vals):
+                if oper == "&":
+                    return "t" if all([e == "t" for e in vals]) else "f"
+                elif oper == "|":
+                    return "t" if any([e == "t" for e in vals]) else "f"
+                elif oper == "!":
+                    return "t" if vals[0] == "f" else "f"
+
+            while c := next(tokens, None):
+                if c in "&|!":
+                    oper = c
+                elif c == "(":
+                    vals = compute(tokens)
+                    stack.append(process_stack(vals))
+                elif c == ")":
+                    return stack
+                elif c in "ft":
+                    stack.append(c)
+            return stack[0]
+        
+        return True if compute(tokens) == "t" else False
+
+----------------------------------------------------------------------------------------------------------------
 class Solution:
     def parseBoolExpr(self, expression: str) -> bool:
         string = ""
