@@ -4,6 +4,30 @@ Given the root of a binary tree, find the maximum value v for which there exist 
 A node a is an ancestor of b if either: any child of a is equal to b or any child of a is an ancestor of b.
 '''
 
+
+
+class Solution:
+    def maxAncestorDiff(self, root: Optional[TreeNode]) -> int:
+
+        res =-1
+
+        def traverse(node,ma,mi):
+            nonlocal res
+
+            res = max(res, abs(node.val-mi),abs(node.val-ma))
+            if node.val >ma:
+                ma = node.val
+            if node.val<mi:
+                mi=node.val
+            if node.left:
+                traverse(node.left,ma,mi)
+            if node.right:
+                traverse(node.right,ma,mi)
+        
+        traverse(root,root.val,root.val)
+        return res
+        
+------------------------------------------------------------------------------------------	
 def maxAncestorDiff(root):
 	self.ans = 0
 	def dfs(node, a, b):
