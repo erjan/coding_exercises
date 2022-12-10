@@ -26,3 +26,16 @@ class Solution:
         return ans 
       
 ----------------------------------------------------------------------------------
+
+class Solution:
+    def secondGreaterElement(self, nums: List[int]) -> List[int]:
+        st1,st2=[],[]
+        heapify(st2)
+        ans=[-1 for i in range(len(nums))]
+        for i in range(len(nums)):
+            while st2 and nums[-st2[0]]<nums[i]:
+                ans[-heappop(st2)]=nums[i]
+            while st1 and nums[st1[-1]]<nums[i]:
+                heappush(st2,-st1.pop())
+            st1.append(i)
+        return ans
