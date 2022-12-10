@@ -27,3 +27,39 @@ class Solution:
                 for c in val: node = node.get(1-int(c)) or node.get(int(c))
                 ans[i] = x ^ node["#"]
         return ans 
+    
+-----------------------------------------------------------------------------------------
+class Trie: 
+    def __init__(self):
+        self.root = {}
+        
+    def __bool__(self):
+        return bool(self.root)
+    
+    def insert(self, num):
+        node = self.root 
+        for x in bin(num)[2:].zfill(32): 
+            node = node.setdefault(int(x), {})
+        node["#"] = num
+    
+    def query(self, num): 
+        node = self.root
+        for x in bin(num)[2:].zfill(32):
+            node = node.get(1 - int(x)) or node.get(int(x))
+        return num ^ node["#"]
+
+
+class Solution:
+    def maximizeXor(self, nums: List[int], queries: List[List[int]]) -> List[int]:
+        nums.sort()
+        queries = sorted((m, x, i) for i, (x, m) in enumerate(queries))
+        
+        ans = [-1]*len(queries)
+        k = 0
+        trie = Trie()
+        for m, x, i in queries: 
+            while k < len(nums) and nums[k] <= m: 
+                trie.insert(nums[k])
+                k += 1
+            if trie: ans[i] = trie.query(x)
+        return ans 
