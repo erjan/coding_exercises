@@ -7,105 +7,50 @@ Return an array ans where ans[i] is the answer to the ith query.
 '''
 
 class Trie: 
-    def __init__(self): 
-        self.root = {}
-    
-    def insert(self, x): 
-        node = self.root
-        for i in range(18, -1, -1): 
-            bit = (x >> i) & 1
-            node = node.setdefault(bit, {})
-            node["mult"] = 1 + node.get("mult", 0)
-        node["#"] = x # sentinel 
-        
-    def search(self, x): 
-        node = self.root
-        for i in range(18, -1, -1): 
-            bit = (x >> i) & 1
-            if 1^bit in node: node = node[1^bit]
-            else: node = node[bit]
-        return x ^ node["#"]
-    
-    def remove(self, x): 
-        node = self.root
-        for i in range(18, -1, -1): 
-            bit = (x >> i) & 1
-            node[bit]["mult"] -= 1
-            if node[bit]["mult"] == 0: 
-                node.pop(bit)
-                break 
-            node = node[bit]
-        
-
-class Solution:
-    def maxGeneticDifference(self, parents: List[int], queries: List[List[int]]) -> List[int]:
-        mp = {}
-        for i, (node, val) in enumerate(queries): 
-            mp.setdefault(node, []).append([val, i])
-        
-        tree, root = {}, -1
-        for i, x in enumerate(parents): 
-            if x == -1: root = i
-            else: tree.setdefault(x, []).append(i)
-        
-        ans = [0]*len(queries)
-        trie = Trie()
-        
-        def fn(x): 
-            """Collect query results while traversing the tree."""
-            trie.insert(x)
-            for v, i in mp.get(x, []): ans[i] = trie.search(v)
-            for xx in tree.get(x, []): fn(xx)
-            trie.remove(x)
-        
-        fn(root)
-        return ans 
-      
----------------------------------------------------------------------------------------------------------
-class Trie:
+    # dict() will TLE
+    # [kid0, kid1, freq, val] # this is the structure of Trie
     def __init__(self):
-        self.root = dict()
+        self.root = [False, False, 0, False]
         # store pointer to next, and frequency in 'f'
         
     def add(self, x):
         # print('add',x)
         cur = self.root
-        for pwr in range(18,-1,-1):
+        for pwr in range(17,-1,-1):
             mask = 2**pwr # mask = 1<<pwr
             bit = 1 if mask & x else 0
-            if bit not in cur:
-                cur[bit] = dict()
+            if not cur[bit]:
+                cur[bit] = [False, False, 0, False]
             
             cur = cur[bit]
-            cur['f'] = cur.get('f',0) + 1 # increase the frequency :)
+            cur[2] += 1 # increase the frequency :)
         
-        cur['val'] = x
+        cur[3] = x
         
     def remove(self, x):
         # print('rem',x)
         cur = self.root
-        for pwr in range(18,-1,-1):
+        for pwr in range(17,-1,-1):
             mask = 2**pwr # mask = 1<<pwr
             bit = 1 if mask & x else 0
             cur = cur[bit]
-            cur['f'] = cur.get('f',0) - 1 # increase the frequency :)
+            cur[2] -= 1 # increase the frequency :)
         
-        cur['val'] = x
         
     def search(self, x):
         cur = self.root
         res = 0
-        for pwr in range(18,-1,-1):
+        for pwr in range(17,-1,-1):
             mask = 2**pwr # mask = 1<<pwr
             bit = 1 - (1 if mask & x else 0) # searching for opposite
             
-            if bit not in cur or cur[bit]['f'] == 0:
+            if not cur[bit] or cur[bit][2] == 0:
                 # cannot find opposite..
                 cur = cur[1-bit]
             else:
                 cur = cur[bit]
         # print('max', x,'->',cur['val'])
-        return cur['val'] ^ x
+        return cur[3] ^ x
     
 class Solution:
     def getAdj(self, parents):
@@ -128,6 +73,8 @@ class Solution:
         for i, (node, val) in enumerate(queries):
             queryForNode[node].append((val,i))
         
+        self.seen = 0
+        
         def dfs(node):
             nonlocal queryForNode, trie, ans
             # at current node, trie contains everyone in my path :)
@@ -136,14 +83,14 @@ class Solution:
             
             for val,idx in queryForNode[node]:
                 ans[idx] = trie.search(val)
-            
+                self.seen += 1
+                
             for kid in adj[node]:
                 dfs(kid)
             
             # now backtrack..
-            trie.remove(node)
+            if self.seen < len(ans): # TLE without this
+                trie.remove(node)
             
         dfs(root)
         return ans
-      
--------------------------------------------------------------------------------------------------------------
