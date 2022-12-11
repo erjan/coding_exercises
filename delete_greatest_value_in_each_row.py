@@ -57,3 +57,21 @@ class Solution:
         for list in temp:
             answer=answer+max(list)
         return answer
+    
+------------------------------------------------------------------------------------------------------------------------
+class Solution:
+    def deleteGreatestValue(self, grid: List[List[int]]) -> int:
+        rows = len(grid)
+        cols = len(grid[0])
+        ans = 0
+        while grid:
+            cur = 0
+            if not grid[0]:
+                break
+            for i in range(len(grid)):
+                val = max(grid[i])
+                idx = grid[i].index(val)
+                grid[i].pop(idx)
+                cur = max(cur, val)
+            ans += cur
+        return ans
