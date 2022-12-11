@@ -8,49 +8,37 @@ Return the minimum number of semesters needed to take all courses. The testcases
 
 class Solution:
     def minNumberOfSemesters(self, n: int, relations: List[List[int]], k: int) -> int:
-        graph = [0] * n
-        out_degree = [0] * n
-        # -1 to fix 1-based indexing offset from prompt.
-        for pre_req, course in relations:
-            graph[course-1] += 1 << (pre_req-1)
-            out_degree[pre_req-1] += 1
-        # Just converts course to its shifted value
-        c2shift = [1<<course for course in range(n)]
-        start = 0
-        goal = 2**n-1  # will eq course_total once all have been taken.
-        queue = collections.deque([(start,0)])
-        seen = [0] * (2 ** n)
-
-        # Similar to Bellman-Ford
-        while queue:
-            # course_total is state. Each bit representing a taken course.
-            course_total, steps = queue.popleft()
-            available = []
-            for course_num in range(n):
-                if (course_total & graph[course_num] == graph[course_num]) \
-                            and (course_total & c2shift[course_num] == 0):
-                    available.append(course_num)
-
-            # pre_req courses can unlock others.
-            pre_reqs = [c2shift[course_num] for course_num in available if out_degree[course_num]]
-            leaves = [c2shift[course_num] for course_num in available if out_degree[course_num] == 0] 
+        adj = defaultdict(list)
+        in_deg = [0]*n
+        
+        for prev, nxt in relations:
+            adj[prev-1].append(nxt-1)
+            in_deg[nxt-1]+=1
+        
+        # bit_mask:
+        # 1 means not taken
+        # 0 mean taken
+        # initialize to 1<<n -1
+        
+        @cache
+        def backtrack(bit_mask):
+            if not bit_mask:
+                return 0
             
-            # We only include leaf courses when we have extra space
-            if len(pre_reqs) <= k:
-                course_total += sum(pre_reqs) + sum(leaves[:k-len(pre_reqs)])
-                if course_total == goal:
-                    return steps + 1
-                if not seen[course_total]:
-                    queue.append((course_total,steps+1))
-                    seen[course_total] = 1
-            else:
-                # Trying every combination of the pre_reqs.
-                # comb is required here because we can't simply take them all (len(pre_reqs) > k)
-                for batch in itertools.combinations(pre_reqs, k):
-                    diff = sum(batch)
-                    t = course_total + diff
-                    if t == goal:
-                        return steps + 1
-                    if not seen[t]:
-                        queue.append((t, steps+1))
-                        seen[t] = 1![Uploading file...]()
+            catalog = [i for i in range(n) if in_deg[i] == 0 and bit_mask & 1<<i]             
+            ret = float("inf")
+            for k_courses in combinations(catalog,min(k,len(catalog))):
+                nxt_bit_mask = bit_mask                
+                for course in k_courses:
+                    nxt_bit_mask ^= 1<<course
+                    for parent in adj[course]:
+                        in_deg[parent]-=1
+                
+                ret = min( ret, 1 + backtrack( nxt_bit_mask ) )
+                
+                for course in k_courses:
+                    for parent in adj[course]:
+                        in_deg[parent]+=1                
+            return ret
+                
+        return backtrack((1<<n) -1)
