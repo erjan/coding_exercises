@@ -39,3 +39,44 @@ class Solution:
             ans = min(ans, S[-1] - S[0])
             S.add(S.pop() // 2)
         return min(ans, S[-1] - S[0])
+    
+---------------------------------------------------------------------------------------------------------
+We first convert nums to a list of tuples where we store each elements minimum and maximum values. For each number n, if n is odd the minumum value is n itself and the maximum is 2*n. If n is even, the maximum value is n (we can't multiply it by 2) and the minimum value calculated based on how many times we can devided it by 2. For example if n=20 the minumum value in 5.
+
+After this, until the minimum value in array is not reached it's maximum we mulitply it by two and check if it decreases the max deviation we update the answer (it does not necessariliy decrease the deviation because when we double the value it may become the new maximum of the array and increase the deviation.
+
+from heapq import heapify, heappop, heappush
+
+class Solution:
+    def minimumDeviation(self, nums: List[int]) -> int:
+        nums = self.create_min_max_vals(nums)
+        ans = float('inf')
+        maximum = max(nums)[0]
+        while True:
+            minn = heappop(nums)
+            diff = maximum - minn[0]
+            if diff < ans:
+                ans = diff
+            if minn[0] == minn[1]:
+                break
+            else:
+                v = minn[0]*2
+                heappush(nums, (v, minn[1]))
+                if v > maximum:
+                    maximum = v
+                
+        return ans      
+    
+    def create_min_max_vals(self, nums):
+        res = []
+        for n in nums:
+            if n % 2 == 1:
+                res.append((n, 2*n))
+            else:
+                x = n
+                while x % 2 == 0:
+                    x = x // 2
+                res.append((x, n))
+        
+        heapify(res)
+        return res
