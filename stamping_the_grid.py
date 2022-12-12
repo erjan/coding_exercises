@@ -13,28 +13,63 @@ Return true if it is possible to fit the stamps while following the given restri
 '''
 
 
-class Solution:
-    def possibleToStamp(self, grid: List[List[int]], stampHeight: int, stampWidth: int) -> bool:
-        m, n = len(grid), len(grid[0])
-        prefix = [[0]*(n+1) for _ in range(m+1)]
+class Solution(object):
+    def possibleToStamp(self, G, H, W):
+        m, n = len(G), len(G[0])
+
+        # S[i][j] represents the sum of the rectangle from (0, 0) to (i - 1, j - 1) inclusively.
+        S = [[0] * (n + 1) for i in range(m + 1)]
         for i in range(m):
-            for j in range(n): 
-                prefix[i+1][j+1] = grid[i][j] + prefix[i+1][j] + prefix[i][j+1] - prefix[i][j]
-        
-        seen = [[0]*n for _ in range(m)]
-        for i in range(m-stampHeight+1): 
-            for j in range(n-stampWidth+1): 
-                diff = prefix[i+stampHeight][j+stampWidth] - prefix[i+stampHeight][j] - prefix[i][j+stampWidth] + prefix[i][j]
-                if diff == 0: seen[i][j] = 1
-                    
-        prefix = [[0]*(n+1) for _ in range(m+1)]
-        for i in range(m): 
-            for j in range(n): 
-                prefix[i+1][j+1] = seen[i][j] + prefix[i+1][j] + prefix[i][j+1] - prefix[i][j]
-                
+            for j in range(n):
+                S[i + 1][j + 1] = S[i][j + 1] + S[i + 1][j] - S[i][j] + G[i][j]
+
+        # stamp[i][j] represents that weather a stamp can be put with the upper left position (i, j)
+        # if and only if the sum of rectangle from (i, j) to (i + H - 1, j + H - 1) inclusively equals to 0
+        stamp = [[False] * n for _ in G]
+        for i in range(m - H + 1):
+            for j in range(n - W + 1):
+                ii, jj = i + H, j + W
+                stamp[i][j] = S[i][j] + S[ii][jj] - S[i][jj] - S[ii][j] == 0
+
         for i in range(m):
-            ii = max(0, i-stampHeight+1)
-            for j in range(n): 
-                jj = max(0, j-stampWidth+1)
-                if grid[i][j] == 0 and prefix[i+1][j+1] - prefix[i+1][jj] - prefix[ii][j+1] + prefix[ii][jj] == 0: return False 
-        return True 
+            for j in range(n):
+                # traverse each position (i, j) of grid, if it is 0, find out a stamp upper left position (ii, jj)
+                # if not found, it cannot cover, so return False immediately
+                # if found, modify every position that the stamp (ii, jj) can cover to 1 to skip them later
+                # this trick seems inconspicuous, but it is very important
+                if G[i][j] == 0:
+                    flag = False
+                    for ii in range(i, max(-1, i - H), -1):
+                        if flag: break
+                        for jj in range(j, max(-1, j - W), -1):
+                            if stamp[ii][jj]:
+                                for s in range(ii, ii + H):
+                                    for t in range(jj, jj + W):
+                                        G[s][t] = 1  # skip them later
+                                flag = True
+                                break
+                    if not flag: return False
+        return True
+    
+-------------------------------------------------------------------------------------------------------------------------------
+    def possibleToStamp(self, M, h, w):
+        m, n = len(M), len(M[0])
+        A = [[0] * (n + 1) for _ in range(m + 1)]
+        good = [[0] * n for _ in range(m)]
+        for i in xrange(m):
+            for j in xrange(n):
+                A[i + 1][j + 1] = A[i + 1][j] + A[i][j + 1] - A[i][j] + (1 - M[i][j])
+                if i + 1 >= h and j + 1 >= w:
+                    x, y = i + 1 - h, j + 1 -w
+                    if A[i + 1][j + 1] - A[x][j + 1] - A[i + 1][y] + A[x][y] == w * h:
+                        good[i][j] += 1
+        B = [[0] * (n + 1) for _ in range(m + 1)]
+        for i in xrange(m):
+            for j in xrange(n):
+                B[i + 1][j + 1] = B[i + 1][j] + B[i][j + 1] - B[i][j] + good[i][j]
+        for i in xrange(m):
+            for j in xrange(n):
+                x, y = min(i + h, m), min(j + w, n)
+                if M[i][j] == 0 and B[x][y] - B[i][y] - B[x][j] + B[i][j] == 0:
+                    return False
+        return True
