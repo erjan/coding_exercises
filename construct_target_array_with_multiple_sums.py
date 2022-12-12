@@ -57,6 +57,21 @@ class Solution:
         return True            
       
 ----------------------------------------------------------------------------------------------
+
+There is a heap solution with O(n*log(n)) time | O(n) space
+
+modify input array by (target[i] = -target[i]), it helps us to use it in Min Heap
+find sum of all elements in target
+Start loop:
+4) pop smallest element
+if element is -1, it means that we can retrurn True (it's possible to construct the target array from arr)
+subtract the element from sum
+if sum >= element or sum == 0, it mean that we can return False (it's not possible to construct the target array from arr)
+new_element = element mod sum (however it cant be 0, we should use the closest number to 0, in our case it is output of mod operation or sum)
+if new_element > -1, we can return False (it's not possible to construct the target array from arr)
+push new_element to heap
+add new_element to summ
+                                          
 class Solution:
     def isPossible(self, target: List[int]) -> bool:
         heap = list(map(lambda x: -x,target))
@@ -72,3 +87,5 @@ class Solution:
                 return False
             heapq.heappush(heap,item)
             summ+=item
+            
+            
