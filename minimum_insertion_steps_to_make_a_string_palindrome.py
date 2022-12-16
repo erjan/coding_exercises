@@ -14,6 +14,14 @@ class Solution:
         return L - DP[-1][-1]
       
 --------------------------------------------------------------------------------------------------------------------------------------------
+
+Define dp(s) as the minimum number of steps to make s palindrome.
+We'll get the recursion below:
+dp(s) = 0 if s == s[::-1]
+dp(s) = dp(s[1:-1]) if s[0] == s[-1]
+dp(s) = 1 + min(dp(s[1:]), dp(s[:-1])) otherwise
+
+
 from functools import lru_cache
 
 class Solution:
@@ -28,3 +36,5 @@ class Solution:
 				return 1 + min(dp(s[1:]), dp(s[:-1]))
         
         return dp(s)
+
+
