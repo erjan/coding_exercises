@@ -1,0 +1,17 @@
+'''
+You are installing a billboard and want it to have the largest height. The billboard will have two steel supports, one on each side. Each steel support must be an equal height.
+
+You are given a collection of rods that can be welded together. For example, if you have rods of lengths 1, 2, and 3, you can weld them together to make a support of length 6.
+
+Return the largest possible height of your billboard installation. If you cannot support the billboard, return 0.
+'''
+
+class Solution:
+    def tallestBillboard(self, rods: List[int]) -> int:
+        dp = {0: 0}
+        for x in rods: 
+            for k, v in dp.copy().items(): 
+                dp[k+x] = max(dp.get(k+x, 0), v)
+                if k >= x: dp[k-x] = max(dp.get(k-x, 0), v+x)
+                else: dp[x-k] = max(dp.get(x-k, 0), v+k)
+        return dp[0]
