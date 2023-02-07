@@ -25,3 +25,19 @@ class Solution:
             ans.append(pref[r+1] - pref[l])
         print(ans)
         return ans
+
+    
+-------------------------------------------------------------------------------------------------------
+class Solution:
+    def vowelStrings(self, words: List[str], queries: List[List[int]]) -> List[int]:
+                                                                # Example:
+                                                                #    words = ['aba','bcb','ece','aa','e'] 
+                                                                #  queries = [[0,2], [1,4], [1,1]]
+
+        vowels = lambda w: w[0] in 'aeiou' and w[-1] in 'aeiou' #  <-- boolean function  
+
+        words = map(vowels, words)                              #    words = [True, False, True, True, True]
+        
+        pref = list(accumulate(words, initial = 0))             #     pref = [0, 1, 1, 2, 3, 4]
+        
+        return [pref[r+1] - pref[l] for l,r in queries]         #   return [2-0, 4-1, 1-1] = [2,3,0]
