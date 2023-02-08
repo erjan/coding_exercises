@@ -105,3 +105,16 @@ class Solution:
         # 3 try again DFS, if it's not connected, return True
         return not dfs(0,0)
         
+        
+--------------------------------------------------------------------------------------------------------
+class Solution:
+    def isPossibleToCutPath(self, grid: List[List[int]]) -> bool:
+        m, n, used = len(grid), len(grid[0]), set()
+        def dfs(x, y):
+            nonlocal m, n
+            if x == m - 1 and y == n - 1: return True
+            if x + y: used.add((x, y))
+            if x + 1 < m and grid[x + 1][y] and (x + 1, y) not in used and dfs(x + 1, y): return True
+            if y + 1 < n and grid[x][y + 1] and (x, y + 1) not in used and dfs(x, y + 1): return True
+            return False
+        return not (dfs(0, 0) and dfs(0, 0))
