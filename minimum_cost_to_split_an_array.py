@@ -60,3 +60,39 @@ class Solution:                                         #   Example: nums = [1, 
             return ans
 
         return dp(0)  
+    
+-------------------------------------------------------------------------------------------------------------------------------------
+Intuition
+The value range of length is no more than 1000, so an O(n2)O(n^{2})O(n2) algorithm can be considered.
+Notice the subarray is consecutive, immediately think of enumerating all the potential start position iii for all the end position jjj.
+As a result, the answer of i−1i-1i−1 can easily transfer to the answer of jjj.
+Another question is to calculate the trimmed length. The trimmed length equals to the total length j−i+1j-i+1j−i+1 minus removed count. The removed count can be traced with iii moved from right to left.
+Approach
+Linear dynamic programming, define dp[i]dp[i]dp[i] as the result of nums[0...i]nums[0...i]nums[0...i], easily to write the transfer equation:
+dp[j]=min⁡i=0j{dp[i−1]+k+(j−i+1−removed)}dp[j] = \min_{i={0}} ^{j} {\{ dp[i-1] + k+(j-i+1 -removed)\}}dp[j]=min 
+i=0
+j
+
+ {dp[i−1]+k+(j−i+1−removed)}
+
+Use a counter mp to record the count of each number, and an integer rm to record the removed count.
+Once find a new number, the rm should add one; if find a new value has been removed, it should be returned, so the rm should be minus 1.
+
+Complexity
+Time complexity: O(n2)O(n ^ {2})O(n2)
+Space complexity: O(n)O(n)O(n)
+Code
+class Solution:
+    def minCost(self, nums: List[int], k: int) -> int:
+        n = len(nums)
+        dp = [0] + [n+k+1] * n
+        for j in range(1, n+1):
+            mp = [0] * (n+1)
+            rm = 0
+            for i in range(j, 0, -1):
+                # update the removed number
+                rm += (mp[nums[i-1]] == 0) - (mp[nums[i-1]] == 1)
+                mp[nums[i-1]] += 1
+                last = dp[i-1] + k + j - i + 1 - rm
+                if last < dp[j]: dp[j] = last
+        return dp[n]
