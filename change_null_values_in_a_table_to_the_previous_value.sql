@@ -32,3 +32,37 @@ SELECT
     first_value(drink) over(PARTITION by grp) AS drink
 FROM
     cte;
+    
+---------------------------------------------------------------------------------------------
+WITH RECURSIVE WithRowNum (row_num, id, drink) AS (
+    SELECT
+        ROW_NUMBER() OVER() AS row_num,
+        id,
+        drink
+    FROM CoffeeShop
+), Result (row_num, id, drink) AS (
+    SELECT
+        row_num,
+        id,
+        drink
+    FROM WithRowNum
+    WHERE row_num = 1
+    UNION ALL
+    SELECT
+        WithRowNum.row_num,
+        WithRowNum.id,
+        IFNULL(WithRowNum.drink, Result.drink) AS drink
+    FROM Result
+    JOIN WithRowNum
+    ON Result.row_num = WithRowNum.row_num - 1
+)
+
+SELECT id, drink
+FROM Result;
+
+--------------------
+WITH cte AS (SELECT id, drink, ROW_NUMBER() OVER () AS nb FROM CoffeeShop), -- nb = initial row order
+     cte2 AS (SELECT id, drink, nb, SUM(1-ISNULL(drink)) OVER (ORDER BY nb) AS group_id FROM cte) -- same group_id -> same drink
+SELECT id, FIRST_VALUE(drink) OVER (PARTITION BY group_id) AS drink
+FROM cte2
+ORDER BY nb;
