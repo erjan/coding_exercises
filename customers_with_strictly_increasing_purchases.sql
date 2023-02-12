@@ -25,3 +25,20 @@ select distinct customer_id from t where
 customer_id not in (
 select customer_id from t where
 yr_lag>1 or total_lag<=0) 
+
+--------------------------------------------------------------------------------
+with h as(
+select customer_id, year(order_date) as yr, sum(price) total from orders
+
+group by customer_id, yr),
+
+
+h2 as(
+select customer_id, total, yr-lag(yr,1)over(partition by customer_id order by yr asc) as yr_lag,
+total - lag(total,1)over(partition by customer_id order by yr asc) as price_lag
+from h)
+
+select distinct customer_id from h2 where customer_id not in (select customer_id from h2 where
+ yr_lag>1 or price_lag<=0)
+
+
