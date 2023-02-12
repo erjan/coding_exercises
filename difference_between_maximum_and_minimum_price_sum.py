@@ -11,6 +11,24 @@ Return the maximum possible cost amongst all possible root choices.
 '''
 
 
+
+
+
+'''
+My original submission was weak, and with the recently added test case, it went TLE. The comment below (thank you @user7784J) included a 
+link from which I got the idea for a better way to approach the problem.
+
+We assign a three-uplestateto each node. the root and each leaf gets (0,price,0), and each other link'sstate is 
+determined by the recurence relation indfs. The figure below is for Example 1 in the problem's description.
+
+Best way to figure it out is to trace it from the recurence relation. The correct answer is24, which is 
+state[0] for node 1. BTW, if you start from a root other than0, the state for some nodes may change, but the answer doesn't.
+
+'''
+
+
+
+
 class Solution:
     def maxOutput(self, n: int, edges: List[List[int]], price: List[int]) -> int:
 
