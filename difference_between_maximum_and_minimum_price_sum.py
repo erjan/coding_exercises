@@ -1,0 +1,39 @@
+'''
+There exists an undirected and initially unrooted tree with n nodes indexed from 0 to n - 1. You are given the integer n and a 2D integer array edges of length n - 1, where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the tree.
+
+Each node has an associated price. You are given an integer array price, where price[i] is the price of the ith node.
+
+The price sum of a given path is the sum of the prices of all nodes lying on that path.
+
+The tree can be rooted at any node root of your choice. The incurred cost after choosing root is the difference between the maximum and minimum price sum amongst all paths starting at root.
+
+Return the maximum possible cost amongst all possible root choices.
+'''
+
+
+class Solution:
+    def maxOutput(self, n: int, edges: List[List[int]], price: List[int]) -> int:
+
+        g = defaultdict(list)
+        for a, b in edges: g[a].append(b) ;  g[b].append(a)
+
+        def dfs(node1, node2 =-1):
+            p = price[node1]
+            state = (0, p, 0)
+
+            for n in g[node1]:
+                if n == node2: continue
+
+                (a1, a2, a3), (b1, b2, b3) = state, dfs(n, node1)
+                
+                state = (max(a1, b1, a2 + b3, a3 + b2),
+                         max(a2, b2 + p),
+                         max(a3, b3 + p))
+
+            return state
+
+        if n <= 2: return sum(price) - min(price)
+
+        for node in range(n):
+            if len(g[node]) > 1:
+                return dfs(node)[0]
