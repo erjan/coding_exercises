@@ -45,4 +45,16 @@ class Solution:
             split += 1
 
         return split
-    
+------------------------------------------------------------------------------------------------------------------------------------
+Explanation
+Simple do a prefix gcd and keep track of current gcd c_gcd, if c_gcd == 1, we need to split the subarray
+Implementation
+class Solution:
+    def minimumSplits(self, nums: List[int]) -> int:
+        ans, c_gcd = 1, nums[0]
+        for i, num in enumerate(nums[1:], 1):
+            c_gcd = gcd(num, c_gcd)
+            if c_gcd == 1:
+                ans += 1
+                c_gcd = num
+        return ans        
