@@ -17,3 +17,24 @@ class Solution:
             time -=1 
             
         return position + 1
+
+-----------------------------------------------------------------------------------------------------
+//TC - O(t)
+//SC - O(1)
+class Solution:
+    def passThePillow(self, n: int, time: int) -> int:
+        if(time < n):
+            return time+1
+        d = 'f'
+        i = 1
+        while(time > 0):
+            if(d == 'f'):
+                i+=1
+                if(i == n):
+                    d = 'r'
+            else:
+                i-=1
+                if(i == 1):
+                    d = 'f'
+            time-=1
+        return i 
