@@ -73,3 +73,29 @@ class Solution:
             _,w = heapq.heappop(l)
             ret.append(w)
         return ret
+
+-------------------------------------------------------------------
+#21 march 2023 - myself!
+
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        
+        d = Counter(words)
+
+        res = []
+
+        d2 = list()
+
+        for i in d:            
+            heapq.heappush(d2, [-d[i],i] )
+        
+        while k:
+            temp = heapq.heappop(d2)
+            res.append(temp[1])
+            k=k-1
+        
+        return res
+        
+
+            
+
