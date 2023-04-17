@@ -7,7 +7,7 @@ Return an array containing the index of the row, and the number of ones in it.
 '''
 
 
-
+#this is bs and hard to grokk!
 class Solution:
     def rowAndMaximumOnes(self, mat: List[List[int]]) -> List[int]:    
         ones = 0 
@@ -19,3 +19,15 @@ class Solution:
                 index = it
         
         return [index,ones]
+
+------------------------------------------------------------------------------
+class Solution:
+    def rowAndMaximumOnes(self, mat: List[List[int]]) -> List[int]:
+        resi = 0
+        rescnt = 0
+        for i,row in enumerate(mat):
+            cnt = row.count(1)
+            if cnt > rescnt:
+                resi = i
+                rescnt = cnt
+        return resi, rescnt
