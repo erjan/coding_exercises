@@ -26,3 +26,14 @@ class Solution:
             heapq.heappush(nums,-temp)
         
         return ans
+
+    
+----------------------------------------------------------------------------------------------------------------------
+class Solution:
+    def maximizeSum(self, nums: List[int], k: int) -> int:
+        max_num = max(nums)
+        ans = 0
+        for _ in range(k):
+            ans += max_num
+            max_num += 1
+        return ans
