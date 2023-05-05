@@ -7,16 +7,18 @@ A string is called valid if it can be formed by concatenating the string "abc" s
 
 class Solution:
     def addMinimum(self, word: str) -> int:
-        it = 0
-        result = 0
-        while it < len(word) :
-            if word[it:it+3] == "abc":
-                it += 3  
-            elif word[it:it+2] in ["ab","ac","bc"]:
-                result += 1
-                it += 2
+        
+        res = 0
+        i = 0
+        while i < len(word):
+
+            if word[i:i+3]=='abc':
+                i+=3
+            elif word[i:i+2] == 'ab' or word[i:i+2] == 'bc' or word[i:i+2]=='ac':
+                i+=2
+                res+=1
             else:
-                result += 2
-                it += 1
-        return result
-                    
+                i+=1
+                res+=2
+        
+        return res
