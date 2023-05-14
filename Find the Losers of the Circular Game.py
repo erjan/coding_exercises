@@ -17,7 +17,23 @@ The losers of the game are friends who did not receive the ball in the entire ga
 Given the number of friends, n, and an integer k, return the array answer, which contains the losers of the game in the ascending order.
 '''
 
+class Solution:
+    def circularGameLosers(self, n: int, k: int) -> List[int]:
 
+        ans = [0]
+        m = k
+        while True:
+            if (ans[-1]+m)%n not in ans:
+                ans.append((ans[-1]+m)%n)
+                m= m+k
+            else:
+                break
+        
+        res = [(i+1) for i in range(n) if i not in ans]
+        print(res)
+        return res
+    
+----------------------------------------------------------------------------------------------------------------------------------------------------------    
 class Solution:
     def circularGameLosers(self, n: int, k: int) -> List[int]:
         start = 0
