@@ -62,5 +62,28 @@ class Solution:
                     dp[i][j] = j
                     continue
         return res
+    
+-----------------------------------------------------------------------------------------------------------------
+class Solution:
+    def maxMoves(self, grid: List[List[int]]) -> int:
+        dp={}
+        def dfs(i,j):
+            n=0
+            n1=0
+            n2=0
+            if((i,j) in dp):return dp[(i,j)]
+            if(i-1>=0 and j+1<len(grid[0]) and grid[i][j]<grid[i-1][j+1]):
+                n=1+dfs(i-1,j+1)
+            if(i>=0 and i<len(grid) and j+1<len(grid[0])):
+                if(i+1<len(grid) and grid[i+1][j+1]>grid[i][j]):
+                    n1=1+dfs(i+1,j+1)
+                if(grid[i][j+1]>grid[i][j]):
+                    n2=1+dfs(i,j+1)
+            dp[(i,j)]=max(n,n1,n2)
+            return dp[(i,j)]
+        res=0
+        for i in range(len(grid)):
+            res=max(res,dfs(i,0))
+        return res
             
         
