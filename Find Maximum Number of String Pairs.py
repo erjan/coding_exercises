@@ -38,3 +38,13 @@ class Solution:
         return  sum(map((lambda x: x*(x-1)), d.values()))//2
 
 ---------------------------------------------------------------------------------------  
+
+class Solution:
+    def maximumNumberOfStringPairs(self, words: List[str]) -> int:
+        count=0
+        s=set()
+        for ele in words:
+            if ele[::-1] in s:
+                count+=1
+            s.add(ele)
+        return count
