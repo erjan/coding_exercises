@@ -26,6 +26,23 @@ class Solution:
             if s1[k] != s2[k]:
                 return False
         return True
+-------------------------------------------------------------------
+class Solution:
+    def isGood(self, nums: List[int]) -> bool:
+        
 
+        base = len(nums)-1
+        hashmap = defaultdict(int)
+        for i in nums:
+            if i > base:
+                return False
+            hashmap[i]+=1
+        
+            if i!=base and hashmap[i]>1:
+                return False
+
+        if hashmap[base]>2:
+            return False
+        return True
         
 
