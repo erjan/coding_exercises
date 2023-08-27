@@ -25,3 +25,58 @@ class Solution:
             end += 1
 
         return max_len
+
+---------------------------------------------------------------------------------------------------------
+
+def print_pointers(nums, l, r):
+
+    for i in range(len(nums)):
+        if i == l and i == r:
+            print('V')
+            print('V')
+        elif i == l or i == r:
+            print("V", end=" ")
+        else:
+            print(" ", end=" ")
+    print()
+    for i in range(len(nums)):
+        print(nums[i], end=" ")
+    print()
+
+
+def f(nums) -> None:
+    n = len(nums)
+    l = 0
+    r = 0
+    res = 0
+
+    count = 0
+
+    while r < len(nums):
+        print("----------------------------")
+        print_pointers(nums, l, r)
+        print()
+
+        if nums[r] == 0:
+            count += 1
+            print("found 0, increase count, count now is %d" % count)
+
+        while count > 1:
+            print("***********")
+
+            if nums[l] == 0:
+                count -= 1
+                print("left was 0, decrease count, count now is %d" % count)
+            print("moving left pointer")
+            l += 1
+            print_pointers(nums, l, r)
+
+        res = max(res, r - l + 1 - count)
+        print("moving right pointer")
+        r += 1
+
+    res = res - 1 if res == n else res
+    print("max window is %d" % res)
+    return res
+
+
