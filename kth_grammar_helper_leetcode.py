@@ -1,14 +1,8 @@
-
-https://leetcode.com/problems/k-th-symbol-in-grammar/description/
-
-this code is for the above leetcode exercise - generating bunch of lines into list of lists
-
 def f(n: int, k: int) -> int:
     s = [["0"]]
 
     if n == 0:
-        return s[0]
-
+        return s[0][0]
 
     for i in range(1, n):
         print("--------------------------------------------")
@@ -29,14 +23,11 @@ def f(n: int, k: int) -> int:
 
             cur_row.append(cur)
 
-        print()
-        print("adding this row")
-        print(cur_row)
         s.append(cur_row)
 
-    print()
-    print()
-    print(s)
+    print("answer is ")
+    print(s[k - 1][0])
+    return s[k-1][0]
 
 
-f(5, 2)
+f(2, 2)
