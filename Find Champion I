@@ -1,0 +1,43 @@
+class Solution:
+    def findChampion(self, grid: List[List[int]]) -> int:
+        
+
+        n = len(grid)
+
+        a = 0
+        b = 0
+
+        ch = dict()
+        for i in range(n):
+            for j in range(n):
+                if i!=j:
+                    if grid[i][j] == 1:
+                        if i not in ch:
+                            ch[i] =1
+                        else:
+                            ch[i]+=1
+        
+        m = max(ch.values())
+        for k,v in ch.items():
+            if v == m:
+                return k
+
+------------------------------------------------------------------------------------------------------------------------------
+class Solution:
+    def findChampion(self, grid: List[List[int]]) -> int:
+        
+        n = len(grid)
+        
+        for i in range(n):
+            if sum(grid[i]) == n - 1:
+                return i
+-----------------------------------------------------------------------------
+class Solution:
+    def findChampion(self, grid: List[List[int]]) -> int:
+        for c in range(len(grid)):
+            for r in range(len(grid)):
+                if grid[r][c]:
+                    break
+            else:
+                return c
+
