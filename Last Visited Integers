@@ -1,0 +1,53 @@
+'''
+Given a 0-indexed array of strings words where words[i] is either a positive integer represented as a string or the string "prev".
+
+Start iterating from the beginning of the array; for every "prev" string seen in words, find the last visited integer in words which is defined as follows:
+
+Let k be the number of consecutive "prev" strings seen so far (containing the current string). Let nums be the 0-indexed array of integers seen so far and nums_reverse be the reverse of nums, then the integer at (k - 1)th index of nums_reverse will be the last visited integer for this "prev".
+If k is greater than the total visited integers, then the last visited integer will be -1.
+Return an integer array containing the last visited integers.
+'''
+
+#wrong solution
+class Solution:
+    def lastVisitedIntegers(self, words: List[str]) -> List[int]:
+
+        k = 0
+        res = []
+        nums_reverse = words[::-1]
+
+        for i in range(1,len(words)):
+            if words[i] == 'prev' and words[i-1]:
+                k+=1
+            elif words[i] == 'prev':
+                k = 1
+
+            if k > i:
+                res.append(-1)
+            else:
+                res.append(nums_reverse[k-1])
+        return res
+-----------------------------------------------------------------------------------------------------------
+class Solution:
+    def lastVisitedIntegers(self, words: List[str]) -> List[int]:
+
+        k = 0
+        res = []
+        nums_reverse = []
+
+        for w in words:
+            if w.isdigit():
+                nums_reverse.append(int(w))
+                k = 0
+            else:
+                k+=1
+                if k> len(nums_reverse):
+                    res.append(-1)
+                else:
+                    res.append(nums_reverse[-k])
+        return res
+                
+       
+            
+            
+            
