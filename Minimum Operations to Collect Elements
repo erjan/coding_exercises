@@ -1,0 +1,22 @@
+'''
+You are given an array nums of positive integers and an integer k.
+
+In one operation, you can remove the last element of the array and add it to your collection.
+
+Return the minimum number of operations needed to collect elements 1, 2, ..., k.
+'''
+
+
+class Solution:
+    def minOperations(self, nums: List[int], k: int) -> int:
+        
+
+        s = set()
+        count = 0
+        for n in nums[::-1]:
+            if n <=k:
+                s.add(n)
+            count+=1
+            if len(s)==k:
+                return count
+        return count
