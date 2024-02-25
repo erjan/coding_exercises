@@ -10,16 +10,20 @@ def analyze_vacancy_keywords(filename):
 
     vacancy_dataset = vacancy_dataset.split('\n')
 
-
     for i in range(len(vacancy_dataset)):
         vacancy_dataset[i] = vacancy_dataset[i].lower()
 
     vacancy_dataset = dict(Counter(vacancy_dataset))
+    
 
 
     vacancy_dataset = sorted(vacancy_dataset.items(),key = lambda x: -x[1])
+    
+    vacancy_dataset = list(filter(lambda x: x[0] != '',vacancy_dataset))
 
-    v = filename.split('.txt')[0]
+
+    v = filename.replace('.txt', '')
+
     print('ANALYZING FOR vacancy in: ' + v)
     print()
     
