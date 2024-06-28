@@ -40,3 +40,39 @@ class Solution:
             summ += Arr[i] * (i+1)  # Multiply city roads with corresponding score
         
         return summ
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+#done again on june 28 2024! myself! yay!!!!!!!!!!!!!!!!
+
+class Solution:
+    def maximumImportance(self, n: int, roads: List[List[int]]) -> int:
+        g = defaultdict(list)
+        for u,v in roads:
+            g[u].append(v)
+            g[v].append(u)
+        
+
+        g = [[k,len(v)]for k,v in g.items()]
+        
+        g.sort(key = lambda x: x[1],reverse=True)
+        sg = [d[0] for d in g]
+   
+        s2 = []
+        i = 0
+        for x in sg:
+            s2.append([x,n-i])
+            i+=1
+        print(s2)
+        d = dict()
+        for k,v in s2:
+            d[k] = v
+        print(d)
+        res = 0
+        for a,b in roads:
+            res += d[a] + d[b]
+        return res
+
+
+
+        
+       
