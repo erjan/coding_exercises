@@ -86,6 +86,8 @@ def f(s):
                 print(stack)
             elif ch == ')':
                 print('emptying stack..')
+                print('stack before emptying:')
+                print(stack)
                 temp = ''
                 while stack and stack[-1]!='(':
 
@@ -138,26 +140,27 @@ stack now :
 ----------------------
 adding ( to stack
 stack now :
-['(', 'e', 'd', '(', 'e', 't',
-'(']
+['(', 'e', 'd', '(', 'e', 't', '(']
 ----------------------
 adding to stack: o
 stack now :
-['(', 'e', 'd', '(', 'e', 't',
-'(', 'o']
+['(', 'e', 'd', '(', 'e', 't', '(', 'o']
 ----------------------
 adding to stack: c
 stack now :
-['(', 'e', 'd', '(', 'e', 't',
-'(', 'o', 'c']
+['(', 'e', 'd', '(', 'e', 't', '(', 'o', 'c']
 ----------------------
 emptying stack..
+stack before emptying:
+['(', 'e', 'd', '(', 'e', 't', '(', 'o', 'c']
 popping from stack: c
 popping from stack: o
 adding to the stack this:
 ['c', 'o']
 ----------------------
 emptying stack..
+stack before emptying:
+['(', 'e', 'd', '(', 'e', 't', 'c', 'o']
 popping from stack: o
 popping from stack: c
 popping from stack: t
@@ -165,10 +168,6 @@ popping from stack: e
 adding to the stack this:
 ['o', 'c', 't', 'e']
 ----------------------
-
-
-
-
 adding to stack: e
 stack now :
 ['(', 'e', 'd', 'o', 'c', 't', 'e', 'e']
@@ -178,6 +177,8 @@ stack now :
 ['(', 'e', 'd', 'o', 'c', 't', 'e', 'e', 'l']
 ----------------------
 emptying stack..
+stack before emptying:
+['(', 'e', 'd', 'o', 'c', 't', 'e', 'e', 'l']
 popping from stack: l
 popping from stack: e
 popping from stack: e
