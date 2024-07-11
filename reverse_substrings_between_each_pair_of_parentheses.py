@@ -67,3 +67,124 @@ class Solution:
             i+=1
 
         return ''.join(stack)
+
+-----------------------------------------------------------------------------------
+#11 july 2024
+#this prints out the full stack trace
+
+def f(s):
+
+
+        stack = []
+
+        for ch in s:
+            print('----------------------')
+            if ch == '(':
+                print('adding ( to stack')
+                stack.append('(')
+                print('stack now :')
+                print(stack)
+            elif ch == ')':
+                print('emptying stack..')
+                temp = ''
+                while stack and stack[-1]!='(':
+
+                    x= stack.pop()
+                    print('popping from stack: ' + x)
+                    temp += x
+                stack.pop()
+                print('adding to the stack this: ')
+                print(list(temp))
+                stack += list(temp)
+
+            else:
+                print('adding to stack: ' + ch)
+                stack.append(ch)
+                print('stack now :')
+                print(stack)
+
+        return ''.join(stack)
+
+s = "(ed(et(oc))el)"
+
+
+f(s)
+
+python t5.py
+----------------------
+adding ( to stack
+stack now :
+['(']
+----------------------
+adding to stack: e
+stack now :
+['(', 'e']
+----------------------
+adding to stack: d
+stack now :
+['(', 'e', 'd']
+----------------------
+adding ( to stack
+stack now :
+['(', 'e', 'd', '(']
+----------------------
+adding to stack: e
+stack now :
+['(', 'e', 'd', '(', 'e']
+----------------------
+adding to stack: t
+stack now :
+['(', 'e', 'd', '(', 'e', 't']
+----------------------
+adding ( to stack
+stack now :
+['(', 'e', 'd', '(', 'e', 't',
+'(']
+----------------------
+adding to stack: o
+stack now :
+['(', 'e', 'd', '(', 'e', 't',
+'(', 'o']
+----------------------
+adding to stack: c
+stack now :
+['(', 'e', 'd', '(', 'e', 't',
+'(', 'o', 'c']
+----------------------
+emptying stack..
+popping from stack: c
+popping from stack: o
+adding to the stack this:
+['c', 'o']
+----------------------
+emptying stack..
+popping from stack: o
+popping from stack: c
+popping from stack: t
+popping from stack: e
+adding to the stack this:
+['o', 'c', 't', 'e']
+----------------------
+
+
+
+
+adding to stack: e
+stack now :
+['(', 'e', 'd', 'o', 'c', 't', 'e', 'e']
+----------------------
+adding to stack: l
+stack now :
+['(', 'e', 'd', 'o', 'c', 't', 'e', 'e', 'l']
+----------------------
+emptying stack..
+popping from stack: l
+popping from stack: e
+popping from stack: e
+popping from stack: t
+popping from stack: c
+popping from stack: o
+popping from stack: d
+popping from stack: e
+adding to the stack this:
+['l', 'e', 'e', 't', 'c', 'o', 'd', 'e']
