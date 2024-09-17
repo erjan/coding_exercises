@@ -1,0 +1,74 @@
+import json
+
+players = json.loads(input())
+
+# Initialize result dictionary
+result = {
+    "playerWithMaxHealing": {},
+    "teamWithMaxStats": {},
+    "teamsWithEfficiency": [],
+    "teamStats": {}
+}
+
+# Variables to track maximum healing and team statistics
+max_healing_player = None
+max_damage = 0
+max_frags = 0
+max_revives = 0
+team_stats = {}
+
+# Process each team
+for team in players:
+    team_name = team["name"]
+    total_damage = 0
+    total_frags = 0
+    total_revives = 0
+    total_healing = 0
+    num_players = len(team["players"])
+
+    for player in team["players"]:
+        # Update total statistics
+        total_damage += player["damage"]
+        total_frags += player["frags"]
+        total_revives += player["revives"]
+        total_healing += player["healing"]
+
+        # Check for player with maximum healing
+        if max_healing_player is None or player["healing"] > max_healing_player["healing"]:
+            max_healing_player = player
+
+    # Calculate efficiency
+    efficiency = (total_damage + total_frags) / num_players #if total_frags > 0 else 0
+    efficiency_str = f"{efficiency:.2f}"
+
+    # Store efficiency in team dictionary
+    team["efficiency"] = efficiency_str
+    result["teamsWithEfficiency"].append(team)
+
+    # Store total stats for the team
+    team_stats[team_name] = {
+        "totalDamage": total_damage,
+        "totalFrags": total_frags,
+        "totalRevives": total_revives
+    }
+
+    # Update maximum stats
+    if total_damage > max_damage or total_frags > max_frags or total_revives > max_revives:
+        max_damage = max(max_damage, total_damage)
+        max_frags = max(max_frags, total_frags)
+        max_revives = max(max_revives, total_revives)
+        result["teamWithMaxStats"] = {
+            "maxDamage": total_damage,
+            "maxFrags": total_frags,
+            "maxRevives": total_revives,
+            "maxTeam": team
+        }
+
+# Assign the player with maximum healing
+result["playerWithMaxHealing"] = max_healing_player
+
+# Assign team stats to the result
+result["teamStats"] = team_stats
+
+# Output the result
+print(json.dumps(result, separators=(',', ':'), ensure_ascii=False))
