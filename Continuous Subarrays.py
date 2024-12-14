@@ -33,3 +33,59 @@ class Solution:
             total_subarrays += end - start + 1
         
         return total_subarrays
+
+---------------------------
+'''
+my vs code to print out everything
+notice, how i print out the content of sorted window [2,4,5] but the original array at this moment is [5,4,2] so i remove the nums[start] from the sorted array!
+
+'''
+from sortedcontainers import SortedList
+
+class Solution:
+    def continuousSubarrays(self, nums) -> int:
+        res = 0
+
+        sorted_window = SortedList()
+        n = len(nums)
+        start = 0
+        total = 0
+        print(f'original array: {nums}')
+        print()
+        for end in range(n):
+            print('---------------------------------------')
+            print(f'start: {start}, end: {end}')
+            sorted_window.add(nums[end])
+            print('sorted window:')
+            print(sorted_window)
+
+            while sorted_window[-1]-sorted_window[0]>2:
+                print()
+                print(' ' *30  + 'invalid window, start pointer +1')
+                print(f'start: {start}, end: {end}')
+                print(f'nums[start]: {nums[start]}')
+                sorted_window.remove(nums[start])
+                print(' ' *30  + 'sorted window after removing nums[start]')
+                print(sorted_window)
+                start+=1
+            else:
+                print('window is valid , continue adding')
+            
+            print()
+            print(f'adding total: {total}')
+            total+= end -start+1
+
+        return total            
+
+
+
+
+s = Solution()
+nums = [5,4,2,4]
+
+s.continuousSubarrays(nums)
+
+
+
+
+
