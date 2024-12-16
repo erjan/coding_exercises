@@ -24,3 +24,25 @@ class Solution:
         for val,ind in heap:
             nums[ind] = val
         return nums
+
+
+----------------------------------
+#without enumerate
+
+class Solution:
+    def getFinalState(self, nums: List[int], k: int, multiplier: int) -> List[int]:
+        
+        heap = []
+        for i in range(len(nums)):
+            val = nums[i]
+            heapq.heappush(heap, [val,i])
+        
+        for i in range(k):
+
+            val,ind = heapq.heappop(heap)
+            newval = val*multiplier
+            heapq.heappush(heap, [newval,ind])
+        
+        for val,ind in heap:
+            nums[ind] = val
+        return nums
