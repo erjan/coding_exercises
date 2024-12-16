@@ -19,4 +19,12 @@ class Solution:
                 for k in range(j+1,n):
                     res = max(res, (nums[i]-nums[j])*nums[k])
         return res
-
+------------------------------------------------------------------------
+class Solution:
+    def maximumTripletValue(self, A: List[int]) -> int:
+        res = maxa = maxab = 0
+        for a in A:
+            res = max(res, maxab * a)
+            maxab = max(maxab, maxa - a)
+            maxa = max(maxa, a)
+        return res        
