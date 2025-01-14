@@ -28,3 +28,24 @@ class Solution:
                 count += 1
             ans.append(count)
         return ans
+
+-----------------------------------------------------------------------------------
+class Solution:
+    def findThePrefixCommonArray(self, A: List[int], B: List[int]) -> List[int]:
+        n  = len(A)
+
+        freq = [ [0*n]  for _ in range(n)]
+        
+        res = [0]*n
+        for i in range(1,n+1):
+            prefA = A[:i]
+            prefB = B[:i]
+
+            p1 = set(prefA)
+            p2 = set(prefB)
+
+            
+                  
+            res[i-1] =  len(p1.intersection(p2))
+
+        return res
