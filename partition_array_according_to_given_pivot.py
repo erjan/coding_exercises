@@ -44,3 +44,17 @@ class Solution:
 				ans.append(j)
 
 		return ans
+
+-------------------------------------------------------------------------------------------
+# 3 march 2025
+class Solution:
+    def pivotArray(self, nums: List[int], pivot: int) -> List[int]:
+        
+        l = [x for x in nums if x<pivot]
+        eq = [x for x in nums if x == pivot]
+        h = [x for x in nums if x> pivot]
+        print(l)
+        print(eq)
+        print(h)
+        res = l + eq + h
+        return res
