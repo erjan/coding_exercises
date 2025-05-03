@@ -29,3 +29,93 @@ class Solution:
         if count >= len(tops):
             return min([len(tops) - tops.count(value), len(bottoms) - bottoms.count(value)])
         return -1
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+class Solution:
+    def minDominoRotations(self, tops: List[int], bottoms: List[int]) -> int:
+        
+        top_freq = dict(Counter(tops))
+        bottom_freq = dict(Counter(bottoms))
+
+        most_frequent_top = [[k,v] for k,v in top_freq.items()]
+        most_frequent_top.sort(key = lambda x: x[1], reverse=True)
+
+        most_frequent_bottom = [[k,v] for k,v in bottom_freq.items()]
+        most_frequent_bottom.sort(key = lambda x: x[1], reverse=True)
+
+        n = len(tops)
+        most_frequent_top = most_frequent_top[0]
+        most_frequent_bottom = most_frequent_bottom[0]
+
+        print(top_freq)
+        print(bottom_freq)
+        print('-----------')
+
+        print('most top val')
+        most_frequent_top_number = most_frequent_top[0]
+        most_frequent_bottom_number = most_frequent_bottom[0]
+
+        print(f'most_frequent top number: {most_frequent_top_number}')        
+        print(f'most_frequent bottom number: {most_frequent_bottom_number}')
+
+        most_frequent_top_number_count = most_frequent_top[1]
+        most_frequent_bottom_number_count = most_frequent_bottom[1]
+
+
+
+
+
+        res1 = res2 = 0
+
+        m = list(zip(tops,bottoms))
+        #make all tops same
+
+        newtops = []
+        for t,b in m:
+                if t!= most_frequent_top_number:
+                        if bottom_freq[most_frequent_bottom_number]>0:
+                                bottom_freq[most_frequent_bottom_number]-=1
+                                newtops.append(b)
+                                res1+=1
+                else:
+                        newtops.append(t)
+        
+        print(f'newtops: {newtops}')
+        expected_tops = [ most_frequent_top_number for x in  tops]
+        print(f'expected tops: {expected_tops}')
+        print('---------------')
+        print('---------------')
+        print('---------------')
+
+
+
+        newbottoms = []
+        for t,b in m:
+                if b!= most_frequent_bottom_number:
+                        if top_freq[most_frequent_top_number]>0:
+                                top_freq[most_frequent_top_number]-=1
+                                newbottoms.append(t)
+                                res2+=1
+                else:
+                        newbottoms.append(b)
+        
+      
+        expected_bottoms = [most_frequent_bottom_number for x in tops]
+        print(f'newtops: {newtops}')
+        print(f'newbottoms: {newbottoms}')
+        print(f'expected: {expected_bottoms}')
+
+        print(res1,res2)
+
+        if newtops != expected_tops and  newbottoms != expected_bottoms:
+                print('cant make newtops or newbottoms as expected')
+                return -1
+        
+
+        print(min(res1,res2))
+        return min(res1,res2)
+       
