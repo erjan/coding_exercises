@@ -31,3 +31,26 @@ class Solution:
                 x =math.comb(item,2)
                 total+=x
         return total
+
+-------------------------------------------------------------------------------------
+
+class Solution:
+    def numEquivDominoPairs(self, dominoes: List[List[int]]) -> int:
+        res = 0
+
+        n = len(dominoes)
+        myd = dict()
+        
+        dominoes = [ sorted(el) for el in dominoes]
+
+        for i in range(n):
+                cur = dominoes[i]
+                cur = tuple(cur)
+                if cur not in myd:
+                        myd[cur] = 1
+                else:
+                        myd[cur] +=1
+        
+        res = sum([ v*(v-1)//2 for k,v in myd.items() if v> 1])
+
+        return res
