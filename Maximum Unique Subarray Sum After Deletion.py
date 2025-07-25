@@ -30,3 +30,30 @@ class Solution:
         return res
 
 ---------------------------------------------------------------  
+
+class Solution:
+    def maxSum(self, nums: List[int]) -> int:
+
+
+        n = len(nums)
+        haspos = False
+
+        for n in nums:
+            if n>0:
+                haspos= True
+                break
+    
+        if not haspos:
+            return max(nums)
+        
+        seen = set()
+
+        res = 0
+
+        for val in nums:
+            if val not in seen and val>=0:
+                res += val
+                seen.add(val)
+        
+        return res
+        
